@@ -13,6 +13,12 @@ import kids from './kids.png'
 import pricewhite from './pricewhite.png'
 import priceblue from './priceblue.png'
 import priceblack from './priceblack.png'
+import quality from './quality.png'
+import payment from './payment2.png'
+import support from'./support.png'
+import exchange from './exchange.png'
+import price from './price.png'
+import payment1 from './payment.jpg'
 
 
 
@@ -33,4 +39,9 @@ export {
     priceblack,
     pricewhite,
     priceblue,
+    quality,
+    support,
+    payment,
+    price,
+    exchange,
 }

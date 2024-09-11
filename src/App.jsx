@@ -1,7 +1,7 @@
 
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+import { BrowserRouter, Route,Routes } from 'react-router-dom';
 import RootLayout from './Layouts/RootLayout';
-import { RouterProvider } from 'react-router';
+// import { RouterProvider } from 'react-router';
 import Nav from './Components/Nav'
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -11,12 +11,15 @@ import Cart from './Pages/Cart';
 import CrewneckProducts from './Pages/CrewneckProducts';
 import Signup from './Pages/Signup';
 
-const  router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<RootLayout />}>
-      <Route index element={<Home />}/>
-
-      <Route path='/Home' element={<Home/>} />
+function App() {
+  
+  return (
+    <div className='App'>
+        <BrowserRouter>
+          <Routes>
+          <Route element={<RootLayout />} >
+            <Route index element={<Home />} />
+            <Route path='/Home' element={<Home/>} />
       {/* <Route path='/Products' element={<Products/>} /> */}
       <Route path='/About' element={<About/>} />
       <Route path='/Contact' element={<Contact/>} />
@@ -25,20 +28,12 @@ const  router = createBrowserRouter(
       <Route path='/Cart' element={<Cart/>} />
       <Route path='/CrewneckProducts' element={<CrewneckProducts/>} />
     </Route>
-  )
 
-)
+            </Routes>
+            </BrowserRouter>
+            </div>
 
-function App() {
-  
-
-  return (
-    <>
-      <Nav />
-      <RouterProvider router={router} />
-  
-    </>
-  )
+            )
 }
 
 export default App

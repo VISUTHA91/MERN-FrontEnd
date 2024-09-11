@@ -7,9 +7,7 @@ function RootLayout() {
     <>
     <Nav />
     <Outlet />
-    
-    
-    </>
+        </>
   )
 }
 

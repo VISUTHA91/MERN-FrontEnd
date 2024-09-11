@@ -157,15 +157,15 @@ const settings = {
       settings: {
         slidesToShow: 2, // Show 2 slides on small tablets
         slidesToScroll: 1,
-        arrows: false,   // Optionally hide arrows on mobile for better UX
+        arrows: true,   // Optionally hide arrows on mobile for better UX
       }
     },
     {
       breakpoint: 480, // For screens <= 480px (mobile devices)
       settings: {
-        slidesToShow: 1, // Show 1 slide on mobile
+        slidesToShow: 2, // Show 1 slide on mobile
         slidesToScroll: 1,
-        arrows: false,   // Optionally hide arrows on mobile for better UX
+        arrows: true,   // Optionally hide arrows on mobile for better UX
       }
     }
   ]
@@ -227,7 +227,7 @@ function ShopbyCategory() {
           <Slider className="flex flex-row flex-wrap gap-6 justify-center w-full items-center p-4" {...settings}>
             {products.map((e) => (
               <a href='/ProductList/' key={e.id}>
-                <div className='flex flex-col justify-center items-center mt-4 w-40'>
+                <div className='flex flex-col justify-center items-center mt-4 ml-8 w-40'>
                   <img
                     src={e.imgURL}
                     sizes={60}
@@ -246,3 +246,5 @@ function ShopbyCategory() {
 }
 
 export default ShopbyCategory;
+
+

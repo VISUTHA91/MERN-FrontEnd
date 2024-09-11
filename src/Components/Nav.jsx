@@ -132,6 +132,7 @@ import { IoMdClose } from "react-icons/io";
 import { BsFillHandbagFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 function Nav() {
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
@@ -183,7 +184,7 @@ function Nav() {
     <nav className={`p-4 w-full flex fixed justify-between items-center shadow-lg z-40 transition-colors duration-500 ${
         isScrolled ? 'bg-fuchsia-900 text-white' : 'bg-transparent text-white'}`}>
       <div className="font-bold text-white text-2xl cursor-pointer ml-6 mt-4 flex items-center gap-1">
-        <a href="/"> <p>ABC</p></a>
+        <Link to={'/'} > <p>ABC</p></Link>
       </div>
 
       <div onClick={() => setOpen(!open)} className="absolute right-5 top-5 cursor-pointer md:hidden">
@@ -206,21 +207,21 @@ function Nav() {
                 {isAboutDropdownOpen && (
                   <ul className="absolute left-0 mt-6 py-2 w-48 rounded-md shadow-lg bg-white z-20">
                     <li>
-                      <a href="/product1" className="block px-4 py-2 hover:bg-blue-400 hover:text-white duration-300">Product 1</a>
+                      <Link to={'/product1'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white duration-300">Product 1</Link>
                     </li>
                     <li>
-                      <a href="/product2" className="block px-4 py-2 hover:bg-blue-400 hover:text-white duration-300">Product 2</a>
+                      <Link to={'/product2' }className="block px-4 py-2 hover:bg-blue-400 hover:text-white duration-300">Product 2</Link>
                     </li>
                     <li>
-                      <a href="/product3" className="block px-4 py-2 hover:bg-blue-400 hover:text-white duration-300">Product 3</a>
+                      <Link to={'/product3'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white duration-300">Product 3</Link>
                     </li>
                   </ul>
                 )}
               </>
             ) : (
-              <a href={link.link} className="hover:text-blue-500 duration-500">
+              <Link to ={link.link} className="hover:text-blue-500 duration-500">
                 {link.name}
-              </a>
+              </Link>
             )}
           </li>
         ))}
@@ -240,12 +241,12 @@ function Nav() {
           </button>
         </div>
         <div className="flex items-center gap-8 bg-blue">
-          <a href="/Cart">
+          <Link to={'/Cart'}>
             <BsFillHandbagFill size={28} className="cursor-pointer" />
-          </a>
-          <a href="/Signin">
+          </Link>
+          <Link to={'/Signin'}>
             <FaUserAlt size={28} className="cursor-pointer" />
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
