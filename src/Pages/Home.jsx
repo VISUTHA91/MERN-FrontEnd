@@ -3,6 +3,7 @@ import Hero from '../Components/Hero'
 // import ShopbyCategory from '../Components/ShopbyCategory'
 import Catogory from './Catogory'
 import Standards from '../Components/Standards'
+import Supply from '../Components/Supply'
 
 function Home() {
   return (
@@ -11,6 +12,7 @@ function Home() {
     <Hero />
     <Catogory />
     <Standards />
+    <Supply />
     
     </>
   )

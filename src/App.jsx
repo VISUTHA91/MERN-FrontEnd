@@ -8,8 +8,9 @@ import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Signin from './Pages/Signin';
 import Cart from './Pages/Cart';
-import CrewneckProducts from './Pages/CrewneckProducts';
+// import CrewneckProducts from './Pages/CrewneckProducts';
 import Signup from './Pages/Signup';
+import Productlist from './Pages/Productlist';
 
 function App() {
   
@@ -26,7 +27,7 @@ function App() {
       <Route path='/Signin' element={<Signin/>} />
       <Route path='/Signup' element={<Signup/>} />
       <Route path='/Cart' element={<Cart/>} />
-      <Route path='/CrewneckProducts' element={<CrewneckProducts/>} />
+      <Route path='/Productlist' element={<Productlist/>} />
     </Route>
 
             </Routes>

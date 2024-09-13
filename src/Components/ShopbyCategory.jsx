@@ -124,6 +124,7 @@ import { products } from '../Constant';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from 'react-router-dom';
 
 const settings = {
   className: "center",
@@ -226,17 +227,17 @@ function ShopbyCategory() {
 
           <Slider className="flex flex-row flex-wrap gap-6 justify-center w-full items-center p-4" {...settings}>
             {products.map((e) => (
-              <a href='/ProductList/' key={e.id}>
+              <Link to={'/Productlist/'} key={e.id}>
                 <div className='flex flex-col justify-center items-center mt-4 ml-8 w-40'>
-                  <img
+                   <img
                     src={e.imgURL}
-                    sizes={60}
-                    className='border rounded-full bg-gray-200 hover:scale-110 transition-transform duration-300'
+                    size={60}
+                    className='border rounded-xl bg-gray-400 hover:scale-110 transition-transform duration-300'
                     alt={e.category}
                   />
                   <div className='text-bold text-2xl mt-4'>{e.category}</div>
                 </div>
-              </a>
+              </Link>
             ))}
           </Slider>
         </div>

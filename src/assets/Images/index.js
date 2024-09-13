@@ -14,11 +14,12 @@ import pricewhite from './pricewhite.png'
 import priceblue from './priceblue.png'
 import priceblack from './priceblack.png'
 import quality from './quality.png'
-import payment from './payment2.png'
+import payment1 from './payment1.png'
 import support from'./support.png'
 import exchange from './exchange.png'
 import price from './price.png'
-import payment1 from './payment.jpg'
+// import payment from './payment.jpg'
+import supplyBanner from './supplyBanner.jpg'
 
 
 
@@ -41,7 +42,8 @@ export {
     priceblue,
     quality,
     support,
-    payment,
+    payment1,
     price,
     exchange,
+    supplyBanner,
 }
