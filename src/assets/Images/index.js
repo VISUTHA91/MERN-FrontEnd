@@ -20,6 +20,10 @@ import exchange from './exchange.png'
 import price from './price.png'
 // import payment from './payment.jpg'
 import supplyBanner from './supplyBanner.jpg'
+import front from './front.jpg'
+import frontneck from './frontneck.jpg'
+import frontfull from './frontfull.jpg'
+import frontmiddle from './frontfull.jpg'
 
 
 
@@ -46,4 +50,8 @@ export {
     price,
     exchange,
     supplyBanner,
+    front,
+    frontfull,
+    frontmiddle,
+    frontneck,
 }

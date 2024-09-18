@@ -1,9 +1,5 @@
 import { black,blue,brown,purple,green,yellow,kids,women,men, priceblue, priceblack, pricewhite } from "../assets/Images";
 
-
-
-
-
 export const products = [
         {
             id:1,
@@ -95,8 +91,8 @@ export const price =[
 export const totalproducts =[
     {
         id:1,
-        imgURL:[blue,],
-        name:"Men's Cotton Stretch Solid Polo T-Shirt (Regular Fit)",
+        imgURL:[blue,yellow,black,brown,purple],
+        name:"Men's Cotton Stretch Solid Polo T-Shirt | Plain  | Half Sleeve (Regular Fit)",
         category:"POLO",
         color:"blue",
         size:"M",
@@ -109,8 +105,8 @@ export const totalproducts =[
     },
     {
         id:2,
-        imgURL:[yellow,],
-        name:"Men's Solid Cotton T Shirt | Plain | Round Neck | Half Sleeve - Regular Fit",
+        imgURL:[yellow,blue,black],
+        name:"Men's Solid Cotton T Shirt | Round Neck | Plain | Half Sleeve - Regular Fit",
         category:"POLO",
         color:"red",
         size:"s",
@@ -123,8 +119,8 @@ export const totalproducts =[
     },
     {
         id:3,
-        imgURL:[brown,],
-        name:"Men's Regular Fit Polo T-shirt",
+        imgURL:[brown,yellow,green],
+        name:"Men's Regular Fit | Plain | Polo T-shirt | Half Sleeve - Regular Fit ",
         category:"POLO",
         color:"green",
         size:"l",
@@ -137,7 +133,7 @@ export const totalproducts =[
     },
     {
         id:4,
-        imgURL:[purple,],
+        imgURL:[purple,green,yellow],
         name:"Men's Solid Cotton T Shirt | Plain | Round Neck | Half Sleeve - Regular Fit",
         category:"POLO",
         color:"yellow",
@@ -151,8 +147,8 @@ export const totalproducts =[
     },
     {
         id:5,
-        imgURL:[green,],
-        name:"Men's Regular Fit Polo T-shirt",
+        imgURL:[green,yellow,black,blue],
+        name:"Men's Regular Fit | Plain | Polo T-shirt| Half Sleeve - Regular Fit ",
         category:"POLO",
         color:"brown",
         size:"M",
@@ -165,8 +161,8 @@ export const totalproducts =[
     },
     {
         id:6,
-        imgURL:[black,],
-        name:"Men's Cotton Stretch Solid Polo T-Shirt (Regular Fit)",
+        imgURL:[black,blue,brown],
+        name:"Men's Cotton Solid | Plain | Half Sleeve - (Regular Fit)",
         category:"POLO",
         color:"pink",
         size:"s",
@@ -179,8 +175,8 @@ export const totalproducts =[
     },
     {
         id:7,
-        imgURL:[blue,],
-        name:"Men's Solid Cotton T Shirt | Plain | Round Neck | Half Sleeve - Regular Fit",
+        imgURL:[blue,black,green],
+        name:"Men's Solid Cotton T Shirt | Plain | Half Sleeve - Regular Fit",
         category:"POLO",
         color:"green",
         size:"l",
@@ -193,8 +189,8 @@ export const totalproducts =[
     },
     {
         id:8,
-        imgURL:[blue,],
-        name:"Men's Regular Fit Polo T-shirt",
+        imgURL:[blue,black,brown],
+        name:"Men's Regular Fit | Plain | Polo T-shirt| Half Sleeve - Regular Fit ",
         category:"POLO",
         color:"brown",
         size:"xl",

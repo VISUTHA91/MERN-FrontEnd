@@ -133,6 +133,8 @@ import { BsFillHandbagFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import Badge from '@mui/material/Badge';
+
 
 function Nav() {
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
@@ -242,7 +244,9 @@ function Nav() {
         </div>
         <div className="flex items-center gap-8 bg-blue">
           <Link to={'/Cart'}>
-            <BsFillHandbagFill size={28} className="cursor-pointer" />
+          <Badge color="secondary" badgeContent={20}>
+
+            <BsFillHandbagFill size={28} className="cursor-pointer" /></Badge>
           </Link>
           <Link to={'/Signin'}>
             <FaUserAlt size={28} className="cursor-pointer" />

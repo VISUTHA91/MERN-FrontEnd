@@ -11,6 +11,7 @@ import Cart from './Pages/Cart';
 // import CrewneckProducts from './Pages/CrewneckProducts';
 import Signup from './Pages/Signup';
 import Productlist from './Pages/Productlist';
+import Productdetails from './Pages/Productdetails';
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
       <Route path='/Signup' element={<Signup/>} />
       <Route path='/Cart' element={<Cart/>} />
       <Route path='/Productlist' element={<Productlist/>} />
+      <Route path='/Productdetails/:id' element={<Productdetails/>} />
     </Route>
 
             </Routes>
