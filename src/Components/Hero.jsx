@@ -19,7 +19,7 @@ function Hero() {
     <img src={banner} className='w-full h-4/5 object-cover' alt="banner"></img>
     
     {/* Hide on mobile (default hidden), show on sm and larger screens */}
-    <div className="hidden sm:flex absolute flex-col text-white translate-x-6 translate-y-6 left-6 top-24 sm:left-12 sm:top-6 lg:left-24 lg:top-44">
+    <div className="hidden sm:flex absolute flex-col text-white translate-x-6 translate-y-6 left-6 top-24 sm:left-12 sm:top-6 lg:left-24 lg:top-44 ">
       <h1 className='text-xl sm:text-2xl lg:text-4xl font-bold mb-2 sm:mb-4'>
         Welcome to Our Site!
       </h1>

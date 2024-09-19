@@ -12,14 +12,22 @@ import Cart from './Pages/Cart';
 import Signup from './Pages/Signup';
 import Productlist from './Pages/Productlist';
 import Productdetails from './Pages/Productdetails';
+import { useState } from 'react';
+import Support from './Pages/Support';
 
 function App() {
+  const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
+
+  // Function to handle adding item to cart
+  const addToCart = () => {
+    setCartCount(cartCount + 1); // Increase cart count by 1
+  };
   
   return (
     <div className='App'>
         <BrowserRouter>
           <Routes>
-          <Route element={<RootLayout />} >
+          <Route element={<RootLayout  cartCount={cartCount} />} >
             <Route index element={<Home />} />
             <Route path='/Home' element={<Home/>} />
       {/* <Route path='/Products' element={<Products/>} /> */}
@@ -28,8 +36,9 @@ function App() {
       <Route path='/Signin' element={<Signin/>} />
       <Route path='/Signup' element={<Signup/>} />
       <Route path='/Cart' element={<Cart/>} />
+      <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist' element={<Productlist/>} />
-      <Route path='/Productdetails/:id' element={<Productdetails/>} />
+      <Route path='/Productdetails/:id' element={<Productdetails  addToCart={addToCart}  />} />
     </Route>
 
             </Routes>

@@ -136,7 +136,7 @@ import { Link } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 
 
-function Nav() {
+function Nav({ cartCount }) {
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
   const aboutDropdownRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -185,8 +185,9 @@ function Nav() {
   return (
     <nav className={`p-4 w-full flex fixed justify-between items-center shadow-lg z-40 transition-colors duration-500 ${
         isScrolled ? 'bg-fuchsia-900 text-white' : 'bg-transparent text-white'}`}>
+     {/* <nav  className='p-4 w-full flex fixed justify-between items-center shadow-lg z-40 transition-colors duration-500 bg-fuchsia-900'>  */}
       <div className="font-bold text-white text-2xl cursor-pointer ml-6 mt-4 flex items-center gap-1">
-        <Link to={'/'} > <p>ABC</p></Link>
+        <Link to={'/'} > <p><span className=''>Evvi</span> Tees</p></Link>
       </div>
 
       <div onClick={() => setOpen(!open)} className="absolute right-5 top-5 cursor-pointer md:hidden">
@@ -244,13 +245,25 @@ function Nav() {
         </div>
         <div className="flex items-center gap-8 bg-blue">
           <Link to={'/Cart'}>
-          <Badge color="secondary" badgeContent={20}>
+          <Badge color="secondary" badgeContent={ cartCount }>
 
             <BsFillHandbagFill size={28} className="cursor-pointer" /></Badge>
           </Link>
+          <div>
+          {/* {isUserLogged ? (
+                <button
+                  onClick={handleLogout}
+                  style={{ color: "white", fontWeight: "bold" }}
+                  className="btn btn-danger"
+                >
+                  Logout
+                </button>
+              ) : ( */}
           <Link to={'/Signin'}>
             <FaUserAlt size={28} className="cursor-pointer" />
           </Link>
+          {/* )} */}
+          </div>
         </div>
       </div>
     </nav>

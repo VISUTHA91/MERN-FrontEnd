@@ -7,14 +7,14 @@ import Supply from '../Components/Supply'
 
 function Home() {
   return (
-    <>
+    <div className=''>
     
-    <Hero />
+    <Hero  />
     <Catogory />
     <Standards />
     <Supply />
     
-    </>
+    </div>
   )
 }
 
