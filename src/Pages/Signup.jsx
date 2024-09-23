@@ -11,27 +11,44 @@
 
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import * as apiCalls from "../api/apiServices.jsx"
+
+
 
 function Signup() {
-    const [formData, setFormData] = useState({
+  const navigate = useNavigate()
+
+    const [userData, setUserData] = useState({
         name: "",
-        phonenumber:"",
+        phone_number:"",
         email: "",
         password: "",
         confirmpassword:"",
       });
     
       const handleChange = (e) => {
-        setFormData({
-          ...formData,
+        setUserData({
+          ...userData,
           [e.target.name]: e.target.value,
         });
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = async(e) => {
         e.preventDefault();
         // Perform form submission logic here, like sending data to your API
-        console.log("Form data submitted:", formData);
+        // console.log("Form data submitted:", userData);
+        const data = await apiCalls.registerUser(userData);
+        try {
+          // console.log(data) // Correctly passing the 'user' object
+          console.log("Registration  Successful:", data);
+          localStorage.setItem("authToken", data.token); // Storing token if needed
+        } catch (error) {
+          console.log(error);
+          console.error("Registration failed:", error.message || error);
+        }
+        navigate("/Signin")
+
       };
     
       return (
@@ -51,7 +68,7 @@ function Signup() {
                 type="text"
                 id="name"
                 name="name"
-                value={formData.name}
+                value={userData.name}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Your Name"
@@ -66,9 +83,9 @@ function Signup() {
               </label>
               <input
                 type="number"
-                id="phonenumber"
-                name="phonenumber"
-                value={formData.phonenumber}
+                id="phone_number"
+                name="phone_number"
+                value={userData.phone_number}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Your Contact Number"
@@ -85,7 +102,7 @@ function Signup() {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
+                value={userData.email}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Email Address"
@@ -102,7 +119,7 @@ function Signup() {
                 type="password"
                 id="password"
                 name="password"
-                value={formData.password}
+                value={userData.password}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="********"
@@ -118,7 +135,7 @@ function Signup() {
                 type="confirmpassword"
                 id="confirmpassword"
                 name="confirmpassword"
-                value={formData.confirmpassword}
+                value={userData.confirmpassword}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="********"

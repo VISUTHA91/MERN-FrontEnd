@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { totalproducts } from '../Constant';
 import Sizechart from '../Components/Sizechart';
 import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -14,6 +15,8 @@ import Tooltip from '@mui/material/Tooltip';
 
 
 function Productdetails() {
+  const navigate = useNavigate()
+
   const { id } = useParams();
   const [selectedColor, setSelectedColor] = useState('');
 
@@ -23,6 +26,7 @@ function Productdetails() {
 
   const [activeImage, setActiveImage] = useState(product.imgURL[0]);
   const [qty, setQty] = useState(1);
+
 
 
 

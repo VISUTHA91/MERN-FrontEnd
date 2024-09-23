@@ -1,28 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { FaUnlock } from "react-icons/fa";
 import { login } from "../assets/Images";
 import * as apiCalls from "../api/apiServices.jsx"
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function Signin() {
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
 
-  const registerUser = async(e) => {
+  const navigate = useNavigate()
 
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const registerUser = async (e) => {
     e.preventDefault();
-    // console.log(e.target.email.value);
-    // console.log(e.target.password.value);
-    const user = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
+    console.log(user)
     try {
       const data = await apiCalls.userLogin(user); // Correctly passing the 'user' object
-      // console.log("Sign In Successful:", data);
-      localStorage.setItem("auth-token", data.token); // Storing token if needed
+      // console.log("Login In Successful:", data);
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("userData", JSON.stringify({ role: data.user.role ,name:data.user.name })); // Store user name
+      console.log("heelo",data.message);
+      navigate("/")
+      window.location.reload();
+      // Storing token if needed
     } catch (error) {
-      console.error("SignIn failed:", error.message || error);
+      console.error("Login failed:", error.message || error);
+      alert(data.message)
+      navigate("/Signup")
     }
   };
 
@@ -45,7 +61,8 @@ export default function Signin() {
                   <span className="inline-flex items-center border-r border-gray-300 bg-white px-3 text-sm text-gray-500 shadow-sm">
                     <MdEmail />
                   </span>
-                  <input type="email" id="login-email" className="w-full flex-1 appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400  focus:outline-none" placeholder="Email" />
+                  <input type="email" id="email" name="email" value={user.email} onChange={handleChange}
+                    className="w-full flex-1 appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400  focus:outline-none" placeholder="Email" />
                 </div>
               </div>
               <div className="mb-12 flex flex-col pt-4">
@@ -53,7 +70,8 @@ export default function Signin() {
                   <span className="inline-flex items-center border-r border-gray-300 bg-white px-3 text-sm text-gray-500 shadow-sm">
                     <FaUnlock />
                   </span>
-                  <input type="password" id="login-password" className="w-full flex-1 appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400  focus:outline-none" placeholder="Password" />
+                  <input type="password" id="password"  name="password"  value={user.password} onChange={handleChange}
+                    className="w-full flex-1 appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400  focus:outline-none" placeholder="Password" />
                 </div>
               </div>
               <button type="submit" className="w-full rounded-lg bg-blue-700 px-4 py-2 text-center text-base font-semibold text-white shadow-md transition ease-in hover:bg-blue-600 focus:outline-none focus:ring-2">

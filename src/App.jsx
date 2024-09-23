@@ -14,6 +14,10 @@ import Productlist from './Pages/Productlist';
 import Productdetails from './Pages/Productdetails';
 import { useState } from 'react';
 import Support from './Pages/Support';
+import ScrollToTop from './Components/ScrollToTop';
+import Dashboard from './Pages/Admin/Dashboard';
+import Userlist from './Pages/Admin/Userlist';
+import Createproduct from './Pages/Admin/Createproduct';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -26,6 +30,9 @@ function App() {
   return (
     <div className='App'>
         <BrowserRouter>
+        
+        <ScrollToTop />
+       
           <Routes>
           <Route element={<RootLayout  cartCount={cartCount} />} >
             <Route index element={<Home />} />
@@ -39,8 +46,11 @@ function App() {
       <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist' element={<Productlist/>} />
       <Route path='/Productdetails/:id' element={<Productdetails  addToCart={addToCart}  />} />
+      <Route path='/Admin/Dashboard' element={<Dashboard />} />
+      <Route path='/Admin/Userlist' element={<Userlist />} />
+      <Route path='/Admin/Createproduct' element={<Createproduct />} />
     </Route>
-
+    
             </Routes>
             </BrowserRouter>
             </div>
