@@ -30,14 +30,11 @@ function App() {
   return (
     <div className='App'>
         <BrowserRouter>
-        
         <ScrollToTop />
-       
           <Routes>
           <Route element={<RootLayout  cartCount={cartCount} />} >
             <Route index element={<Home />} />
             <Route path='/Home' element={<Home/>} />
-      {/* <Route path='/Products' element={<Products/>} /> */}
       <Route path='/About' element={<About/>} />
       <Route path='/Contact' element={<Contact/>} />
       <Route path='/Signin' element={<Signin/>} />
@@ -49,13 +46,12 @@ function App() {
       <Route path='/Admin/Dashboard' element={<Dashboard />} />
       <Route path='/Admin/Userlist' element={<Userlist />} />
       <Route path='/Admin/Createproduct' element={<Createproduct />} />
-    </Route>
-    
-            </Routes>
-            </BrowserRouter>
-            </div>
+          </Route>
+          </Routes>
+        </BrowserRouter>
+    </div>
 
-            )
+          )
 }
 
 export default App

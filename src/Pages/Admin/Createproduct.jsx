@@ -68,9 +68,11 @@ const Createproduct = () => {
 
 
   return (
-    <div className="max-w-md mx-auto  p-6 bg-white border border-gray-300 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 mt-16">Create Product</h2>
-      <form onSubmit={handleSubmit}>
+
+    <div className="  p-10 bg-white border border-2 border-gray-300 rounded-lg shadow-md  mb-8">
+      <h2 className="text-2xl font-bold mb-4">Create Product</h2>
+      <form onSubmit={handleSubmit} className=''>
+        
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
             Product Name
@@ -165,7 +167,9 @@ const Createproduct = () => {
             required
           />
         </div>
-
+        
+    
+        
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="size">
             Size
@@ -207,6 +211,7 @@ const Createproduct = () => {
             required
           />
         </div>
+    
 
         
 

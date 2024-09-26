@@ -125,6 +125,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { getCategories} from '../api/apiServices'
+
 
 const settings = {
   className: "center",
@@ -217,6 +221,26 @@ function PrevArrow(props) {
 }
 
 function ShopbyCategory() {
+
+  const [categories, setCategories] = useState([]);
+  const [categoryName, setCategoryName] = useState('');
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getCategories(); // Fetch categories from backend
+        // console.log("Fetched Data",response)
+        setCategories(response.data); // Store fetched categories
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+
+
   return (
     <>
       <div className="flex flex-col justify-center items-center p-2 mt-10 w-full">
@@ -224,22 +248,24 @@ function ShopbyCategory() {
           <div className="flex text-3xl font-bold justify-center items-center">
             <h1>Explore By Categories</h1>
           </div>
-
+          {categories && (
           <Slider className="flex flex-row flex-wrap gap-6 justify-center w-full items-center p-4" {...settings}>
-            {products.map((e) => (
-              <Link to={'/Productlist/'} key={e.id}>
-                <div className='flex flex-col justify-center items-center mt-4 ml-8 w-40'>
+          {categories.map((category) => (
+              <Link to={'/Productlist/'} key={category._id}>
+                <div className='flex flex-col justify-center items-center mt-4 ml-8 w-40 '>
                    <img
-                    src={e.imgURL}
-                    size={60}
-                    className='border rounded-xl bg-gray-400 hover:scale-110 transition-transform duration-300'
-                    alt={e.category}
+                    // src={category.image}
+                    src={`http://192.168.20.7:4000/${category.image}`}
+                    // size={70}
+                    className='border rounded-xl bg-gray-400 hover:scale-110 transition-transform duration-300 object-cover h-48 w-48'
+                    alt={category.name}
                   />
-                  <div className='text-bold text-2xl mt-4'>{e.category}</div>
+                  <div className='text-bold text-2xl mt-4'>{category.name}</div>
                 </div>
               </Link>
             ))}
           </Slider>
+          )}
         </div>
       </div>
     </>

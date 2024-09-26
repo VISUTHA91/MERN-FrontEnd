@@ -57,13 +57,13 @@ export const getCategories = async () => {
 
 
 
-// fet all userlist(admin)
+// fetch all userlist(admin)
 export const getAllUser = async () => {
   try {
     const response = await axiosInstance.get(`${API_BASE_URL}admin/getAllUsers`); // Fetches categories from the backend
     return response.data; // Assuming the categories are in response.data
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error('Error fetching AllUserslist:', error);
     throw error;
   }
 };
@@ -103,3 +103,48 @@ export const getAllUser = async () => {
     throw error;
     }
   };
+
+
+// CategoryCreation
+  export const createCategory = async (formData) => {
+    const response = await axiosInstance.post(`${API_BASE_URL}admin/categoryCreate`, formData);
+    return response.data;
+  };
+
+  // Get all Products List
+  export const getProducts = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}getAllProducts`); // Fetches categories from the backend
+      return response.data; // Assuming the categories are in response.data
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      throw error;
+    }
+  };
+
+
+  // Delete Category
+  export const deleteCategory = async (id) => {
+    console.log(id)
+    try {
+      const response = await axiosInstance.post(`${API_BASE_URL}admin/deleteCategory`
+        ,{id});
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      throw error; // You can handle this error in your component
+    }
+  };
+
+
+// Update  or Edit Category
+export const editCategory = async ( id, formData) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}admin/updateCategory`, {id,formData});
+    return response.data;
+  } catch (error) {
+    console.error('Error updating category:', error);
+    throw error; // Handle the error in the component if needed
+  }
+};
+
