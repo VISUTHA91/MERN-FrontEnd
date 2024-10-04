@@ -18,12 +18,12 @@ import { MdReviews } from "react-icons/md";
 function Dashboard() {
 
 
-    const [currentPage, setCurrentPage] = useState('Maincontent');
-    const [isOpen, setIsOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('Maincontent');
+  const [isOpen, setIsOpen] = useState(false);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-      };
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   const renderPageContent = () => {
     switch (currentPage) {
@@ -36,39 +36,38 @@ function Dashboard() {
       case 'Create':
         return <Createproduct />;
       case 'Users':
-            return <Userlist />;
+        return <Userlist />;
       case 'Orders':
-            return <AdminOrders />;
+        return <AdminOrders />;
       default:
         return <h2>Page not found</h2>;
     }
   };
   return (
     <div className="flex ">
-        {/* Side Content */}
-            <div className="w-64">
-            <div className=" mt-20 w-64 h-full bg-fuchsia-900 p-8 text-xl">
-      {/* <nav className="p-4 group"> */}
-        <ul className="space-y-4">
-          <li>
-          <button
-              onClick={() => setCurrentPage('Maincontent')}
-              className="flex items-center text-gray-300 hover:text-black gap-2">
-            <TbLayoutDashboard />
-             Dashboard 
-            </button>
-          </li>
-          <li>
-            <button
-             onClick={() => setCurrentPage('Category')}
-              className="flex items-center text-gray-300 hover:text-black gap-2">
-              <GrProductHunt   />
-              Category 
-            </button>
-          </li>
+      {/* Side Content */}
+      <div className="w-58">
+        <div className=" mt-20 w-58 h-full bg-fuchsia-900 p-8 text-xl">
+          <ul className="space-y-4">
+            <li>
+              <button
+                onClick={() => setCurrentPage('Maincontent')}
+                className="flex items-center text-gray-300 hover:text-black gap-2">
+                <TbLayoutDashboard />
+                Dashboard
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setCurrentPage('Category')}
+                className="flex items-center text-gray-300 hover:text-black gap-2">
+                <GrProductHunt />
+                Category
+              </button>
+            </li>
 
 
-          {/* <li>
+            {/* <li>
             <div className="relative group">
             <button className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
                 onClick={toggleDropdown}>
@@ -100,79 +99,79 @@ function Dashboard() {
             </div>
           </li> */}
 
-          <li>
-            <div className="relative group">
-            <button className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
-                onClick={toggleDropdown}>
-              <GrProductHunt   />
-                Product
-            </button>
-              {isOpen && (
+            <li>
+              <div className="relative group">
+                <button className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
+                  onClick={toggleDropdown}>
+                  <GrProductHunt />
+                  Product
+                </button>
+                {isOpen && (
 
-              <div className=" group-hover:block absolute w-36 left-0 mt-2 bg-gray-700 rounded shadow-lg">
-                <ul className="space-y-2 py-2">
-                  <li>
-                    <button
-                      onClick={() => setCurrentPage('All')}
-                     className="flex items-center text-gray-300 hover:text-black gap-2">           
-                        <FaShoppingBasket className='mt-1' />
-                            All
-                        </button>
-                  </li>
-                  <li>
+                  <div className=" group-hover:block absolute w-36 left-0 mt-2 bg-gray-700 rounded shadow-lg">
+                    <ul className="space-y-2 py-2">
+                      <li>
                         <button
-                      onClick={() => setCurrentPage('Create')}
-                     className="flex items-center text-gray-300 hover:text-black gap-2">                                
-                    <GoPlus  className='mt-1' />
-                        Create
-                    </button>
-                  </li>
-                </ul>
+                          onClick={() => setCurrentPage('All')}
+                          className="flex items-center text-gray-300 hover:text-black gap-2">
+                          <FaShoppingBasket className='mt-1' />
+                          All
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => setCurrentPage('Create')}
+                          className="flex items-center text-gray-300 hover:text-black gap-2">
+                          <GoPlus className='mt-1' />
+                          Create
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
-              )}
-            </div>
-          </li>
+            </li>
 
-          <li>
-            <button
-               onClick={() => setCurrentPage('Orders')}
-              className="flex items-center text-gray-300 hover:text-white gap-2"
-            >
-              <FaFirstOrder />
-              Orders
-            </button>
-          </li>
+            <li>
+              <button
+                onClick={() => setCurrentPage('Orders')}
+                className="flex items-center text-gray-300 hover:text-white gap-2"
+              >
+                <FaFirstOrder />
+                Orders
+              </button>
+            </li>
 
-          <li>
-            <button
-             onClick={() => setCurrentPage('Users')}
-              className="flex items-center text-gray-300 hover:text-white gap-2"
-            >
-              <HiOutlineUserGroup />
-              Users
-            </button>
-          </li>
+            <li>
+              <button
+                onClick={() => setCurrentPage('Users')}
+                className="flex items-center text-gray-300 hover:text-white gap-2"
+              >
+                <HiOutlineUserGroup />
+                Users
+              </button>
+            </li>
 
-          <li>
-            <button
-             onClick={() => setCurrentPage('Reviews')}
-              className="flex items-center text-gray-300 hover:text-white gap-2"
-            >
-              <MdReviews />
-              Reviews
-            </button>
-          </li>
-        </ul>
-      {/* </nav> */}
-    </div>
-            </div>
-            {/* Main Content */}
-            <div className='mt-10 ml-16'>
+            <li>
+              <button
+                onClick={() => setCurrentPage('Reviews')}
+                className="flex items-center text-gray-300 hover:text-white gap-2"
+              >
+                <MdReviews />
+                Reviews
+              </button>
+            </li>
+          </ul>
+          {/* </nav> */}
+        </div>
+      </div>
+      {/* Main Content */}
+      <div className='mt-10 ml-16'>
         {renderPageContent()}
       </div>
 
-        </div>
-    );
+    </div>
+  );
 }
 
 export default Dashboard

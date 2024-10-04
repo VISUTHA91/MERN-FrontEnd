@@ -263,7 +263,7 @@ function Nav({ cartCount }) {
                   {link.name}
                 </button>
                 {isAboutDropdownOpen && (
-                  <ul className="absolute left-0 mt-2 py-2 w-48 rounded-md shadow-lg bg-white z-20">
+                  <ul className="absolute left-0 mt-2 py-2 w-48 rounded-md shadow-lg bg-white text-black z-20">
                     <li><Link to={'/product1'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 1</Link></li>
                     <li><Link to={'/product2'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 2</Link></li>
                     <li><Link to={'/product3'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 3</Link></li>
@@ -318,7 +318,11 @@ function Nav({ cartCount }) {
                     Dashboard
                     </Link>
                     ) : (
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                      <Link to={'/User/Profile'} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        Profile
+                        </Link>
+
+                    // {/* <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a> */}
                     )}
                   <a href="/" onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
                 </div>

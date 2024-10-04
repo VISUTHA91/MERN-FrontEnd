@@ -73,17 +73,22 @@ export const price =[
     {
         id:1,
         imgURL:priceblue,
-        category:"under ₹299"
+        category:"299"
     },
     {
         id:2,
         imgURL:priceblack,
-        category:"under ₹599"
+        category:"599"
     },
     {
         id:3,
         imgURL:pricewhite,
-        category:"above ₹600"
+        category:"799"
+    },
+    {
+        id:4,
+        imgURL:pricewhite,
+        category:"899"
     }
 ]
 

@@ -18,6 +18,10 @@ import ScrollToTop from './Components/ScrollToTop';
 import Dashboard from './Pages/Admin/Dashboard';
 import Userlist from './Pages/Admin/Userlist';
 import Createproduct from './Pages/Admin/Createproduct';
+import Maincontent from './Pages/Admin/Maincontent';
+import AdminLayout from './Layouts/AdminLayout';
+import Profile from './Pages/User/Profile';
+import AdminProductlist from './Pages/Admin/AdminProductlist';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -41,12 +45,24 @@ function App() {
       <Route path='/Signup' element={<Signup/>} />
       <Route path='/Cart' element={<Cart/>} />
       <Route path='/Support' element={<Support/>} />
-      <Route path='/Productlist' element={<Productlist/>} />
+      <Route path='/Productlist/:categoryName' element={<Productlist/>} />
+      <Route path='/User/Profile' element={<Profile />} />
       <Route path='/Productdetails/:id' element={<Productdetails  addToCart={addToCart}  />} />
-      <Route path='/Admin/Dashboard' element={<Dashboard />} />
+          </Route>
+
+
+          {/* Admin Layout */}
+        <Route element={<AdminLayout  />} >
+        <Route index element={<Dashboard />} />
+        <Route path='/Admin/Dashboard' element={<Dashboard />} />
       <Route path='/Admin/Userlist' element={<Userlist />} />
       <Route path='/Admin/Createproduct' element={<Createproduct />} />
-          </Route>
+      <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} />
+        </Route>
+
+
+
+
           </Routes>
         </BrowserRouter>
     </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL for your API
-const API_BASE_URL = "http://192.168.20.7:4000/";
+export const API_BASE_URL = "http://192.168.20.5:4000/";
 
 const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
@@ -69,6 +69,18 @@ export const getAllUser = async () => {
 };
 
 
+export const deleteUser = async (userId) => {
+  console.log(userId)
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}admin/deleteuser`
+      ,{userId});
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting UserDetails:', error);
+    throw error; // You can handle this error in your component
+  }
+};
+
 
 
 
@@ -105,13 +117,50 @@ export const getAllUser = async () => {
   };
 
 
+
+  // Product Edit
+  export const editProduct = async (id, productData) => {
+    try {
+      // Append 'id' to the productData
+      productData.append('id', id); // Include the ID in the formData
+  
+      // Send the POST request
+      const response = await axiosInstance.post(`${API_BASE_URL}admin/updateProduct`, productData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // This ensures image upload is handled correctly
+        },
+      });
+  
+      return response.data; // Return updated product data
+    } catch (error) {
+      console.error('Error updating product:', error);
+      throw error; // Re-throw the error to handle it in the component
+    }
+  };
+  
+  // Product Delete
+  export const deleteProduct = async (productId) => {
+    console.log(productId)
+    try {
+      const response = await axiosInstance.post(`${API_BASE_URL}admin/deleteproduct`
+        ,{productId});
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      throw error; // You can handle this error in your component
+    }
+  };
+
+
 // CategoryCreation
   export const createCategory = async (formData) => {
+    console.log(formData)
+
     const response = await axiosInstance.post(`${API_BASE_URL}admin/categoryCreate`, formData);
     return response.data;
   };
 
-  // Get all Products List
+  // Get all Products List For Admin
   export const getProducts = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}getAllProducts`); // Fetches categories from the backend
@@ -138,13 +187,86 @@ export const getAllUser = async () => {
 
 
 // Update  or Edit Category
-export const editCategory = async ( id, formData) => {
+
+export const editCategory = async (categoryId, formData) => {
   try {
-    const response = await axiosInstance.post(`${API_BASE_URL}admin/updateCategory`, {id,formData});
-    return response.data;
+    // Append categoryId to formData
+    formData.append('categoryId', categoryId);
+
+    const response = await axiosInstance.post(`${API_BASE_URL}admin/updateCategory`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // This ensures FormData is handled correctly
+      },
+    });
+
+    return response.data; // Return the response data
   } catch (error) {
     console.error('Error updating category:', error);
-    throw error; // Handle the error in the component if needed
+    throw error; // Rethrow the error to be handled in the component
   }
 };
 
+
+
+//  Get User Profile
+
+export const getUserProfile = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}admin/getAllUsers`);
+    return response;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+// Update or Edit User Profile
+export const updateUserProfile = async (updatedUser) => {
+  try {
+    const formData = new FormData();
+    formData.append('name', updatedUser.name);
+    formData.append('email', updatedUser.email);
+    formData.append('address', updatedUser.address);
+    if (updatedUser.profilePicture) {
+      formData.append('profilePicture', updatedUser.profilePicture);
+    }
+
+    const response = await axios.put(`${API_URL}/user/profile`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    throw error;
+  }
+};
+
+
+  //  User Side Product list by Category
+  export const getProductsByCategory = async (categoryName) => {
+    try {
+      const response = await axiosInstance.get(`${API_BASE_URL}productByCategory`, {
+        params: { category: categoryName }, // Pass categoryName as a query parameter
+      });
+      return response; // Return the response
+    } catch (error) {
+      console.error("Error fetching products by category:", error);
+      throw error; // Rethrow the error to be handled by the calling component
+    }
+  };
+
+
+// Product Detail get by Id
+  export const getProductsById = async (productId) => {
+    try {
+      const response = await axiosInstance.get(`${API_BASE_URL}getProductById`, {
+       params:{ productId} , // Pass categoryName as a query parameter
+      });
+      return response; // Return the response
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error; // Rethrow the error to be handled by the calling component
+    }
+  };

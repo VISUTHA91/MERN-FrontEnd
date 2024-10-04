@@ -67,11 +67,20 @@ function AdminCategory() {
     formData.append('name', categoryName);
     formData.append('images', images);
 
+
+
     try {
-      await createCategory(formData); // Call API to create category
+      await createCategory(formData); 
+      // Call API to create category
       setSuccessMessage('Category created successfully!');
       setCategoryName('');
       setImages(null);
+      setShowCreateForm(false);
+
+      // window.location.reload();
+      // fetchCategories();
+
+
     } catch (error) {
       console.error('Error creating category:', error);
       setErrorMessage('Failed to create category.');
@@ -107,46 +116,48 @@ const handleEdit = (category) => {
 // Submit the edited category
 const handleEditSubmit = async (event) => {
   event.preventDefault();
-  setErrorMessage(''); // Clear previous error messages
-  setSuccessMessage(''); // Clear previous success messages
+  
+  // Clear previous messages
+  setErrorMessage('');
+  setSuccessMessage('');
 
-  // Basic validation
+  // Basic validation for category name
   if (!categoryName) {
-    setErrorMessage('Please provide the category name.');
+    setErrorMessage('Category name is required.');
     return;
   }
 
-  const formData = new FormData();
-  formData.append('name', categoryName);
-  if (images) {
-    formData.append('images', images); // Append new image only if one is selected
-  }
-
   try {
-    // Log formData to see if it contains the right information
-    console.log("Form Data Submitted:", formData);
-    
-    await editCategory(editCategoryId, formData); // Call API to update category
-    
-    setSuccessMessage('Category updated successfully!'); // Show success message
-    setShowEditModal(false); // Close modal on success
-    setCategoryName(''); // Reset input field
-    setImages(null); // Reset image input
-    setCurrentImage(null); // Reset current image reference
+    // Prepare form data
+    const formData = new FormData();
+    formData.append('name', categoryName);
+    if (images) {
+      formData.append('images', images); // Append image if selected
+    }
 
-    // Re-fetch categories to reflect the update
-    const response = await getCategories();
-    setCategories(response.data); // Update categories state with new data
+    // Debug: Log form data key-value pairs
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    // Call API to update category
+    await editCategory(editCategoryId, formData);
+
+    // Success: Display message and reset inputs
+    setSuccessMessage('Category updated successfully!');
+    setShowEditModal(false); 
+    resetForm(); 
+    window.location.reload();
+
+    // Refresh categories list
+    const { data } = await getCategories();
+    setCategories(data); 
   } catch (error) {
     console.error('Error updating category:', error);
-    setErrorMessage('Failed to update category.'); // Show error message
+    const errorMsg = error.response?.data?.message || 'Failed to update category.';
+    setErrorMessage(errorMsg);
   }
 };
-
-
-
-
-
 
 
   return (
@@ -179,7 +190,7 @@ const handleEditSubmit = async (event) => {
               <td className="py-2 px-4 border-b">{category.name}</td>
               <td className="py-2 px-4 border-b">
               <img
-                    src={`http://192.168.20.7:4000/${category.image}`}
+                    src={`http://192.168.20.5:4000/${category.image}`}
                     alt={""}
                     height="50"
                     width="50"
@@ -213,8 +224,8 @@ const handleEditSubmit = async (event) => {
        {/* Show Edit From */}
 
 {showEditModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center ">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 mt-14">
               <h2 className="text-2xl mb-4">Edit Category</h2>
               {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
               {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
@@ -239,7 +250,7 @@ const handleEditSubmit = async (event) => {
                   </label>
                   {currentImage && (
                     <img
-                      src={`http://192.168.20.7:4000/${currentImage}`} // Display the current image for reference
+                      src={`http://192.168.20.5:4000/${currentImage}`} // Display the current image for reference
                       alt="Current"
                       className="mb-4"
                       height="100"
@@ -247,11 +258,6 @@ const handleEditSubmit = async (event) => {
                     />
                   )}
                 </div>
-
-
-
-
-
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="images">
                     Category Image (Optional)
@@ -270,7 +276,7 @@ const handleEditSubmit = async (event) => {
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   >
-                    Update Category
+                    Update
                   </button>
                   <button
                     type="button"

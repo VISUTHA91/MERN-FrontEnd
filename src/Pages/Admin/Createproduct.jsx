@@ -36,7 +36,7 @@ const Createproduct = () => {
 
   const handleChange = (e) => {
     const { name, value,files } = e.target;
-    console.log(`Changing ${name} to ${value}`);  // Log for debugging
+    // console.log(`Changing ${name} to ${value}`);  // Log for debugging
 
     if (name === 'images') {
         setProduct((prevData) => ({
@@ -51,10 +51,9 @@ const Createproduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted with product data:", product); // Debugging line
     try {
-      console.log("Submitting product data:", product);
-
-      const response = await createProduct(product);
+         const response = await createProduct(product);
       console.log("Product created successfully:", response);
     } catch (error){
       console.error("Error creating product:", error); // Log the whole error object
@@ -72,6 +71,38 @@ const Createproduct = () => {
     <div className="  p-10 bg-white border border-2 border-gray-300 rounded-lg shadow-md  mb-8">
       <h2 className="text-2xl font-bold mb-4">Create Product</h2>
       <form onSubmit={handleSubmit} className=''>
+      <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+            Category
+          </label>
+          <select
+            type="text"
+            name="category"
+            value={product.category}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          >
+             <option value="" disabled>Select a category</option>
+             {categories.length > 0 ? 
+             (
+            categories.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))):
+            (
+            <option disabled>Loading categories...</option>
+            )}
+          
+          </select>
+        </div>
+
+
+
+
+
+
         
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -99,32 +130,7 @@ const Createproduct = () => {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
-            Category
-          </label>
-          <select
-            type="text"
-            name="category"
-            value={product.category}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          >
-             <option value=" " disabled>Select a category</option>
-             {categories.length > 0 ? 
-             (
-            categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))):
-            (
-            <option disabled>Loading categories...</option>
-            )}
-          
-          </select>
-        </div>
+      
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender">
@@ -229,17 +235,11 @@ const Createproduct = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Create Product
-        </button>
-      </form>
-
-
 {/* Preview Images */}
-{product.images.length > 0 && (
+
+
+
+        {product.images.length > 0 && (
         <div className="mt-6">
           <h3 className="text-lg font-bold mb-2">Image Preview</h3>
           <div className="flex  space-x-4 overflow-auto">
@@ -255,6 +255,14 @@ const Createproduct = () => {
           </div>
         </div>
       )}
+
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-6 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Create Product
+        </button>
+      </form>
 
 
 

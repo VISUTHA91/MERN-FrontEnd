@@ -1,39 +1,86 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { totalproducts } from '../Constant';
+// import { totalproducts } from '../Constant';
 import Sizechart from '../Components/Sizechart';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getProductsById } from '../api/apiServices';
+import  { API_BASE_URL } from '../api/apiServices';
 
-
-
-
-
-
-
-
-
-function Productdetails() {
+function Productdetails({_id ,images, price}) {
   const navigate = useNavigate()
+  // const { name } = useParams();              // Get the name from params
+  const location = useLocation();
+  const productId = location.state?.productId;
 
-  const { id } = useParams();
+  // const { _id } = location.state || {};
   const [selectedColor, setSelectedColor] = useState('');
+  const [product, setProduct] = useState(null);
 
   const [selectedSize, setSelectedSize] = useState('');
 
-  const product = totalproducts.find((p) => p.id === Number(id));
+  // const product = totalproducts.find((p) => p.id === _id);
+  // const product = totalproducts.find((p) => p.id === productId);
 
-  const [activeImage, setActiveImage] = useState(product.imgURL[0]);
+  const [activeImage, setActiveImage] = useState(images?.[0] || ''); // Default to the first image or an empty string
+  // const [activeImage, setActiveImage] = useState(images);
+  // const [activeImage, setActiveImage] = useState({`http://192.168.20.5:4000/${images[0]}`});
   const [qty, setQty] = useState(1);
+  const [loading, setLoading] = useState(true); // Loading state for API call
+  const [error, setError] = useState(null);
 
 
+  // useEffect(() => {
+  //   if (productId) {
+  //     const fetchedProduct = totalproducts.find((p) => p.id === productId);
+  //     if (fetchedProduct) {
+  //       setProduct(fetchedProduct);
+  //       // setActiveImage(fetchedProduct.images[0]); // Set default active image
+  //       setActiveImage(`${baseUrl}${fetchedProduct.images[0]}`);      }
+  //   }
+  // }, [productId]);
+
+  useEffect(() => {
+    if (product) {
+      // Set the first image in the array as the default active image
+      setActiveImage(`${API_BASE_URL}${product.images[0]}`);
+    }
+  }, [product]);
 
 
+  useEffect(() => {
+    if (productId) {
+      setLoading(true);
+      getProductsById(productId)
+        .then((response) => {
+          const fetchedProduct = response.data;
+          console.log(fetchedProduct);  
+          setProduct(fetchedProduct.product);
+          // setActiveImage(fetchedProduct.product.images[0] ); // Set default active image
+          // setActiveImage(`${API_BASE_URL}${product.images[0]}`);
 
-  const handleMouseEnterProduct = (imageURL) => {
-    setActiveImage(imageURL)
-  }
+        })
+        .catch((err) => {
+          console.error('Error fetching product details:', err);
+          setError('Failed to fetch product details');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [productId]);
+
+
+  // const handleMouseEnterProduct = (images) => {
+  //   setActiveImage(images)
+  // }
+
+  const handleMouseEnterProduct = (image) => {
+    setActiveImage(`${API_BASE_URL}${image}`); // Update the state with the hovered image URL
+  };
   const handleColorChange = (colorName) => {
     setSelectedColor(colorName);
   };
@@ -68,6 +115,15 @@ function Productdetails() {
     }
   }
 
+  if (loading) {
+    return <div>Loading product details...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+
   return (
     // <div className='lg:flex lg:flex-row sm:flex sm:flex-col '>
 
@@ -81,7 +137,13 @@ function Productdetails() {
 
           {/* <div className='w-96'> */}
           <img
-            src={activeImage} size='96'
+            // src={`${API_BASE_URL}${product.images[0]}`}
+            src={activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`}
+
+
+            // src={activeImage}
+            // src={`${images[0]}`}
+            size='96'
             // width={480}
             // height={480} 
             alt='image'></img>
@@ -92,17 +154,22 @@ function Productdetails() {
 
             {/* <div className='flex gap-2'> */}
             {
-              product.imgURL.map((imageURL, index, id) => (
+             product.images && product.images.map((image, index, _id) => (
                 <div key={index} className="w-16 h-16 sm:w-20 sm:h-20">
                   <img
-                    src={imageURL}
+                    // src={images}
+                    // src={`${API_BASE_URL}${images}`}
+                    src={`${API_BASE_URL}${image}`}
+
                     alt={`product image ${index}`}
                     width={80}
                     height={80}
                     // className='hover:border border-black rounded-xl cursor-pointer max-sm:flex-1 border'
                     // onClick={() => handleMouseEnterProduct(imageURL)}
-                    className={` border-black rounded-xl cursor-pointer max-sm:flex-1 border${activeImage === imageURL ? ' ring-1 ring-purple-900' : ' border border-1'
-                      }`} onClick={() => handleMouseEnterProduct(imageURL)}
+                    className={`border-black rounded-xl cursor-pointer max-sm:flex-1 border
+                      ${activeImage ===  `${API_BASE_URL}${image}` ? 'ring-1 ring-purple-900' : 'border border-1'}`}
+                      //  onClick={() => handleMouseEnterProduct(images)}
+                       onMouseEnter={() => handleMouseEnterProduct(image)}
                   />
                 </div>
               ))}
@@ -118,12 +185,13 @@ function Productdetails() {
       <div className=' mt-32 pl-8 lg:flex-col'>
         <div className='flex flex-col gap-4  mr-4'>
           <div className='text-3xl'>{product.name}</div>
-          <div className='text-3xl'> ₹{product.saleprice} </div>
+          <div className='text-3xl'> ₹{product.price} </div>
           <div className=' flex flex-row text-2xl gap-4 '>
             <div className='line-through'>
-              MRP.₹ {product.originalprice}
+              {/* MRP.₹ {product.originalprice} */}
+              MRP.₹ {product.price}
             </div>
-            <div className=' text-2xl text-green-400'>({product.offer}% OFF) </div>
+            {/* <div className=' text-2xl text-green-400'>({product.offer}% OFF) </div> */}
           </div>
           <div className='text-l'>Price Inclusive all Taxes</div>
         </div>

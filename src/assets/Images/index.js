@@ -25,6 +25,7 @@ import frontneck from './frontneck.jpg'
 import frontfull from './frontfull.jpg'
 import frontmiddle from './frontfull.jpg'
 import aboutstore from './aboutstore.jpg'
+import bgimage from './bgimage.jpg'
 
 
 
@@ -56,4 +57,5 @@ export {
     frontmiddle,
     frontneck,
     aboutstore,
+    bgimage,
 }

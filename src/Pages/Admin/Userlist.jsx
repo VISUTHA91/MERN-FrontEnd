@@ -31,11 +31,9 @@ const deleteuser = async (userId) => {
   setIsDeleting(true);
   try {
     await deleteuser(userId); // Call API to delete user
-    alert('User deleted successfully!');
     fetchuserlist(); // Refetch the user list after successful deletion
   } catch (error) {
     console.error('Error deleting user:', error);
-    alert('Failed to delete user');
   } finally {
     setIsDeleting(false);
   }
