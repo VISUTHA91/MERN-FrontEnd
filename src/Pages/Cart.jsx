@@ -132,8 +132,30 @@ const initialCartItems = [
   },
 ];
 
+
+
+
+
+
+
 function Cart() {
   const [cartItems, setCartItems] = useState(initialCartItems);
+
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const data = await getCartItems(); // Call the API service to get cart items
+        setCartItems(data); // Assuming the API returns an array of cart items
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCartItems();
+  }, []);
 
   // Handle increase quantity
   const increaseQuantity = (id) => {
@@ -167,6 +189,7 @@ function Cart() {
       0
     );
   };
+
 
   return (
     <div className='p-8 pt-28'>

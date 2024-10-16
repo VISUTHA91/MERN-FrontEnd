@@ -13,6 +13,7 @@ import { GoPlus } from "react-icons/go";
 import { GrProductHunt } from "react-icons/gr";
 import { FaFirstOrder } from "react-icons/fa";
 import { MdReviews } from "react-icons/md";
+import VendorList from './VendorList';
 // import { useState } from 'react';
 
 function Dashboard() {
@@ -39,6 +40,8 @@ function Dashboard() {
         return <Userlist />;
       case 'Orders':
         return <AdminOrders />;
+        case 'Vendors':
+          return <VendorList />;
       default:
         return <h2>Page not found</h2>;
     }
@@ -139,6 +142,17 @@ function Dashboard() {
               >
                 <FaFirstOrder />
                 Orders
+              </button>
+            </li>
+
+            
+            <li>
+              <button
+                onClick={() => setCurrentPage('Vendors')}
+                className="flex items-center text-gray-300 hover:text-white gap-2"
+              >
+                <HiOutlineUserGroup />
+                Vendors
               </button>
             </li>
 

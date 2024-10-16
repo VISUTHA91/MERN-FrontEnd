@@ -1,14 +1,12 @@
 
 import { BrowserRouter, Route,Routes } from 'react-router-dom';
 import RootLayout from './Layouts/RootLayout';
-// import { RouterProvider } from 'react-router';
 import Nav from './Components/Nav'
 import Home from './Pages/Home';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Signin from './Pages/Signin';
 import Cart from './Pages/Cart';
-// import CrewneckProducts from './Pages/CrewneckProducts';
 import Signup from './Pages/Signup';
 import Productlist from './Pages/Productlist';
 import Productdetails from './Pages/Productdetails';
@@ -21,7 +19,16 @@ import Createproduct from './Pages/Admin/Createproduct';
 import Maincontent from './Pages/Admin/Maincontent';
 import AdminLayout from './Layouts/AdminLayout';
 import Profile from './Pages/User/Profile';
+import ProfilePage from './Pages/User/ProfilePage';
 import AdminProductlist from './Pages/Admin/AdminProductlist';
+import VendorSignup from './Pages/Vendor/VendorSignup';
+import VendorLogin from './Pages/Vendor/VendorLogin';
+import VendorDashboard from './Pages/Vendor/VendorDashboard';
+import VendorMainContent from './Pages/Vendor/VendorMainContent';
+import VendorList from './Pages/Admin/VendorList';
+import VendorDetails from './Pages/Vendor/VendorDetails';
+import VendorProductCreation from './Pages/Vendor/VendorProductCreation';
+
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -46,7 +53,8 @@ function App() {
       <Route path='/Cart' element={<Cart/>} />
       <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />
-      <Route path='/User/Profile' element={<Profile />} />
+      <Route path='/User/ProfilePage/' element={<ProfilePage />} />
+      <Route path='/User/Profile/' element={<Profile />} />
       <Route path='/Productdetails/:id' element={<Productdetails  addToCart={addToCart}  />} />
           </Route>
 
@@ -56,9 +64,24 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path='/Admin/Dashboard' element={<Dashboard />} />
       <Route path='/Admin/Userlist' element={<Userlist />} />
+      <Route path='/Admin/VendorList' element={<VendorList />} />
+      <Route path='/Admin/VendorDetails/:id' element={<VendorDetails />} />
       <Route path='/Admin/Createproduct' element={<Createproduct />} />
       <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} />
         </Route>
+
+{/* Vendor Layout */}
+        {/* <Route element={<VendorSignup />} > */}
+        {/* <Route index element={<VendorSignup />} /> */}
+        <Route path='/Vendor/VendorSignup' element={<VendorSignup />} />
+        <Route path='/Vendor/VendorLogin' element={<VendorLogin />} />
+        <Route path='/Vendor/VendorDashboard' element={<VendorDashboard />} />
+        <Route path='/Vendor/VendorMainContent' element={<VendorMainContent />} />
+        <Route path='/Vendor/VendorProductCreation' element={<VendorProductCreation />} />
+      {/* <Route path='/Admin/Userlist' element={<Userlist />} /> */}
+      {/* <Route path='/Admin/Createproduct' element={<Createproduct />} /> */}
+      {/* <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} /> */}
+        {/* </Route> */}
 
 
 

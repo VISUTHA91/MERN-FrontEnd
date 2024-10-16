@@ -138,7 +138,7 @@ function ShopbyCategory() {
                 <div className='flex flex-col justify-center items-center mt-4 ml-8 w-40 '>
                    <img
                     // src={category.image}
-                    src={`http://192.168.20.5:4000/${category.image}`}
+                    src={`http://192.168.20.5:3000/${category.image}`}
                     // size={70}
                     className='border rounded-xl bg-gray-400 hover:scale-110 transition-transform duration-300 object-cover h-48 w-48'
                     alt={category.name}

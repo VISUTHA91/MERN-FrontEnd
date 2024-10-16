@@ -51,7 +51,6 @@ function AdminCategory() {
 
 
   // Category Creation
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrorMessage('');
@@ -66,8 +65,7 @@ function AdminCategory() {
     const formData = new FormData();
     formData.append('name', categoryName);
     formData.append('images', images);
-
-
+    console.log(".........",formData)
 
     try {
       await createCategory(formData); 
@@ -190,7 +188,7 @@ const handleEditSubmit = async (event) => {
               <td className="py-2 px-4 border-b">{category.name}</td>
               <td className="py-2 px-4 border-b">
               <img
-                    src={`http://192.168.20.5:4000/${category.image}`}
+                    src={`http://192.168.20.5:3000/${category.image}`}
                     alt={""}
                     height="50"
                     width="50"
@@ -250,7 +248,7 @@ const handleEditSubmit = async (event) => {
                   </label>
                   {currentImage && (
                     <img
-                      src={`http://192.168.20.5:4000/${currentImage}`} // Display the current image for reference
+                      src={`http://192.168.20.5:3000/${currentImage}`} // Display the current image for reference
                       alt="Current"
                       className="mb-4"
                       height="100"

@@ -191,7 +191,7 @@ const handleDelete = async (productId) => {
 
                     <img
                     key={index}
-                      src={`http://192.168.20.5:4000/${image}`}
+                      src={`http://192.168.20.5:3000/${image}`}
                       alt={`Product Image ${index + 1}`}
                       height="25"
                       width="30"

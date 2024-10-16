@@ -142,6 +142,12 @@ const Footer = () => {
             Contact Us
           </Link>
         </li>
+        <li className="mb-2">
+          {/* <Link to={'/Vendor/VendorDashboard'} className="hover:underline"> */}
+          <Link to={'/Vendor/VendorLogin'} className="hover:underline">
+            Vendor
+          </Link>
+        </li>
       </ul>
     </div>
 

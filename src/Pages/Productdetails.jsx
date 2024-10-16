@@ -27,7 +27,7 @@ function Productdetails({_id ,images, price}) {
 
   const [activeImage, setActiveImage] = useState(images?.[0] || ''); // Default to the first image or an empty string
   // const [activeImage, setActiveImage] = useState(images);
-  // const [activeImage, setActiveImage] = useState({`http://192.168.20.5:4000/${images[0]}`});
+  // const [activeImage, setActiveImage] = useState({`http://192.168.20.5:3000/${images[0]}`});
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(true); // Loading state for API call
   const [error, setError] = useState(null);
@@ -93,8 +93,10 @@ function Productdetails({_id ,images, price}) {
   };
 
   function addToCart() {
-    console.log(sessionStorage.getItem("isUserLogged"))
-    if (sessionStorage.getItem("isUserLogged")) {
+    const userData = JSON.parse(localStorage.getItem("userData")); 
+    console.log(".................",userData)
+
+    if (userData) {
       const productWithqty = { ...product, qty };
 
       if (localStorage.getItem("cart-items") != null) {
@@ -108,12 +110,21 @@ function Productdetails({_id ,images, price}) {
 
       // toast.success("Cart Item added succesfully!")
       alert("Cart Item added succesfully!")
-      // navigate("/Cart")
+      navigate("/Cart")
     } else {
       alert("You must login to add products to the cart!")
       navigate("/Signup")
     }
   }
+
+
+  const buyNow = () => {
+    const addedToCart = addToCart();
+    if (addedToCart) {
+      // After adding to cart, redirect to the cart page
+      navigate('/Cart');
+    }
+  };
 
   if (loading) {
     return <div>Loading product details...</div>;
@@ -261,7 +272,7 @@ function Productdetails({_id ,images, price}) {
               🛒 Add To Cart
           </button>
           <button
-            onClick={() => addToCart()}
+            onClick={() => buyNow()}
             className=" border border-black border-2 rounded-lg hover:bg-red-600 hover:text-white transition lg:w-36 p-2">
             Buy Now
           </button>

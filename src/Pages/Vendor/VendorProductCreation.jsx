@@ -1,0 +1,416 @@
+import React, { useState } from 'react';
+import { createProduct, getCategories } from '../../api/apiServices';
+import { useEffect } from 'react';
+
+const VendorProductCreation = () => {
+    const [product, setProduct] = useState({
+        name: '',
+        color: '',
+        // variants: [{ size: "", stock: "" }],
+        gender: '',
+        category: '',
+        MRP: '',
+        offer_percentage:'',
+        // product_details: [{ sleeve_details: '', pattern_type: '', material_type: '', fit_type: '' }],
+        description: '',
+        // stock_quantity: '',
+        images: [],
+    });
+
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await getCategories(); // Fetch categories from backend
+                // console.log("Fetched Data",response)
+                setCategories(response.data); // Store fetched categories
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+        fetchCategories();
+    }, []);
+
+
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
+
+        if (name === 'images') {
+            setProduct((prevData) => ({
+                ...prevData,
+                images: [...prevData.images, ...Array.from(files)]  // Append new images
+            }));
+        }
+        // else if (name in product.product_details[0]) {
+        //     // Update product_details array
+        //     setProduct((prevData) => ({
+        //         ...prevData,
+        //         product_details: [{ ...prevData.product_details[0], [name]: value }]
+        //     }));
+        // }
+         else {
+            setProduct({ ...product, [name]: value });
+        }
+    };
+    const handleColorChange = (e) => {
+        setProduct({ ...product, color: e.target.value });
+    };
+
+    // Handle size and quantity changes
+    const handleSizeChange = (index, e) => {
+        const { name, value } = e.target;
+        const updatedSizes = [...product.variants];
+        updatedSizes[index] = { ...updatedSizes[index], [name]: value };
+        setProduct({ ...product, variants: updatedSizes });
+    };
+
+    // Add new size field
+    const addSizeField = () => {
+        setProduct({
+            ...product,
+            variants: [...product.variants, { size: "", stock: "" }],
+        });
+    };
+
+    // Remove size field
+    const removeSizeField = (index) => {
+        const updatedSizes = product.variants.filter((_, i) => i !== index);
+        setProduct({ ...product, variants: updatedSizes });
+    };
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("Before Append",product)
+    const formData = new FormData();
+    formData.append('name', product.name);
+    formData.append('color', product.color);
+    formData.append('gender', product.gender);
+    formData.append('category', product.category);
+    formData.append('MRP', product.MRP);
+    formData.append('offer_percentage', product.offer_percentage);
+    formData.append('description', product.description);
+
+    // Append images (this is key for sending files)
+    product.images.forEach((image, index) => {
+        formData.append(`images`, image); // Add images one by one
+    });
+    console.log("Product created successfully:", formData);
+    for (let [key, value] of formData.entries()) {
+        console.log(`.............,${key}:`, value);
+    }
+        try {
+            await createProduct(formData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',  // Set the correct content type
+                    },
+                }
+            );
+        } catch (error) {
+            console.error("Error creating product:", error); // Log the whole error object
+            if (error.response) {
+                console.error("Response data:", error.response.data);
+                console.error("Response status:", error.response.status);
+                console.error("Response headers:", error.response.headers);
+            } else {
+                console.error("Error message:", error.message); // Log error message if no response
+            }
+        }
+    };   
+    return (
+        <div className=" w-full p-12 bg-white border border-2 border-gray-300 rounded-lg shadow-md mb-8 ml-20">
+            <h2 className=" w-full text-2xl font-bold mb-4">Create Product</h2>
+            <form onSubmit={handleSubmit} className='w-full'>
+                <div className='lg:flex-col flex-col gap-2'>
+                    {/* Left Side Content */}
+                    <div className='bg-gray-00 w-full'>
+                        <div className="mb-4 ">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+                                Category
+                            </label>
+                            <select
+                                type="text"
+                                name="category"
+                                value={product.category}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                                <option value="" disabled>Select a category</option>
+                                {categories.length > 0 ?
+                                    (
+                                        categories.map((category) => (
+                                            <option key={category._id} value={category._id}>
+                                                {category.name}
+                                            </option>
+                                        ))) :
+                                    (
+                                        <option disabled>Loading categories...</option>
+                                    )}
+
+                            </select>
+                        </div>
+
+                        {/* Product Name */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                                Product Name
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={product.name}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+
+                        {/* Gender */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender">
+                                Gender
+                            </label>
+                            <input
+                                type="text"
+                                name="gender"
+                                value={product.gender}
+                                onChange={handleChange}
+                                className="shadow appearance-none border  w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+                                    {/* Color */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Color
+                            </label>
+                            <input
+                                type="text"
+                                name="color"
+                                placeholder="Enter Color"
+                                value={product.color}
+                                onChange={handleColorChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+
+                        {/* Sizes and Quantities */}
+                        {/* <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Sizes and Quantities
+                            </label>
+                            {product.variants.map((sizeField, index) => (
+                                <div key={index} className="mb-2 flex gap-2">
+                    
+                                    <div className="mb-2">
+                                        <label
+                                            className="block text-gray-700 text-sm font-bold mb-2"
+                                            htmlFor={`size-${index}`}>
+                                            Size
+                                        </label>
+                                        <select
+                                            name="size"
+                                            value={sizeField.size || ""}
+                                            onChange={(e) => handleSizeChange(index, e)}
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            <option value="">Select Size</option>
+                                            <option value="XS">XS</option>
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                        </select>
+                                    </div>
+
+                                
+                                    <div className="mb-2">
+                                        <label
+                                            className="block text-gray-700 text-sm font-bold mb-2"
+                                            htmlFor={`stock-${index}`}>
+                                            Quantity
+                                        </label>
+                                        <input
+                                            type="number"
+                                            name="stock"
+                                            placeholder="Enter Quantity"
+                                            value={sizeField.stock}
+                                            onChange={(e) => handleSizeChange(index, e)}
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            
+                                        />
+                                    </div>
+
+                                
+                                    {product. variants.length > 1 && (
+                                        <button
+                                            type="button"
+                                            onClick={() => removeSizeField(index)}
+                                            className="bg-red-500 text-white h-9 mt-7 px-2 rounded hover:bg-red-700"
+                                        >
+                                            Remove Size
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+
+                    
+                            <button
+                                type="button"
+                                onClick={addSizeField}
+                                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
+                                Add Size
+                            </button>
+                        </div> */}
+
+
+                        {/* Description */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                                Description
+                            </label>
+                            <textarea
+                                name="description"
+                                value={product.description}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                rows="4"
+                                // required
+                            />
+                        </div>
+                    </div>
+                    {/* Right Side Content */}
+                    <div className='bg-gray-00 w-full'>
+                        {/* Matirial Type */}
+                        {/* <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="material_type">
+                                Material Type
+                            </label>
+                            <input
+                                type="text"
+                                name="material_type"
+                                value={product.product_details[0].material_type}                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                // required
+                                 />
+                        </div> */}
+                        {/* Fit Type */}
+                        {/* <div className="mb-4">
+                            <label className="block  text-gray-700 text-sm font-bold mb-2" htmlFor="fit_type">
+                                FitType
+                            </label>
+                            <input
+                                type="text"
+                                name="fit_type"
+                                value={product.product_details[0].fit_type}                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                // required
+                            />
+                        </div> */}
+
+                        {/* Sleeve Type */}
+                        {/* <div className="mb-4">
+                            <label className="block  text-gray-700 text-sm font-bold mb-2" htmlFor="sleeve_details">
+                                SleeveType
+                            </label>
+                            <input
+                                type="text"
+                                name="sleeve_details"
+                                value={product.product_details[0].sleeve_details}                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                // required
+                            />
+                        </div> */}
+
+                        {/* Pattern Type */}
+                        {/* <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="pattern_type">
+                                PatternType
+                            </label>
+                            <input
+                                type="text"
+                                name="pattern_type"
+                                value={product.product_details[0].pattern_type} 
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                // required
+                            />
+                        </div> */}
+
+                        {/* Original Price */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="MRP">
+                                MRP.Price
+                            </label>
+                            <input
+                                type="number"
+                                name="MRP"
+                                value={product.MRP}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                // required
+                            />
+                        </div>
+
+                        {/* Offer %  */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="offer_percentage">
+                                Offer Percentage
+                            </label>
+                            <input
+                                type="number"
+                                name="offer_percentage"
+                                value={product.offer_percentage}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Images */}
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="images">
+                        Image
+                    </label>
+                    <input
+                        type="file"
+                        name="images"
+                        accept="images/*"
+                        onChange={handleChange}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required
+                    />
+                </div>
+
+                {/* Preview Images */}
+                { product.images.length > 0 && (
+                    <div className="mt-6">
+                        <h3 className="text-lg font-bold mb-2">Image Preview</h3>
+                        <div className="flex  space-x-4 overflow-auto">
+
+                            {product.images.map((image, index) => (
+                                <img
+                                    key={index}
+                                    src={URL.createObjectURL(image)}
+                                    alt={`Preview ${index + 1}`}
+                                    className="w-32 h-32 object-cover rounded-lg"
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                <button
+                    type="submit"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-6 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Create Product
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default VendorProductCreation;

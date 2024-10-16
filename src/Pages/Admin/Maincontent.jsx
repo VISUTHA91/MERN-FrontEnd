@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import AdminProductlist from './AdminProductlist'
-// import AdminOrders from './AdminOrders'
+
 
 function Maincontent() {
   return (

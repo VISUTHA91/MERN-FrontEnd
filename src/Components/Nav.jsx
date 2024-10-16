@@ -1,130 +1,3 @@
-// import React, { useState, useRef, useEffect } from 'react';
-// import { RxHamburgerMenu } from "react-icons/rx";
-// import { IoMdClose } from "react-icons/io";
-// import { BsFillHandbagFill } from "react-icons/bs";
-// import { FaUserAlt } from "react-icons/fa";
-// import { IoIosSearch } from "react-icons/io";
-
-
-
-
-// function Nav() {
-//   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
-//   const aboutDropdownRef = useRef(null);
-//   const [open, setOpen] = useState(false);
-
-
-//   const Links = [
-//     { name: "HOME", link: "/Home" },
-//     // { name: "ABOUT", link: "/About" },
-//     { name: "PRODUCTS", link: "/Product" },
-//     { name: "CONTACT", link: "/Contact" },
-//   ];
-
-//   // Function to handle outside click
-//   useEffect(() => {
-//     function handleClickOutside(event) {
-//       if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target)) {
-//         setIsAboutDropdownOpen(false);
-//       }
-//     }
-
-//     document.addEventListener('mousedown', handleClickOutside);
-//     return () => {
-//       document.removeEventListener('mousedown', handleClickOutside);
-//     };
-//   }, [aboutDropdownRef]);
-
-//   return (
-//     <nav className=" p-4  w-full flex fixed justify-between border border-b-2 shadow-cyan-500/50">
-//         <div onClick={()=>setOpen(!open)} className='absolute right-1 top-7 cursor-pointer md:hidden w-7 h-7'>
-//                 {
-//                     open ? <IoMdClose size={28} /> : <RxHamburgerMenu size={28} />
-
-//                 }
-//             </div>
-//        <div className='font-bold text-2xl cursor-pointer ml-6 flex items-center gap-1'>
-//           <p>ABC</p>
-//       </div>
-//       <ul className={`md:flex md:items-center md:pb-0 pb-12 gap-10 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-16 p-4 ml-2 leading-loose w-36' : 'top-[-490px]'}`} > 
-      
-//       {/* className="flex justify-between items-center text-white"> */}
-//         {Links.map((link) => (
-//           <li key={link.name} className="relative ml-4 font-semibold ">
-//             {link.name === "PRODUCTS" ? (
-//               <>
-//                 <button
-//                    onMouseOver={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
-//                   className=" hover:text-blue-400 duration-500"
-//                   ref={aboutDropdownRef}
-//                 >
-//                   {link.name}
-//                 </button>
-//                 {isAboutDropdownOpen && (
-//                   <ul className="absolute left-0 mt-6 py-2 w-48 rounded-md shadow-lg z-20">
-//                     <li>
-//                       <a
-//                         href="/about-us"
-//                         className="block px-4 py-2  hover:bg-blue-400 hover:text-white duration-300"
-//                       >
-//                         Product 1
-//                       </a>
-//                     </li>
-//                     <li>
-//                       <a
-//                         href="/team"
-//                         className="block px-4 py-2  hover:bg-blue-400 hover:text-white duration-300"
-//                       >
-//                         Product 2
-//                       </a>
-//                     </li>
-//                     <li>
-//                       <a
-//                         href="/careers"
-//                         className="block px-4 py-2  hover:bg-blue-400 hover:text-white duration-300"
-//                       >
-//                         Product 3
-//                       </a>
-//                     </li>
-//                   </ul>
-//                 )}
-//               </>
-//             ) : (
-//               <a href={link.link} className="hover:text-blue-500 duration-500 ">
-                
-//                 {link.name}
-//               </a>
-              
-//             )}
-//           </li>
-          
-//         ))}
-//       </ul>
-
-//       <div className='flex  justify-between gap-48 mr-6 mt-2'>
-//       {/* <div class="flex flex-1 items-center justify-center p-2"> */}
-//     <div className="w-full flex max-w-64 mt-0 focus:border-blue-500 ">
-//         <div className=" sm:mt-10">
-//             <input id="q" name="q" className="inline w-80  border rounded-xl bg-white py-2 pl-1 pr-3 placeholder-gray-500    sm:text-sm" placeholder="Search Products" type="text"   />
-//             <button type="submit" class="mt-3 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
-//             sm:mt-10 sm:ml-3 sm:w-auto sm:text-sm">Search</button>
-//             </div>
-//             {/* <IoIosSearch size={28} className='mr-2 cursor-pointer' onClick={""}  /> */}
-//     </div>
-//     <div className='flex gap-4'>
-//     <a  href='Cart'><BsFillHandbagFill size={28} className='cursor-pointer'/></a>
-//       <a href='Signin'><FaUserAlt size={28} className='cursor-pointer'  /></a>
-//       </div>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default Nav;
-
-
-
-
 
 import React, { useState, useRef, useEffect } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -134,6 +7,9 @@ import { FaUserAlt } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
+import { getUserProfile } from '../api/apiServices';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Nav({ cartCount }) {
@@ -145,6 +21,8 @@ function Nav({ cartCount }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
 
   const Links = [
     { name: "HOME", link: "/Home" },
@@ -152,6 +30,7 @@ function Nav({ cartCount }) {
     { name: "CONTACT", link: "/Contact" },
   ];
 
+  const userDropdownRef = useRef(null);
   useEffect(() => {
     function handleClickOutside(event) {
       if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target)) {
@@ -163,7 +42,7 @@ function Nav({ cartCount }) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [aboutDropdownRef]);
+  }, [userDropdownRef]);
 
   // Handle scroll event to change navbar background color
   useEffect(() => {
@@ -185,30 +64,11 @@ function Nav({ cartCount }) {
     };
   }, []);
 
-  // For Login
-
-  // useEffect(() => {
-  //   // Check if the user is authenticated (e.g., token exists in localStorage)
-  //   const token = localStorage.getItem("authToken");
-  //   if (token) {
-  //     // Example: Set user data, assuming you stored it earlier (like after login)
-  //     const userData = { name: "John Doe" }; // Retrieve actual user data
-  //     setUser(userData);
-  //     setIsAuthenticated(true);
-  //   }
-  // }, []);
-
-
+  const token = localStorage.getItem("authToken");
+  const userData = JSON.parse(localStorage.getItem("userData")); 
 
   useEffect(() => {
-    // Check if the user is authenticated (e.g., token exists in localStorage)
-    const token = localStorage.getItem("authToken");
-    const userData = JSON.parse(localStorage.getItem("userData")); // Retrieve the user data (e.g., name)
-    // console.log(localStorage.getItem("userData")); // Should return the user object with the name
-
     if (token && userData) {
-      console.log("User Data:", userData);  // Check if user data is retrieved
-
       setUser(userData);  // Set the user data with the real name
       setIsAuthenticated(true);
     }
@@ -216,7 +76,9 @@ function Nav({ cartCount }) {
 
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    // setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen(prev => !prev);
+
   };
 
   const handleLogout = () => {
@@ -225,16 +87,38 @@ function Nav({ cartCount }) {
     setIsAuthenticated(false);
     setUser(null);
     alert('Logged Out');
-        // navigate("/")
+        navigate("/")
         window.location.reload();
   };
+  // const handleClick = () => {
+  //   getUserProfile(user.id)
+  //       .then((response) => {
+  //         // setUser(response.data); 
+  //         console.log(response) // Assuming the user data is in response.data
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching user profile:", error);
+  //       });
+  // }
+
+  // const handleClick = async (e) => {
+  //   e.preventDefault(); // Prevent immediate navigation
+    
+  //   try {
+  //     const response = await getUserProfile(user.id);
+  //     console.log(response); // Handle the response
+  //     // Navigate to the profile page after fetching data
+  //     navigate(`/User/Profile/${user.name}`);
+  //   } catch (error) {
+  //     console.error("Error fetching user profile:", error);
+  //   }
+  // };
 
 
-
-
-
-
-
+  const handleOptionSelect = (option) => {
+    console.log(option); // Example action for selecting an option
+    setIsDropdownOpen(false); // Close the dropdown
+  };
 
 
   return (
@@ -256,14 +140,15 @@ function Nav({ cartCount }) {
             {link.name === "PRODUCTS" ? (
               <>
                 <button
-                  onMouseOver={() => setIsAboutDropdownOpen(true)}
-                  onMouseOut={() => setIsAboutDropdownOpen(false)}
+                  // onMouseOver={() => setIsAboutDropdownOpen(true)}
+                  // onMouseOut={() => setIsAboutDropdownOpen(false)}
+                  onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
                   className="hover:text-blue-400 duration-500"
                 >
                   {link.name}
                 </button>
                 {isAboutDropdownOpen && (
-                  <ul className="absolute left-0 mt-2 py-2 w-48 rounded-md shadow-lg bg-white text-black z-20">
+                  <ul className="absolute left-0  py-2 w-48 rounded-md shadow-lg bg-white text-black z-20">
                     <li><Link to={'/product1'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 1</Link></li>
                     <li><Link to={'/product2'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 2</Link></li>
                     <li><Link to={'/product3'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 3</Link></li>
@@ -306,8 +191,9 @@ function Nav({ cartCount }) {
 
           {/* User Dropdown */}
           {isAuthenticated ? (
-            <div className="relative">
-              <button onClick={toggleDropdown} className="text-white focus:outline-none">
+            <div className="relative" ref={userDropdownRef}>
+              <button onClick={toggleDropdown} 
+              className="text-white focus:outline-none">
                Welcome {user.name}
               </button>
               {isDropdownOpen && (
@@ -318,13 +204,19 @@ function Nav({ cartCount }) {
                     Dashboard
                     </Link>
                     ) : (
-                      <Link to={'/User/Profile'} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                      // <Link to={'/User/Profile'} 
+                      <Link 
+                      to={'/User/ProfilePage'} 
+                      // to={`/User/Profile/${user.name}`}
+                      // to='#'
+                        // onClick={handleClick}
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                         Profile
                         </Link>
-
                     // {/* <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a> */}
                     )}
-                  <a href="/" onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+                  <a href="/" onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout
+                  </a>
                 </div>
               )}
             </div>
@@ -336,7 +228,6 @@ function Nav({ cartCount }) {
         </div>
       </div>
     </nav>
-
   );
 }
 
