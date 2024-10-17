@@ -113,6 +113,8 @@
 // export default Cart
 
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 // Mock Data for Cart Items
 const initialCartItems = [
@@ -139,23 +141,25 @@ const initialCartItems = [
 
 
 function Cart() {
+  const navigate = useNavigate();
+
   const [cartItems, setCartItems] = useState(initialCartItems);
 
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const data = await getCartItems(); // Call the API service to get cart items
-        setCartItems(data); // Assuming the API returns an array of cart items
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchCartItems = async () => {
+  //     try {
+  //       const data = await getCartItems(); // Call the API service to get cart items
+  //       setCartItems(data); // Assuming the API returns an array of cart items
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchCartItems();
-  }, []);
+  //   fetchCartItems();
+  // }, []);
 
   // Handle increase quantity
   const increaseQuantity = (id) => {
@@ -188,6 +192,12 @@ function Cart() {
       (total, item) => total + item.price * item.quantity,
       0
     );
+  };
+
+
+  
+  const handleProceedToPayment = () => {
+    navigate('/payment');
   };
 
 
@@ -240,7 +250,10 @@ function Cart() {
 
           {/* Checkout Button */}
           <div className="mt-4 text-right">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded">
+            <button
+             onClick={handleProceedToPayment}
+
+             className="bg-blue-500 text-white px-4 py-2 rounded">
               Proceed to Checkout
             </button>
           </div>

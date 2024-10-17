@@ -173,12 +173,12 @@ export const getAllVendors = async () => {
 //     // formData.append("stock_quantity", productData.stock_quantity);
     
 //     // Handle sizes array (size and stock pair)
-//     if (productData.variants && productData.variants.length > 0) {
-//       productData.variants.forEach((sizeData, index) => {
-//         formData.append(`variants[${index}][size]`, sizeData.size);
-//         formData.append(`variants[${index}][stock]`, sizeData.stock);
-//       });
-//     }
+    // if (productData.variants && productData.variants.length > 0) {
+    //   productData.variants.forEach((sizeData, index) => {
+    //     formData.append(`variants[${index}][size]`, sizeData.size);
+    //     formData.append(`variants[${index}][stock]`, sizeData.stock);
+    //   });
+    // }
     
 //     // Handle images array
 //     if (productData.images && productData.images.length > 0) {
@@ -223,16 +223,16 @@ export const getAllVendors = async () => {
 
 //     console.log("basifield", formData);
     
-//     // Handle product_details (assuming it's an array of objects)
-//     if (productData.product_details && productData.product_details.length > 0) {
-//       productData.product_details.forEach((details, index) => {
-//         Object.keys(details).forEach((key) => {
-//           if (details[key]) {
-//             formData.append(`product_details[${index}][${key}]`, details[key]);
-//           }
-//         });
-//       });
-//     }
+    // Handle product_details (assuming it's an array of objects)
+    // if (productData.product_details && productData.product_details.length > 0) {
+    //   productData.product_details.forEach((details, index) => {
+    //     Object.keys(details).forEach((key) => {
+    //       if (details[key]) {
+    //         formData.append(`product_details[${index}][${key}]`, details[key]);
+    //       }
+    //     });
+    //   });
+    // }
 
 //     // Handle variants array (size and stock pair)
 //     if (productData.variants && productData.variants.length > 0) {

@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { createProduct, getCategories } from '../../api/apiServices';
 import { useEffect } from 'react';
+import { MdDeleteForever } from "react-icons/md";
+
 
 const VendorProductCreation = () => {
     const [product, setProduct] = useState({
         name: '',
         color: '',
-        // variants: [{ size: "", stock: "" }],
+        variants: [{ size: "", stock: "" }],
         gender: '',
         category: '',
         MRP: '',
         offer_percentage:'',
-        // product_details: [{ sleeve_details: '', pattern_type: '', material_type: '', fit_type: '' }],
+        gst_percentage:'',
+        product_details: [{ sleeve_details: '', pattern_type: '', material_type: '', fit_type: '' }],
+        seller_details: [{ seller_name: '', seller_location: '' }],
         description: '',
-        // stock_quantity: '',
+        country_of_origin: '',
         images: [],
     });
 
@@ -41,13 +45,20 @@ const VendorProductCreation = () => {
                 images: [...prevData.images, ...Array.from(files)]  // Append new images
             }));
         }
-        // else if (name in product.product_details[0]) {
-        //     // Update product_details array
-        //     setProduct((prevData) => ({
-        //         ...prevData,
-        //         product_details: [{ ...prevData.product_details[0], [name]: value }]
-        //     }));
-        // }
+        else if (name in product.product_details[0]) {
+            // Update product_details array
+            setProduct((prevData) => ({
+                ...prevData,
+                product_details: [{ ...prevData.product_details[0], [name]: value }]
+            }));
+        }
+          else if (name in product.seller_details[0]) {
+            // Update product_details array
+            setProduct((prevData) => ({
+                ...prevData,
+                seller_details: [{ ...prevData.seller_details[0], [name]: value }]
+            }));
+        }
          else {
             setProduct({ ...product, [name]: value });
         }
@@ -90,23 +101,50 @@ const VendorProductCreation = () => {
     formData.append('category', product.category);
     formData.append('MRP', product.MRP);
     formData.append('offer_percentage', product.offer_percentage);
+    formData.append('gst_percentage', product.gst_percentage);
     formData.append('description', product.description);
+    formData.append('country_of_origin', product.country_of_origin);
 
     // Append images (this is key for sending files)
     product.images.forEach((image, index) => {
         formData.append(`images`, image); // Add images one by one
     });
-    console.log("Product created successfully:", formData);
-    for (let [key, value] of formData.entries()) {
-        console.log(`.............,${key}:`, value);
-    }
+    if (product.variants && product.variants.length > 0) {
+        product.variants.forEach((sizeData, index) => {
+          formData.append(`variants[${index}][size]`, sizeData.size);
+          formData.append(`variants[${index}][stock]`, sizeData.stock);
+        });
+      }
+      
+      if (product.product_details && product.product_details.length > 0) {
+        product.product_details.forEach((details, index) => {
+          Object.keys(details).forEach((key) => {
+            if (details[key]) {
+              formData.append(`product_details[${index}][${key}]`, details[key]);
+            }
+          });
+        });
+      }
+
+
+      if (product.seller_details && product.seller_details.length > 0) {
+        product.seller_details.forEach((details, index) => {
+          Object.keys(details).forEach((key) => {
+            if (details[key]) {
+              formData.append(`seller_details[${index}][${key}]`, details[key]);
+            }
+          });
+        });
+      }
+
+
+
+    // console.log("Product created successfully:", formData);
+    // for (let [key, value] of formData.entries()) {
+    //     console.log(`.............,${key}:`, value);
+    // }
         try {
-            await createProduct(formData,{
-                    headers: {
-                        'Content-Type': 'multipart/form-data',  // Set the correct content type
-                    },
-                }
-            );
+            await createProduct(formData);
         } catch (error) {
             console.error("Error creating product:", error); // Log the whole error object
             if (error.response) {
@@ -122,11 +160,11 @@ const VendorProductCreation = () => {
         <div className=" w-full p-12 bg-white border border-2 border-gray-300 rounded-lg shadow-md mb-8 ml-20">
             <h2 className=" w-full text-2xl font-bold mb-4">Create Product</h2>
             <form onSubmit={handleSubmit} className='w-full'>
-                <div className='lg:flex-col flex-col gap-2'>
+                <div className='lg:flex flex gap-2'>
                     {/* Left Side Content */}
                     <div className='bg-gray-00 w-full'>
                         <div className="mb-4 ">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="category">
                                 Category
                             </label>
                             <select
@@ -134,7 +172,7 @@ const VendorProductCreation = () => {
                                 name="category"
                                 value={product.category}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required>
                                 <option value="" disabled>Select a category</option>
                                 {categories.length > 0 ?
@@ -153,7 +191,7 @@ const VendorProductCreation = () => {
 
                         {/* Product Name */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="name">
                                 Product Name
                             </label>
                             <input
@@ -161,14 +199,14 @@ const VendorProductCreation = () => {
                                 name="name"
                                 value={product.name}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
 
                         {/* Gender */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="gender">
                                 Gender
                             </label>
                             <input
@@ -176,13 +214,13 @@ const VendorProductCreation = () => {
                                 name="gender"
                                 value={product.gender}
                                 onChange={handleChange}
-                                className="shadow appearance-none border  w-full  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border  w-full  py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
                                     {/* Color */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                 Color
                             </label>
                             <input
@@ -191,22 +229,22 @@ const VendorProductCreation = () => {
                                 placeholder="Enter Color"
                                 value={product.color}
                                 onChange={handleColorChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
 
                         {/* Sizes and Quantities */}
-                        {/* <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                        <div className="mb-4">
+                            {/* <label className="block text-gray-700 text-sm font-bold mb-1">
                                 Sizes and Quantities
-                            </label>
+                            </label> */}
                             {product.variants.map((sizeField, index) => (
-                                <div key={index} className="mb-2 flex gap-2">
+                                <div key={index} className="mb-1 flex gap-2">
                     
-                                    <div className="mb-2">
+                                    <div className="mb-1">
                                         <label
-                                            className="block text-gray-700 text-sm font-bold mb-2"
+                                            className="block text-gray-700 text-sm font-bold mb-1"
                                             htmlFor={`size-${index}`}>
                                             Size
                                         </label>
@@ -214,8 +252,8 @@ const VendorProductCreation = () => {
                                             name="size"
                                             value={sizeField.size || ""}
                                             onChange={(e) => handleSizeChange(index, e)}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                            <option value="">Select Size</option>
+                                            className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            <option value="">  Size</option>
                                             <option value="XS">XS</option>
                                             <option value="S">S</option>
                                             <option value="M">M</option>
@@ -226,9 +264,9 @@ const VendorProductCreation = () => {
                                     </div>
 
                                 
-                                    <div className="mb-2">
+                                    <div className="mb-4">
                                         <label
-                                            className="block text-gray-700 text-sm font-bold mb-2"
+                                            className="block text-gray-700 text-sm font-bold mb-1"
                                             htmlFor={`stock-${index}`}>
                                             Quantity
                                         </label>
@@ -238,7 +276,7 @@ const VendorProductCreation = () => {
                                             placeholder="Enter Quantity"
                                             value={sizeField.stock}
                                             onChange={(e) => handleSizeChange(index, e)}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             
                                         />
                                     </div>
@@ -248,10 +286,9 @@ const VendorProductCreation = () => {
                                         <button
                                             type="button"
                                             onClick={() => removeSizeField(index)}
-                                            className="bg-red-500 text-white h-9 mt-7 px-2 rounded hover:bg-red-700"
+                                            className="bg-red-500 text-white h-7 mt-7 px-1 rounded hover:bg-red-700"
                                         >
-                                            Remove Size
-                                        </button>
+                                        <MdDeleteForever size={22} />        </button>
                                     )}
                                 </div>
                             ))}
@@ -260,22 +297,22 @@ const VendorProductCreation = () => {
                             <button
                                 type="button"
                                 onClick={addSizeField}
-                                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
+                                className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">
                                 Add Size
                             </button>
-                        </div> */}
+                        </div>
 
 
                         {/* Description */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="description">
                                 Description
                             </label>
                             <textarea
                                 name="description"
                                 value={product.description}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 rows="4"
                                 // required
                             />
@@ -284,49 +321,50 @@ const VendorProductCreation = () => {
                     {/* Right Side Content */}
                     <div className='bg-gray-00 w-full'>
                         {/* Matirial Type */}
-                        {/* <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="material_type">
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="material_type">
                                 Material Type
                             </label>
                             <input
                                 type="text"
                                 name="material_type"
-                                value={product.product_details[0].material_type}                                onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                value={product.product_details[0].material_type}                                
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 // required
                                  />
-                        </div> */}
+                        </div>
                         {/* Fit Type */}
-                        {/* <div className="mb-4">
-                            <label className="block  text-gray-700 text-sm font-bold mb-2" htmlFor="fit_type">
+                        <div className="mb-4">
+                            <label className="block  text-gray-700 text-sm font-bold mb-1" htmlFor="fit_type">
                                 FitType
                             </label>
                             <input
                                 type="text"
                                 name="fit_type"
                                 value={product.product_details[0].fit_type}                                onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 // required
                             />
-                        </div> */}
+                        </div>
 
                         {/* Sleeve Type */}
-                        {/* <div className="mb-4">
-                            <label className="block  text-gray-700 text-sm font-bold mb-2" htmlFor="sleeve_details">
+                        <div className="mb-4">
+                            <label className="block  text-gray-700 text-sm font-bold mb-1" htmlFor="sleeve_details">
                                 SleeveType
                             </label>
                             <input
                                 type="text"
                                 name="sleeve_details"
                                 value={product.product_details[0].sleeve_details}                                onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 // required
                             />
-                        </div> */}
+                        </div>
 
                         {/* Pattern Type */}
-                        {/* <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="pattern_type">
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="pattern_type">
                                 PatternType
                             </label>
                             <input
@@ -334,14 +372,14 @@ const VendorProductCreation = () => {
                                 name="pattern_type"
                                 value={product.product_details[0].pattern_type} 
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 // required
                             />
-                        </div> */}
+                        </div>
 
                         {/* Original Price */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="MRP">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="MRP">
                                 MRP.Price
                             </label>
                             <input
@@ -349,14 +387,14 @@ const VendorProductCreation = () => {
                                 name="MRP"
                                 value={product.MRP}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 // required
                             />
                         </div>
 
                         {/* Offer %  */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="offer_percentage">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="offer_percentage">
                                 Offer Percentage
                             </label>
                             <input
@@ -364,16 +402,77 @@ const VendorProductCreation = () => {
                                 name="offer_percentage"
                                 value={product.offer_percentage}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
-                    </div>
+
+
+                         {/* GST %  */}
+                         <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="gst_percentage">
+                                GSTin
+                            </label>
+                            <input
+                                type="number"
+                                name="gst_percentage"
+                                value={product.gst_percentage}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+
+
+                          <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="country_of_origin">
+                                Country of Origin
+                            </label>
+                            <input
+                                type="text"
+                                name="country_of_origin"
+                                value={product.country_of_origin} 
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                // required
+                            />
+                        </div>
+
+                            {/* seller Detaills */}
+                            <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="seller_name">
+                                Seller Name
+                            </label>
+                            <input
+                                type="text"
+                                name="seller_name"
+                                value={product.seller_details[0].seller_name}                                
+                                onChange={handleChange}
+                                className="shadow appearance-none border  w-full  py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+
+
+                             {/* seller Location */}
+                             <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="seller_location">
+                                Seller Location
+                            </label>
+                            <input
+                                type="text"
+                                name="seller_location"
+                                value={product.seller_details[0].seller_location}                                
+                                onChange={handleChange}
+                                className="shadow appearance-none border  w-full  py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+                        </div>
                 </div>
 
                 {/* Images */}
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="images">
+                    <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="images">
                         Image
                     </label>
                     <input
@@ -381,7 +480,7 @@ const VendorProductCreation = () => {
                         name="images"
                         accept="images/*"
                         onChange={handleChange}
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     />
                 </div>
@@ -389,7 +488,7 @@ const VendorProductCreation = () => {
                 {/* Preview Images */}
                 { product.images.length > 0 && (
                     <div className="mt-6">
-                        <h3 className="text-lg font-bold mb-2">Image Preview</h3>
+                        <h3 className="text-lg font-bold mb-1">Image Preview</h3>
                         <div className="flex  space-x-4 overflow-auto">
 
                             {product.images.map((image, index) => (
@@ -405,7 +504,7 @@ const VendorProductCreation = () => {
                 )}
                 <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-6 px-4 rounded focus:outline-none focus:shadow-outline">
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 mt-6 px-4 rounded focus:outline-none focus:shadow-outline">
                     Create Product
                 </button>
             </form>

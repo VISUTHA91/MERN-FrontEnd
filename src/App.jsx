@@ -28,6 +28,7 @@ import VendorMainContent from './Pages/Vendor/VendorMainContent';
 import VendorList from './Pages/Admin/VendorList';
 import VendorDetails from './Pages/Vendor/VendorDetails';
 import VendorProductCreation from './Pages/Vendor/VendorProductCreation';
+import Payment from './Pages/Payment';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
       <Route path='/Signin' element={<Signin/>} />
       <Route path='/Signup' element={<Signup/>} />
       <Route path='/Cart' element={<Cart/>} />
+      <Route path='/Payment' element={<Payment/>} />
       <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />
       <Route path='/User/ProfilePage/' element={<ProfilePage />} />

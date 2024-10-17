@@ -65,7 +65,9 @@ function AdminCategory() {
     const formData = new FormData();
     formData.append('name', categoryName);
     formData.append('images', images);
-    console.log(".........",formData)
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+  }
 
     try {
       await createCategory(formData); 
