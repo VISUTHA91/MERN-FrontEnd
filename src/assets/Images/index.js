@@ -26,6 +26,9 @@ import frontfull from './frontfull.jpg'
 import frontmiddle from './frontfull.jpg'
 import aboutstore from './aboutstore.jpg'
 import bgimage from './bgimage.jpg'
+import menn from './menn.png'
+import womenn from './womenn.png'
+import kidss from './kidss.png'
 
 
 
@@ -58,4 +61,7 @@ export {
     frontneck,
     aboutstore,
     bgimage,
+    menn,
+    womenn,
+    kidss,
 }

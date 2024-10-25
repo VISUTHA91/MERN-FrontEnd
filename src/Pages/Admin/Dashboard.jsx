@@ -162,7 +162,7 @@ function Dashboard() {
                 className="flex items-center text-gray-300 hover:text-white gap-2"
               >
                 <HiOutlineUserGroup />
-                Users
+                Customers
               </button>
             </li>
 
@@ -170,7 +170,7 @@ function Dashboard() {
               <button
                 onClick={() => setCurrentPage('Reviews')}
                 className="flex items-center text-gray-300 hover:text-white gap-2"
-              >
+                >
                 <MdReviews />
                 Reviews
               </button>

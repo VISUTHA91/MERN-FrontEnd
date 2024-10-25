@@ -1,4 +1,4 @@
-import { black,blue,brown,purple,green,yellow,kids,women,men, priceblue, priceblack, pricewhite } from "../assets/Images";
+import { black,blue,brown,purple,green,yellow,kids,women,men, priceblue, priceblack, pricewhite,menn,womenn,kidss } from "../assets/Images";
 
 export const products = [
         {
@@ -55,17 +55,17 @@ export const products = [
 export const gender=[
     {
         id:1,
-        imgURL:men,
+        imgURL:menn,
         catogory:"MEN's"
     },
     {
         id:2,
-        imgURL:women,
+        imgURL:womenn,
         catogory:"WOMEN's"
     },
     {
         id:3,
-        imgURL:kids,
+        imgURL:kidss,
         catogory:"KID's"
     }
 ]

@@ -12,8 +12,8 @@ const VendorProductCreation = () => {
         gender: '',
         category: '',
         MRP: '',
-        offer_percentage:'',
-        gst_percentage:'',
+        offer_percentage: '',
+        gst_percentage: '',
         product_details: [{ sleeve_details: '', pattern_type: '', material_type: '', fit_type: '' }],
         seller_details: [{ seller_name: '', seller_location: '' }],
         description: '',
@@ -52,14 +52,14 @@ const VendorProductCreation = () => {
                 product_details: [{ ...prevData.product_details[0], [name]: value }]
             }));
         }
-          else if (name in product.seller_details[0]) {
+        else if (name in product.seller_details[0]) {
             // Update product_details array
             setProduct((prevData) => ({
                 ...prevData,
                 seller_details: [{ ...prevData.seller_details[0], [name]: value }]
             }));
         }
-         else {
+        else {
             setProduct({ ...product, [name]: value });
         }
     };
@@ -89,60 +89,57 @@ const VendorProductCreation = () => {
         setProduct({ ...product, variants: updatedSizes });
     };
 
-
+    const handleRemoveNewImage = (index) => {
+        const updatedImages = product.images.filter((_, i) => i !== index);
+        setProduct((prevData) => ({ ...prevData, images: updatedImages }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Before Append",product)
-    const formData = new FormData();
-    formData.append('name', product.name);
-    formData.append('color', product.color);
-    formData.append('gender', product.gender);
-    formData.append('category', product.category);
-    formData.append('MRP', product.MRP);
-    formData.append('offer_percentage', product.offer_percentage);
-    formData.append('gst_percentage', product.gst_percentage);
-    formData.append('description', product.description);
-    formData.append('country_of_origin', product.country_of_origin);
+        console.log("Before Append", product)
+        const formData = new FormData();
+        formData.append('name', product.name);
+        formData.append('color', product.color);
+        formData.append('gender', product.gender);
+        formData.append('category', product.category);
+        formData.append('MRP', product.MRP);
+        formData.append('offer_percentage', product.offer_percentage);
+        formData.append('gst_percentage', product.gst_percentage);
+        formData.append('description', product.description);
+        formData.append('country_of_origin', product.country_of_origin);
 
-    // Append images (this is key for sending files)
-    product.images.forEach((image, index) => {
-        formData.append(`images`, image); // Add images one by one
-    });
-    if (product.variants && product.variants.length > 0) {
-        product.variants.forEach((sizeData, index) => {
-          formData.append(`variants[${index}][size]`, sizeData.size);
-          formData.append(`variants[${index}][stock]`, sizeData.stock);
+        // Append images (this is key for sending files)
+        product.images.forEach((image, index) => {
+            formData.append(`images`, image); // Add images one by one
         });
-      }
-      
-      if (product.product_details && product.product_details.length > 0) {
-        product.product_details.forEach((details, index) => {
-          Object.keys(details).forEach((key) => {
-            if (details[key]) {
-              formData.append(`product_details[${index}][${key}]`, details[key]);
-            }
-          });
-        });
-      }
+        if (product.variants && product.variants.length > 0) {
+            product.variants.forEach((sizeData, index) => {
+                formData.append(`variants[${index}][size]`, sizeData.size);
+                formData.append(`variants[${index}][stock]`, sizeData.stock);
+            });
+        }
+
+        if (product.product_details && product.product_details.length > 0) {
+            product.product_details.forEach((details, index) => {
+                Object.keys(details).forEach((key) => {
+                    if (details[key]) {
+                        formData.append(`product_details[${index}][${key}]`, details[key]);
+                    }
+                });
+            });
+        }
 
 
-      if (product.seller_details && product.seller_details.length > 0) {
-        product.seller_details.forEach((details, index) => {
-          Object.keys(details).forEach((key) => {
-            if (details[key]) {
-              formData.append(`seller_details[${index}][${key}]`, details[key]);
-            }
-          });
-        });
-      }
+        if (product.seller_details && product.seller_details.length > 0) {
+            product.seller_details.forEach((details, index) => {
+                Object.keys(details).forEach((key) => {
+                    if (details[key]) {
+                        formData.append(`seller_details[${index}][${key}]`, details[key]);
+                    }
+                });
+            });
+        }
 
-
-
-    // console.log("Product created successfully:", formData);
-    // for (let [key, value] of formData.entries()) {
-    //     console.log(`.............,${key}:`, value);
-    // }
         try {
             await createProduct(formData);
         } catch (error) {
@@ -155,9 +152,9 @@ const VendorProductCreation = () => {
                 console.error("Error message:", error.message); // Log error message if no response
             }
         }
-    };   
+    };
     return (
-        <div className=" w-full p-12 bg-white border border-2 border-gray-300 rounded-lg shadow-md mb-8 ml-20">
+        <div className=" w-full p-12 bg-white border border-2 border-gray-300 rounded-lg shadow-md mb-8 ml">
             <h2 className=" w-full text-2xl font-bold mb-4">Create Product</h2>
             <form onSubmit={handleSubmit} className='w-full'>
                 <div className='lg:flex flex gap-2'>
@@ -197,6 +194,7 @@ const VendorProductCreation = () => {
                             <input
                                 type="text"
                                 name="name"
+                                id='name'
                                 value={product.name}
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -205,20 +203,40 @@ const VendorProductCreation = () => {
                         </div>
 
                         {/* Gender */}
-                        <div className="mb-4">
+                        {/* <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="gender">
                                 Gender
                             </label>
                             <input
                                 type="text"
                                 name="gender"
+                                id='gender'
                                 value={product.gender}
                                 onChange={handleChange}
                                 className="shadow appearance-none border  w-full  py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
+                        </div> */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="gender">
+                                Gender
+                            </label>
+                            <select
+                                name="gender"
+                                id="gender"
+                                value={product.gender}
+                                onChange={handleChange}
+                                className="shadow appearance-none border w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            >
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
-                                    {/* Color */}
+
+                        {/* Color */}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1">
                                 Color
@@ -241,7 +259,7 @@ const VendorProductCreation = () => {
                             </label> */}
                             {product.variants.map((sizeField, index) => (
                                 <div key={index} className="mb-1 flex gap-2">
-                    
+
                                     <div className="mb-1">
                                         <label
                                             className="block text-gray-700 text-sm font-bold mb-1"
@@ -250,6 +268,7 @@ const VendorProductCreation = () => {
                                         </label>
                                         <select
                                             name="size"
+                                            id={`size-${index}`}
                                             value={sizeField.size || ""}
                                             onChange={(e) => handleSizeChange(index, e)}
                                             className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -263,7 +282,7 @@ const VendorProductCreation = () => {
                                         </select>
                                     </div>
 
-                                
+
                                     <div className="mb-4">
                                         <label
                                             className="block text-gray-700 text-sm font-bold mb-1"
@@ -273,27 +292,28 @@ const VendorProductCreation = () => {
                                         <input
                                             type="number"
                                             name="stock"
+                                            id={`stock-${index}`}
                                             placeholder="Enter Quantity"
                                             value={sizeField.stock}
                                             onChange={(e) => handleSizeChange(index, e)}
                                             className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            
+
                                         />
                                     </div>
 
-                                
-                                    {product. variants.length > 1 && (
+
+                                    {product.variants.length > 1 && (
                                         <button
                                             type="button"
                                             onClick={() => removeSizeField(index)}
                                             className="bg-red-500 text-white h-7 mt-7 px-1 rounded hover:bg-red-700"
                                         >
-                                        <MdDeleteForever size={22} />        </button>
+                                            <MdDeleteForever size={22} />        </button>
                                     )}
                                 </div>
                             ))}
 
-                    
+
                             <button
                                 type="button"
                                 onClick={addSizeField}
@@ -311,10 +331,11 @@ const VendorProductCreation = () => {
                             <textarea
                                 name="description"
                                 value={product.description}
+                                id='description'
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 rows="4"
-                                // required
+                            // required
                             />
                         </div>
                     </div>
@@ -328,11 +349,12 @@ const VendorProductCreation = () => {
                             <input
                                 type="text"
                                 name="material_type"
-                                value={product.product_details[0].material_type}                                
+                                id='material_type'
+                                value={product.product_details[0].material_type}
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                // required
-                                 />
+                            // required
+                            />
                         </div>
                         {/* Fit Type */}
                         <div className="mb-4">
@@ -342,9 +364,10 @@ const VendorProductCreation = () => {
                             <input
                                 type="text"
                                 name="fit_type"
-                                value={product.product_details[0].fit_type}                                onChange={handleChange}
+                                id='fit_type'
+                                value={product.product_details[0].fit_type} onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                // required
+                            // required
                             />
                         </div>
 
@@ -356,9 +379,10 @@ const VendorProductCreation = () => {
                             <input
                                 type="text"
                                 name="sleeve_details"
-                                value={product.product_details[0].sleeve_details}                                onChange={handleChange}
+                                id='sleeve_details'
+                                value={product.product_details[0].sleeve_details} onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                // required
+                            // required
                             />
                         </div>
 
@@ -370,10 +394,11 @@ const VendorProductCreation = () => {
                             <input
                                 type="text"
                                 name="pattern_type"
-                                value={product.product_details[0].pattern_type} 
+                                id='pattern_type'
+                                value={product.product_details[0].pattern_type}
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                // required
+                            // required
                             />
                         </div>
 
@@ -385,10 +410,11 @@ const VendorProductCreation = () => {
                             <input
                                 type="number"
                                 name="MRP"
+                                id='MRP'
                                 value={product.MRP}
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                // required
+                            // required
                             />
                         </div>
 
@@ -400,6 +426,7 @@ const VendorProductCreation = () => {
                             <input
                                 type="number"
                                 name="offer_percentage"
+                                id='offer_percentage'
                                 value={product.offer_percentage}
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -408,14 +435,15 @@ const VendorProductCreation = () => {
                         </div>
 
 
-                         {/* GST %  */}
-                         <div className="mb-4">
+                        {/* GST %  */}
+                        <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="gst_percentage">
                                 GSTin
                             </label>
                             <input
                                 type="number"
                                 name="gst_percentage"
+                                id='gst_percentage'
                                 value={product.gst_percentage}
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -423,29 +451,31 @@ const VendorProductCreation = () => {
                         </div>
 
 
-                          <div className="mb-4">
+                        <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="country_of_origin">
                                 Country of Origin
                             </label>
                             <input
                                 type="text"
                                 name="country_of_origin"
-                                value={product.country_of_origin} 
+                                id='country_of_origin'
+                                value={product.country_of_origin}
                                 onChange={handleChange}
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                // required
+                            // required
                             />
                         </div>
 
-                            {/* seller Detaills */}
-                            <div className="mb-4">
+                        {/* seller Detaills */}
+                        <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="seller_name">
                                 Seller Name
                             </label>
                             <input
                                 type="text"
                                 name="seller_name"
-                                value={product.seller_details[0].seller_name}                                
+                                id='seller_name'
+                                value={product.seller_details[0].seller_name}
                                 onChange={handleChange}
                                 className="shadow appearance-none border  w-full  py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
@@ -453,21 +483,22 @@ const VendorProductCreation = () => {
                         </div>
 
 
-                             {/* seller Location */}
-                             <div className="mb-4">
+                        {/* seller Location */}
+                        <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="seller_location">
                                 Seller Location
                             </label>
                             <input
                                 type="text"
                                 name="seller_location"
-                                value={product.seller_details[0].seller_location}                                
+                                id='seller_location'
+                                value={product.seller_details[0].seller_location}
                                 onChange={handleChange}
                                 className="shadow appearance-none border  w-full  py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
-                        </div>
+                    </div>
                 </div>
 
                 {/* Images */}
@@ -478,6 +509,7 @@ const VendorProductCreation = () => {
                     <input
                         type="file"
                         name="images"
+                        id='images'
                         accept="images/*"
                         onChange={handleChange}
                         className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -486,18 +518,28 @@ const VendorProductCreation = () => {
                 </div>
 
                 {/* Preview Images */}
-                { product.images.length > 0 && (
+                {product.images.length > 0 && (
                     <div className="mt-6">
                         <h3 className="text-lg font-bold mb-1">Image Preview</h3>
                         <div className="flex  space-x-4 overflow-auto">
 
                             {product.images.map((image, index) => (
-                                <img
-                                    key={index}
-                                    src={URL.createObjectURL(image)}
-                                    alt={`Preview ${index + 1}`}
-                                    className="w-32 h-32 object-cover rounded-lg"
-                                />
+                                <div key={index} className="relative">
+                                    <img
+                                        key={index}
+                                        src={URL.createObjectURL(image)}
+                                        alt={`Preview ${index + 1}`}
+                                        className="w-32 h-32 object-cover rounded-lg"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveNewImage(index)} // Function to remove new image
+                                        className="absolute top-0 right-0 bg-red-500 text-black p-1 rounded-full"
+                                    >
+                                        <MdDeleteForever size={26} />
+                                    </button>
+                                </div>
+
                             ))}
                         </div>
                     </div>

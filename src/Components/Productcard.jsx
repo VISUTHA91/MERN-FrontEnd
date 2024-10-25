@@ -3,7 +3,7 @@ import { blue } from '../assets/Images'
 // import { totalproducts } from '../Constant'
 import { Link } from 'react-router-dom'
 
-function Productcard({_id, name, price, images}) {
+function Productcard({_id, name, MRP, final_price, images}) {
   // {imgURL,saleprice,originalprice,name,offer,id}
   // const imageUrl = images && images.length > 0 ? images[0] :blue // Use a default image if no image is found
 
@@ -23,8 +23,8 @@ function Productcard({_id, name, price, images}) {
       {/* <div className='justify-start items-start'><p>Men's Cotton Stretch Solid Polo T-Shirt (Regular Fit)</p></div> */}
       <div className='justify-start items-start'><p>{name}</p></div>
       <div className='flex flex-row gap-2'>
-      <div className=' text-2xl'>₹ {price} </div>
-      <div className='leading-9'>M.R.P:₹<span className='line-through'>{price}</span></div>
+      <div className=' text-2xl'>₹ {final_price} </div>
+      <div className='leading-9'>M.R.P:₹<span className='line-through'>{MRP}</span></div>
       {/* <div className='leading-9 text-emerald-400'>{totalproducts.offer}% OFF</div> */}
       </div>
       {/* <button className='border border-2 rounded p-1 px-4'>View</button> */}

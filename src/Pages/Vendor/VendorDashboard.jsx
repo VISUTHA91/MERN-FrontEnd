@@ -9,9 +9,11 @@ import { FaFirstOrder } from "react-icons/fa";
 import { MdReviews } from "react-icons/md";
 import VendorMainContent from './VendorMainContent';
 import VendorProductCreation from './VendorProductCreation';
+import VendorProductList from './VendorProductList';
 import { useEffect } from 'react';
 import { TbLogout } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
+import VendorDetails from './VendorDetails';
 
 
 function VendorDashboard() {
@@ -56,10 +58,13 @@ function VendorDashboard() {
 
     const renderPageContent = () => {
         switch (currentPage) {
+               
+            case 'Profile':
+                return <VendorDetails />;
             case 'Maincontent':
                 return <VendorMainContent />;
             case 'All':
-                return <VendorProductlist />;
+                return <VendorProductList />;
             case 'Create':
                 return <VendorProductCreation />
             case 'Orders':
@@ -87,6 +92,15 @@ function VendorDashboard() {
                                     <span className="hidden lg:block">Dashboard</span>
                                 </button>
                             </li>
+
+                            {/* <li>
+                                <button
+                                    onClick={() => setCurrentPage('Profile')}
+                                    className="flex items-center text-gray-300 hover:text-black gap-2">
+                                    <FaShoppingBasket  className=' rounded mt-1 text-4xl lg:text-base' />
+                                                            <span className="hidden lg:block">AllProducts</span>
+                                </button>
+                            </li> */}
                             <li>
                                 <button
                                     onClick={() => setCurrentPage('All')}

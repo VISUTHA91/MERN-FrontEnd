@@ -116,166 +116,8 @@ export const getAllVendors = async () => {
   }
 };
 
-// Product Creation
-// export const createProduct = async (productData) => {
-//   try {
-//     const formData = new FormData();
 
-//     formData.append("name", productData.name);
-//     formData.append("description", productData.description);
-//     formData.append("price", productData.price);
-//     formData.append("gender", productData.gender);
-//     formData.append("size", productData.size);
-//     formData.append("color", productData.color);
-//     formData.append("category_id", productData.category_id);
-//     formData.append("stock_quantity", productData.stock_quantity);
-
-
-//     if (productData.images && productData.images.length > 0) {
-//       productData.images.forEach((image) => {
-//         formData.append("images", image); // Append each image
-//       });
-//     }
-
-//     const response = await axiosInstance.post(`${API_BASE_URL}vendor/productCreate`, formData);
-//     return response.data; // Return response data (e.g., product details)
-//   } catch (error) {
-//     //   console.error("Error during product creation:", error);
-//     //   throw error.response ? error.response.data.message : new Error("Product creation failed");
-//     // }
-//     console.error("API error:", error); // Log the error here
-//     throw error;
-//   }
-// };
-
-
-// export const createProduct = async (productData) => {
-//   try {
-//     const formData = new FormData();
-//     // Append basic fields
-    
-    // formData.append("name", productData.name);
-    // formData.append("color", productData.color);
-    // formData.append("gender", productData.gender);
-    // formData.append("category", productData.category);
-    // formData.append("MRP", productData.MRP);
-    // formData.append("offer_percentage", productData.offer_percentage);
-    
-//     // Append product_details fields
-//     if (productData.product_details && productData.product_details.length > 0) {
-//       const details = productData.product_details[0]; // Assuming you're always using the first object
-//       formData.append("sleeve_details", details.sleeve_details);
-//       formData.append("pattern_type", details.pattern_type);
-//       formData.append("material_type", details.material_type);
-//       formData.append("fit_type", details.fit_type);
-//     }
-//     formData.append("description", productData.description);
-//     // formData.append("stock_quantity", productData.stock_quantity);
-    
-//     // Handle sizes array (size and stock pair)
-    // if (productData.variants && productData.variants.length > 0) {
-    //   productData.variants.forEach((sizeData, index) => {
-    //     formData.append(`variants[${index}][size]`, sizeData.size);
-    //     formData.append(`variants[${index}][stock]`, sizeData.stock);
-    //   });
-    // }
-    
-//     // Handle images array
-//     if (productData.images && productData.images.length > 0) {
-//       productData.images.forEach((image) => {
-//         formData.append("images", image);
-//       });
-//     }
-    
-//     // Debugging: Log FormData entries
-//     // for (let [key, value] of formData.entries()) {
-//     //     console.log(`${key}: ${value}`);
-//     //   }
-//     console.log("............................",formData)
-
-//     // Send the POST request with the formData
-//     const response = await axiosInstance.post(`${API_BASE_URL}vendor/productCreate`,formData,
-//       // {
-//       //   headers: {
-//       //     'Content-Type': 'multipart/form-data', // This is important for FormData
-//       // },
-//       // }
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.error("API error:", error);
-//     throw error;
-//   }
-// };
-
-// export const createProduct = async (productData) => {
-//   try {
-//     const formData = new FormData();
-
-//     // Automatically append all basic fields except for arrays and nested objects
-//     const basicFields = ['name', 'color', 'gender', 'category', 'MRP', 'offer_percentage', 'description'];
-//     basicFields.forEach(field => {
-//       if (productData[field] !== undefined && productData[field] !== null) {
-//         formData.append(field, String(productData[field]));
-//       }
-//     });
-    
-
-//     console.log("basifield", formData);
-    
-    // Handle product_details (assuming it's an array of objects)
-    // if (productData.product_details && productData.product_details.length > 0) {
-    //   productData.product_details.forEach((details, index) => {
-    //     Object.keys(details).forEach((key) => {
-    //       if (details[key]) {
-    //         formData.append(`product_details[${index}][${key}]`, details[key]);
-    //       }
-    //     });
-    //   });
-    // }
-
-//     // Handle variants array (size and stock pair)
-//     if (productData.variants && productData.variants.length > 0) {
-//       productData.variants.forEach((variant, index) => {
-//         Object.keys(variant).forEach((key) => {
-//           if (variant[key]) {
-//             formData.append(`variants[${index}][${key}]`, variant[key]);
-//           }
-//         });
-//       });
-//     }
-
-//     // Handle images array
-//     // if (productData.images && productData.images.length > 0) {
-//     //   productData.images.forEach((image, index) => {
-//     //     formData.append(`images[${index}]`, image);
-//     //   });
-//     // }
-
-//     // Debugging: Log FormData entries
-//     // for (let [key, value] of formData.entries()) {
-//     //     console.log(`${key}: ${value}`);
-//     // }
-
-//     console.log("sss",formData);
-    
-//     // Send the POST request with the formData
-//     const response = await axiosInstance.post(`${API_BASE_URL}vendor/productCreate`, formData, {
-//       // headers: {
-//       //   'Content-Type': 'multipart/form-data', // For FormData
-//       // },
-//     });
-    
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("API error:", error);
-//     throw error;
-//   }
-// };
-
-
-
+// Vendor Product Creation
 export const createProduct = async (formData) => {
   try {
       const response = await axiosInstance.post(`${API_BASE_URL}vendor/productCreate`, formData,
@@ -287,34 +129,61 @@ export const createProduct = async (formData) => {
   }
 };
 
-
-
-
-// Product Edit
-export const editProduct = async (id, productData) => {
+export const editProduct = async (id, formData) => {
   try {
-    // Append 'id' to the productData
-    productData.append('id', id); // Include the ID in the formData
+    // Create a new FormData object
+    const productData = new FormData();
+
+    // Append product fields to FormData
+    for (const key in formData) {
+      productData.append(key, formData[key]);
+    }
+
+    // Append the 'id'
+    productData.append('id', id);
 
     // Send the POST request
     const response = await axiosInstance.post(`${API_BASE_URL}admin/updateProduct`, productData, {
       headers: {
-        'Content-Type': 'multipart/form-data', // This ensures image upload is handled correctly
+        'Content-Type': 'multipart/form-data', // Ensure image upload is handled correctly
       },
     });
 
-    return response.data; // Return updated product data
+    return response.data;
   } catch (error) {
     console.error('Error updating product:', error);
-    throw error; // Re-throw the error to handle it in the component
+    throw error;
   }
 };
+
+
+export const EditProduct = async ( productData) => { // Make sure to pass the id as an argument
+  try {
+      // Log FormData entries for debugging
+   
+
+      const response = await axiosInstance.post(`${API_BASE_URL}vendor/updateProduct`, productData, {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+          },
+      });
+
+      return response.data;
+  } catch (error) {
+      console.error('Error updating product:', error);
+      throw error;
+  }
+};
+
+
+
+
 
 // Product Delete
 export const deleteProduct = async (productId) => {
   console.log(productId)
   try {
-    const response = await axiosInstance.post(`${API_BASE_URL}admin/deleteproduct`
+    const response = await axiosInstance.post(`${API_BASE_URL}vendor/deleteproduct`
       , { productId });
     return response.data;
   } catch (error) {
@@ -332,10 +201,10 @@ export const createCategory = async (formData) => {
   return response.data;
 };
 
-// Get all Products List For Admin
+// Get all Products List For Vendor
 export const getProducts = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}getAllProducts`); // Fetches categories from the backend
+    const response = await axiosInstance.get(`${API_BASE_URL}vendor/productList`); // Fetches categories from the backend
     return response.data; // Assuming the categories are in response.data
   } catch (error) {
     console.error('Error fetching categories:', error);
@@ -401,15 +270,15 @@ export const updateUserProfile = async (updatedUser) => {
     formData.append('name', updatedUser.name);
     formData.append('email', updatedUser.email);
     formData.append('address', updatedUser.address);
-    if (updatedUser.profilePicture) {
-      formData.append('profilePicture', updatedUser.profilePicture);
-    }
+    // if (updatedUser.profilePicture) {
+    //   formData.append('profilePicture', updatedUser.profilePicture);
+    // }
 
-    const response = await axios.put(`${API_URL}/user/profile`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await axios.put(`${API_URL}/user/profile`, formData
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      // },
+    );
     return response;
   } catch (error) {
     console.error('Error updating profile:', error);
@@ -431,11 +300,25 @@ export const getProductsByCategory = async (categoryName) => {
   }
 };
 
+export const getProductById = async (productId) => {
+  try {
+    console.log(productId)
+    const response = await axiosInstance.get(`${API_BASE_URL}getProductById`, {
+      params: { productId }, // Pass categoryName as a query parameter
+    });
+    return response; // Return the response
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error; // Rethrow the error to be handled by the calling component
+  }
+};
+
 
 // Product Detail get by Id
 export const getProductsById = async (productId) => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}getProductById`, {
+    console.log(productId)
+    const response = await axiosInstance.get(`${API_BASE_URL}vendor/getProductById`, {
       params: { productId }, // Pass categoryName as a query parameter
     });
     return response; // Return the response
@@ -497,10 +380,40 @@ export const getVendorById = async (vendorId) => {
 // Get all Cart items For Admin
 export const getCartItems = async () => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}getCart`); // Fetches categories from the backend
+    const response = await axiosInstance.get(`${API_BASE_URL}listCartById`); // Fetches categories from the backend
     return response.data; // Assuming the categories are in response.data
   } catch (error) {
     console.error('Error fetching categories:', error);
     throw error;
+  }
+};
+
+export const deleteItem = async (id) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}deletecart/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to delete item:', error);
+    throw error;
+  }
+};
+
+
+// Vendor status update in admin side
+export const updateVendorStatus = (vendorId, status) => {
+  const vendorStatus = {
+    vendorId,
+    status,
+  };
+  const response = axiosInstance.post(`${API_BASE_URL}admin/approveVendor`,vendorStatus);
+  return response;
+};
+
+export const addCart = async (cartItem) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}createcart`, cartItem); // Change endpoint based on your API
+    return response.data; // Return response data
+  } catch (error) {
+    throw error.response?.data || 'Error adding to cart';
   }
 };

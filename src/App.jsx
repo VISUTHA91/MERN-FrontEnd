@@ -29,7 +29,11 @@ import VendorList from './Pages/Admin/VendorList';
 import VendorDetails from './Pages/Vendor/VendorDetails';
 import VendorProductCreation from './Pages/Vendor/VendorProductCreation';
 import Payment from './Pages/Payment';
-
+import VendorProductList from './Pages/Vendor/VendorProductList';
+import EditProductPage from './Pages/Vendor/EditProductPage';
+import AdminOrders from './Pages/Admin/AdminOrders';
+import UserOrderPage from './Pages/User/UserOrder';
+import AdminVendorDetails from './Pages/Admin/AdminVendorDetails';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -57,6 +61,7 @@ function App() {
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />
       <Route path='/User/ProfilePage/' element={<ProfilePage />} />
       <Route path='/User/Profile/' element={<Profile />} />
+      <Route path='/User/UserOrder/' element={<UserOrderPage />} />
       <Route path='/Productdetails/:id' element={<Productdetails  addToCart={addToCart}  />} />
           </Route>
 
@@ -70,6 +75,8 @@ function App() {
       <Route path='/Admin/VendorDetails/:id' element={<VendorDetails />} />
       <Route path='/Admin/Createproduct' element={<Createproduct />} />
       <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} />
+      <Route path='/Admin/AdminVendorDetails' element={<AdminVendorDetails />} />
+      <Route path='/Admin/AdminOrders' element={<AdminOrders />} />
         </Route>
 
 {/* Vendor Layout */}
@@ -80,6 +87,8 @@ function App() {
         <Route path='/Vendor/VendorDashboard' element={<VendorDashboard />} />
         <Route path='/Vendor/VendorMainContent' element={<VendorMainContent />} />
         <Route path='/Vendor/VendorProductCreation' element={<VendorProductCreation />} />
+        <Route path='/Vendor/VendorProductList' element={<VendorProductList />} />
+        <Route path='/Vendor/EditProductPage/:id' element={<EditProductPage />} />
       {/* <Route path='/Admin/Userlist' element={<Userlist />} /> */}
       {/* <Route path='/Admin/Createproduct' element={<Createproduct />} /> */}
       {/* <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} /> */}

@@ -77,7 +77,7 @@ const Payment = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6 ">
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-4 mt-10">Payment Details</h2>
+        <h2 className="text-2xl font-bold mb-4 mt-14">Payment Details</h2>
 
         <h3 className="text-xl font-semibold mb-2">Select Billing Address</h3>
 

@@ -31,9 +31,6 @@ function Supply() {
 
     </div>
 
-
-
-
   )
 }
 

@@ -7,41 +7,33 @@ import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getProductsById } from '../api/apiServices';
-import  { API_BASE_URL } from '../api/apiServices';
+import { getProductById } from '../api/apiServices';
+import { API_BASE_URL } from '../api/apiServices';
+import ProductDescription from '../Components/ProductDescription';
+import SellerDetails from '../Components/SellerDetails';
+import { addCart } from '../api/apiServices';
 
-function Productdetails({_id ,images, price}) {
+function Productdetails({ _id, images, price }) {
   const navigate = useNavigate()
-  // const { name } = useParams();              // Get the name from params
   const location = useLocation();
   const productId = location.state?.productId;
 
-  // const { _id } = location.state || {};
   const [selectedColor, setSelectedColor] = useState('');
   const [product, setProduct] = useState(null);
 
   const [selectedSize, setSelectedSize] = useState('');
 
-  // const product = totalproducts.find((p) => p.id === _id);
-  // const product = totalproducts.find((p) => p.id === productId);
 
-  const [activeImage, setActiveImage] = useState(images?.[0] || ''); // Default to the first image or an empty string
-  // const [activeImage, setActiveImage] = useState(images);
-  // const [activeImage, setActiveImage] = useState({`http://192.168.20.5:3000/${images[0]}`});
+  const [activeImage, setActiveImage] = useState(images?.[0] || '');
+
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(true); // Loading state for API call
   const [error, setError] = useState(null);
+  const productDetails = product?.product_details?.[0]; // Get the first product detail (or whichever is relevant)
+  const sellerDetails = product?.seller_details; // Get the first product detail (or whichever is relevant)
 
 
-  // useEffect(() => {
-  //   if (productId) {
-  //     const fetchedProduct = totalproducts.find((p) => p.id === productId);
-  //     if (fetchedProduct) {
-  //       setProduct(fetchedProduct);
-  //       // setActiveImage(fetchedProduct.images[0]); // Set default active image
-  //       setActiveImage(`${baseUrl}${fetchedProduct.images[0]}`);      }
-  //   }
-  // }, [productId]);
+
 
   useEffect(() => {
     if (product) {
@@ -54,10 +46,10 @@ function Productdetails({_id ,images, price}) {
   useEffect(() => {
     if (productId) {
       setLoading(true);
-      getProductsById(productId)
+      getProductById(productId)
         .then((response) => {
           const fetchedProduct = response.data;
-          console.log(fetchedProduct);  
+          console.log(fetchedProduct);
           setProduct(fetchedProduct.product);
           // setActiveImage(fetchedProduct.product.images[0] ); // Set default active image
           // setActiveImage(`${API_BASE_URL}${product.images[0]}`);
@@ -74,9 +66,7 @@ function Productdetails({_id ,images, price}) {
   }, [productId]);
 
 
-  // const handleMouseEnterProduct = (images) => {
-  //   setActiveImage(images)
-  // }
+
 
   const handleMouseEnterProduct = (image) => {
     setActiveImage(`${API_BASE_URL}${image}`); // Update the state with the hovered image URL
@@ -85,37 +75,52 @@ function Productdetails({_id ,images, price}) {
     setSelectedColor(colorName);
   };
   const handleSizeChange = (size) => {
-    setSelectedSize(size);
+    setSelectedSize(size.toUpperCase()); // Change to uppercase if required by backend
+
+    // setSelectedSize(size);
   }
 
   const handleQuantityChange = (event) => {
     setQty(event.target.value);
+    console.log(event.target.value)
   };
 
-  function addToCart() {
-    const userData = JSON.parse(localStorage.getItem("userData")); 
-    console.log(".................",userData)
 
-    if (userData) {
-      const productWithqty = { ...product, qty };
+  const addToCart = async () => {
+    const token = localStorage.getItem('authToken'); // Check if the user is logged in
 
-      if (localStorage.getItem("cart-items") != null) {
+    if (!token) {
+      alert('Please login to add items to your cart.');
+      navigate("/Signin")
 
-        let cartItems = JSON.parse(localStorage.getItem("cart-items"))
-        localStorage.setItem("cart-items", JSON.stringify([...cartItems, productWithqty]))
-      }
-      else {
-        localStorage.setItem("cart-items", JSON.stringify([productWithqty]))
-      }
-
-      // toast.success("Cart Item added succesfully!")
-      alert("Cart Item added succesfully!")
-      navigate("/Cart")
-    } else {
-      alert("You must login to add products to the cart!")
-      navigate("/Signup")
+      return;
     }
-  }
+
+    if (!selectedSize) {
+      alert('Please select size ');
+      return;
+    }
+
+    const cartItem = {
+      productId: product._id,
+      size: selectedSize,
+      color: selectedColor,
+      quantity: qty,
+      price: product.final_price,
+    };
+
+    try {
+      // Call the external API service to add product to cart
+      const response = await addCart(cartItem);
+      // setCartStatus('Product added to cart!');
+      console.log("...............................",response);
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      // setCartStatus('An error occurred. Please try again.');
+    }
+  };
+
+  
 
 
   const buyNow = () => {
@@ -165,7 +170,7 @@ function Productdetails({_id ,images, price}) {
 
             {/* <div className='flex gap-2'> */}
             {
-             product.images && product.images.map((image, index, _id) => (
+              product.images && product.images.map((image, index, _id) => (
                 <div key={index} className="w-16 h-16 sm:w-20 sm:h-20">
                   <img
                     // src={images}
@@ -178,9 +183,9 @@ function Productdetails({_id ,images, price}) {
                     // className='hover:border border-black rounded-xl cursor-pointer max-sm:flex-1 border'
                     // onClick={() => handleMouseEnterProduct(imageURL)}
                     className={`border-black rounded-xl cursor-pointer max-sm:flex-1 border
-                      ${activeImage ===  `${API_BASE_URL}${image}` ? 'ring-1 ring-purple-900' : 'border border-1'}`}
-                      //  onClick={() => handleMouseEnterProduct(images)}
-                       onMouseEnter={() => handleMouseEnterProduct(image)}
+                      ${activeImage === `${API_BASE_URL}${image}` ? 'ring-1 ring-purple-900' : 'border border-1'}`}
+                    //  onClick={() => handleMouseEnterProduct(images)}
+                    onMouseEnter={() => handleMouseEnterProduct(image)}
                   />
                 </div>
               ))}
@@ -195,12 +200,12 @@ function Productdetails({_id ,images, price}) {
 
       <div className=' mt-32 pl-8 lg:flex-col'>
         <div className='flex flex-col gap-4  mr-4'>
-          <div className='text-3xl'>{product.name}</div>
-          <div className='text-3xl'> ₹{product.price} </div>
+          <div className='text-3xl'>{product.name} <span>{product.product_details[0].material_type}</span></div>
+          <div className='text-3xl'> ₹{product.final_price} </div>
           <div className=' flex flex-row text-2xl gap-4 '>
             <div className='line-through'>
               {/* MRP.₹ {product.originalprice} */}
-              MRP.₹ {product.price}
+              MRP.₹ {product.MRP}
             </div>
             {/* <div className=' text-2xl text-green-400'>({product.offer}% OFF) </div> */}
           </div>
@@ -230,28 +235,37 @@ function Productdetails({_id ,images, price}) {
           </div>
         </div>
         <div className='flex flex-col font-bold mt-2' >Size : {selectedSize}</div>
-        <div className='flex flex-wrap gap-2 mt-2'>
-          <Tooltip title="Garment Measurement : Chest - 37.0in" placement="top">
-            <input type="button" name="s" value="S" className={`border border-black rounded-full h-8 w-8 ${selectedSize === 's' ? 'border-black border-2' : 'border-1'
-              }`} onClick={() => handleSizeChange('s')} /> </Tooltip>
-          <Tooltip title="Garment Measurement : Chest - 39.0in" placement="top">
-            <input type="button" name="s" value="M" className={`border border-black rounded-full h-8 w-8 ${selectedSize === 'm' ? 'border-black border-2' : 'border-1'
-              }`} onClick={() => handleSizeChange('m')} /></Tooltip>
-          <Tooltip title="Garment Measurement : Chest - 43.0in" placement="top">
 
-            <input type="button" name="s" value="L" className={`border border-black rounded-full h-8 w-8 ${selectedSize === 'l' ? 'border-black border-2' : 'border-1'
-              }`} onClick={() => handleSizeChange('l')} /></Tooltip>
-          <Tooltip title="Garment Measurement : Chest - 41.0in" placement="top">
-            <input type="button" name="s" value="XL" className={`border border-black rounded-full h-8 w-8 ${selectedSize === 'xl' ? 'border-black border-2' : 'border-1'
-              }`} onClick={() => handleSizeChange('xl')} /></Tooltip>
+        <div className='flex flex-wrap gap-2 mt-2'>
+          {product?.variants?.length > 0 ? (
+            product.variants.map((variant, index) => (
+              <Tooltip
+                key={index}
+                title={`Garment Measurement: Chest - ${variant.chest}in`} // Display chest measurement if available
+                placement="top"
+              >
+                <input
+                  type="button"
+                  name={variant.size.toLowerCase()} // Ensure lowercase for selectedSize comparison
+                  value={variant.size}
+                  className={`border border-black rounded-full h-8 w-8 ${selectedSize === variant.size.toLowerCase() ? 'border-black border-2' : 'border-1'
+                    }`}
+                  onClick={() => handleSizeChange(variant.size.toLowerCase())} // Use lowercase to keep consistency
+                />
+              </Tooltip>
+            ))
+          ) : (
+            <p>No size information available</p> // Fallback if no size is provided
+          )}
         </div>
+
         <Sizechart />
         {/* Quantity */}
 
         <div className="flex items-center">
           <label htmlFor="qty" className="mr-2 font-bold">Quantity:</label>
           <select
-            id="quantity"
+            id="qty"
             className="p-1 border border-black rounded text-center bg-transparent"
             value={qty}
             onChange={handleQuantityChange}
@@ -269,13 +283,41 @@ function Productdetails({_id ,images, price}) {
           <button
             onClick={() => addToCart()}
             className="border border-black border-2 rounded-lg hover:bg-red-600 hover:text-white transition lg:w-36 w-full p-2">
-              🛒 Add To Cart
+            🛒 Add To Cart
           </button>
           <button
             onClick={() => buyNow()}
             className=" border border-black border-2 rounded-lg hover:bg-red-600 hover:text-white transition lg:w-36 p-2">
             Buy Now
           </button>
+        </div>
+
+        <div className='mt-8'>
+          {productDetails ? (
+
+            <ProductDescription
+              material_type={productDetails.material_type}
+              sleeve_details={productDetails.sleeve_details}
+              fit_type={productDetails.fit_type}
+              pattern_type={productDetails.pattern_type}
+            />
+          ) : (
+            <div>No products available in this category</div> // Message when no products found
+          )}
+        </div>
+
+
+
+        <div className='mt-8'>
+          {sellerDetails ? (
+
+            <SellerDetails
+              name={sellerDetails.name}
+              location={sellerDetails.location}
+            />
+          ) : (
+            <div>No Seller Details Available in this Product</div> // Message when no products found
+          )}
         </div>
       </div>
     </div>

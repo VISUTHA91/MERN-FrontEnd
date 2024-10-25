@@ -49,19 +49,19 @@ function ProfilePage() {
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       {successMessage && <p className="text-green-500">{successMessage}</p>}
       <div className="bg-white  font-bold  justify-around sm:gap-4 shadow-md rounded-lg p-6 w-78">
+      <Link to={'/User/UserOrder'} > 
         <div className='border rounded p-6 mb-2 hover:bg-gray-200 flex gap-4 text-xl'> <GiBoxUnpacking  size={30}/>
-        Your Orders</div>
+        Your Orders</div></Link>
         <Link to={'/User/Profile'} > 
         <div className='border rounded p-6 mb-2 hover:bg-gray-200 flex  gap-4 text-xl '> <BiSolidUserBadge  size={30}/>
         Your Profile</div></Link>
          <Link to={'/User/Profile'} > 
         <div className='border rounded p-6 mb-2 hover:bg-gray-200  flex gap-4 text-xl '> <FaLocationDot size={30} /> 
         Your Address</div> </Link>
-        
         <div className='border rounded p-6 mb-2 hover:bg-gray-200 flex gap-4 text-xl'> <FaHeart  size={30}/>
         Your whistlist</div>
         <div className='border rounded p-6 mb-2 hover:bg-gray-200 flex gap-4 text-xl'> <RiCustomerService2Line size={30} />
-        Contact Us</div>
+        Support</div>
         </div>
       </div>
     </div>

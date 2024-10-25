@@ -69,30 +69,7 @@ function AdminProductlist() {
     setShowEdit(true); // Show the modal
   };
 
-  // Handle form submission for editing product
-  // const handleEditSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('name', productName);
-  //     formData.append('price', productPrice);
-  //     formData.append('description', productDescription);
-
-  //     if (productImage) {
-  //       formData.append('images', productImage); // Append the image if it was updated
-  //     }
-
-  //     console.log(formData);
-  //     await editProduct(editProductId, formData); // Call the editProduct API service
-
-  //     setSuccessMessage('Product updated successfully!');
-  //     setShowEdit(false);
-  //     fetchProductList(); // Refresh the product list after editing
-  //   } catch (error) {
-  //     console.error('Error updating product:', error);
-  //   }
-  // };
+ 
   const handleCategoryChange = (e) => {
     const selectedId = e.target.value;
     const selectedCategoryObj = categories.find((category) => category._id === selectedId);
