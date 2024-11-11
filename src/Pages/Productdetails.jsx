@@ -12,6 +12,18 @@ import { API_BASE_URL } from '../api/apiServices';
 import ProductDescription from '../Components/ProductDescription';
 import SellerDetails from '../Components/SellerDetails';
 import { addCart } from '../api/apiServices';
+import ZoomImage from '../Components/ZoomImage';
+import { GlassMagnifier } from 'react-image-magnifiers';
+import ReactImageMagnify from 'react-image-magnify';
+import ReactCursorPosition from 'react-cursor-position';
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+import { kids } from '../assets/Images';
+
+
+
+
+
 
 function Productdetails({ _id, images, price }) {
   const navigate = useNavigate()
@@ -22,17 +34,17 @@ function Productdetails({ _id, images, price }) {
   const [product, setProduct] = useState(null);
 
   const [selectedSize, setSelectedSize] = useState('');
+  // const [activeImage, setActiveImage] = useState(`${API_BASE_URL}${product.images[0]}`);
 
 
   const [activeImage, setActiveImage] = useState(images?.[0] || '');
+
 
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(true); // Loading state for API call
   const [error, setError] = useState(null);
   const productDetails = product?.product_details?.[0]; // Get the first product detail (or whichever is relevant)
   const sellerDetails = product?.seller_details; // Get the first product detail (or whichever is relevant)
-
-
 
 
   useEffect(() => {
@@ -66,8 +78,6 @@ function Productdetails({ _id, images, price }) {
   }, [productId]);
 
 
-
-
   const handleMouseEnterProduct = (image) => {
     setActiveImage(`${API_BASE_URL}${image}`); // Update the state with the hovered image URL
   };
@@ -76,15 +86,12 @@ function Productdetails({ _id, images, price }) {
   };
   const handleSizeChange = (size) => {
     setSelectedSize(size.toUpperCase()); // Change to uppercase if required by backend
-
-    // setSelectedSize(size);
   }
 
   const handleQuantityChange = (event) => {
     setQty(event.target.value);
     console.log(event.target.value)
   };
-
 
   const addToCart = async () => {
     const token = localStorage.getItem('authToken'); // Check if the user is logged in
@@ -113,14 +120,17 @@ function Productdetails({ _id, images, price }) {
       // Call the external API service to add product to cart
       const response = await addCart(cartItem);
       // setCartStatus('Product added to cart!');
-      console.log("...............................",response);
+
+      console.log("...............................", response);
+      alert("Product Added to Cart Successfully");
+
     } catch (error) {
       console.error('Error adding to cart:', error);
       // setCartStatus('An error occurred. Please try again.');
     }
   };
 
-  
+
 
 
   const buyNow = () => {
@@ -140,51 +150,63 @@ function Productdetails({ _id, images, price }) {
   }
 
 
+
+
+  const imageSrc = activeImage || `${API_BASE_URL}${product.images[0]}`;
+
+
   return (
-    // <div className='lg:flex lg:flex-row sm:flex sm:flex-col '>
-
     <div className="flex flex-col lg:flex-row p-4 sm:p-6 lg:p-12 ">
-
-      {/* <div className='w-1/2  flex max-lg:flex-col gap-1 h-96 sm:justify-center items-center ml-28 border border-2 rounded-xl lg:mt-32  mb-64 bg-gray-400' key={product.id}> */}
       <div className="w-full lg:w-1/2 flex flex-col items-center gap-4 lg:ml-16 border rounded-lg p-4 bg-gray-200  lg:mt-32">
-
-        {/* <div className=' flex justify-center relative max-h-full items-center'> */}
         <div className="w-full max-w-xs sm:max-w-md lg:max-w-lg">
+          {/* <ZoomImage imgSrc={activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`} /> */}
+          {/* <ZoomImage imgSrc={imageSrc} /> */}
 
-          {/* <div className='w-96'> */}
-          <img
-            // src={`${API_BASE_URL}${product.images[0]}`}
-            src={activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`}
+          {/* <ReactCursorPosition> */}
+            <ReactImageMagnify {...{
+              smallImage: {
+                alt: 'Wristwatch by Ted Baker London',
+                isFluidWidth: true,
+                // src: activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`
+                 src:imageSrc
+              },
+              largeImage: {
+                //  src: activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`,
+                 src:imageSrc,
+                alt:"Kids",
+                width: 300,
+                height: 300
+              },
+              enlargedImageContainerDimensions: {
+                width: '300%',
+                height: '300%',
+              },
+              enlargedImageContainerStyle: {
+                width: '300px', // Set exact width and height for the enlarged image area
+                height: '300px',
+              },
+              // Control the size and style of the magnifying lens
+              lensStyle: { 
+                backgroundColor: 'rgba(0, 0, 0, 0.2)', 
+                width: '150px', // Adjust lens size to control visible zoomed area
+                height: '150px',
+              },
+              enlargedImagePosition: 'over'
+            }} />
+          {/* </ReactCursorPosition> */}
 
 
-            // src={activeImage}
-            // src={`${images[0]}`}
-            size='96'
-            // width={480}
-            // height={480} 
-            alt='image'></img>
-          {/* </div> */}
-
-          {/* <div className='flex sm:gap-2 absolute  sm:-bottom-20'> */}
           <div className="flex gap-2 mt-4">
-
-            {/* <div className='flex gap-2'> */}
             {
               product.images && product.images.map((image, index, _id) => (
                 <div key={index} className="w-16 h-16 sm:w-20 sm:h-20">
                   <img
-                    // src={images}
-                    // src={`${API_BASE_URL}${images}`}
                     src={`${API_BASE_URL}${image}`}
-
                     alt={`product image ${index}`}
                     width={80}
                     height={80}
-                    // className='hover:border border-black rounded-xl cursor-pointer max-sm:flex-1 border'
-                    // onClick={() => handleMouseEnterProduct(imageURL)}
                     className={`border-black rounded-xl cursor-pointer max-sm:flex-1 border
                       ${activeImage === `${API_BASE_URL}${image}` ? 'ring-1 ring-purple-900' : 'border border-1'}`}
-                    //  onClick={() => handleMouseEnterProduct(images)}
                     onMouseEnter={() => handleMouseEnterProduct(image)}
                   />
                 </div>
@@ -204,10 +226,8 @@ function Productdetails({ _id, images, price }) {
           <div className='text-3xl'> ₹{product.final_price} </div>
           <div className=' flex flex-row text-2xl gap-4 '>
             <div className='line-through'>
-              {/* MRP.₹ {product.originalprice} */}
               MRP.₹ {product.MRP}
             </div>
-            {/* <div className=' text-2xl text-green-400'>({product.offer}% OFF) </div> */}
           </div>
           <div className='text-l'>Price Inclusive all Taxes</div>
         </div>
@@ -216,11 +236,10 @@ function Productdetails({ _id, images, price }) {
         <div className=' flex flex-col  lg:flex-col gap-2 mt-4'>
           <div className=' font-bold'>Colour : <span className='font-normal'>{selectedColor}</span></div>
           <div className='flex flex-wrap gap-2 mt-2'>
-            <input type='button' className={`border border-black  rounded-full  h-8 w-8 bg-red-500 ${selectedColor === 'red' ? 'border-black border-2' : 'border-1'
-              }`} onClick={() => handleColorChange('red')} />
-            <input type="button" name="green" className={`border border-black rounded-full h-8 w-8 bg-green-500 ${selectedColor === 'green' ? 'border-black border-2' : 'border-1'
-              }`} onClick={() => handleColorChange('green')} />
-            <input type="button" name="blue" className={`border border-black rounded-full h-8 w-8 bg-blue-500 ${selectedColor === 'blue' ? 'border-black border-2' : 'border-1'
+            <input type="button" name={product.color} className={`border border-black rounded-full h-8 w-8 ${selectedColor === product.color ? 'border-black border-2' : 'border-1'
+              }`} onClick={() => handleColorChange(product.color)}
+              style={{ backgroundColor: product.color }} />
+            {/*<input type="button" name="blue" className={`border border-black rounded-full h-8 w-8 bg-blue-500 ${selectedColor === 'blue' ? 'border-black border-2' : 'border-1'
               }`} onClick={() => handleColorChange('blue')} />
             <input type="button" name="white" className={`border border-black rounded-full h-8 w-8 bg-white ${selectedColor === 'white' ? 'border-black border-2' : 'border-1'
               }`} onClick={() => handleColorChange('white')} />
@@ -231,7 +250,7 @@ function Productdetails({ _id, images, price }) {
             <input type="button" name="black" className={`border border-black rounded-full h-8 w-8 bg-black ${selectedColor === 'black' ? 'border-black border-2' : 'border-1'
               }`} onClick={() => handleColorChange('black')} />
             <input type="button" name="yellow" className={`border border-black rounded-full h-8 w-8 bg-yellow-500 ${selectedColor === 'yellow' ? 'border-black border-2' : 'border-1'
-              }`} onClick={() => handleColorChange('yellow')} />
+              }`} onClick={() => handleColorChange('yellow')} /> */}
           </div>
         </div>
         <div className='flex flex-col font-bold mt-2' >Size : {selectedSize}</div>
@@ -325,3 +344,27 @@ function Productdetails({ _id, images, price }) {
 }
 
 export default Productdetails
+
+{/* <GlassMagnifier
+imageSrc={imageSrc}
+largeImageSrc={largeImageSrc}
+magnifierBorderColor="rgba(0, 0, 0, 0.5)"
+magnifierSize="300px" // Adjust size as needed
+className="rounded-lg"
+/> */}
+
+
+
+
+{/* <Zoom>
+            <img
+              src={activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`}
+              size='96'
+              alt='image'>
+            </img>
+          </Zoom> */}
+{/* <img
+              src={activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`}
+              size='96'
+              alt='image'>
+            </img> */}

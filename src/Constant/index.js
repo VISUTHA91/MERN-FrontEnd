@@ -52,21 +52,24 @@ export const products = [
         },
     ]
 
-export const gender=[
+export const genders=[
     {
         id:1,
         imgURL:menn,
-        catogory:"MEN's"
+        name:"MEN's Collections",
+        gender:"men"
     },
     {
         id:2,
         imgURL:womenn,
-        catogory:"WOMEN's"
+        name:"WOMEN's Collections",
+        gender:"women"
     },
     {
         id:3,
         imgURL:kidss,
-        catogory:"KID's"
+        name:"KID's Collections",
+        gender:"kids"
     }
 ]
 export const price =[

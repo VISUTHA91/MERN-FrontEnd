@@ -1,5 +1,8 @@
 
 import { BrowserRouter, Route,Routes } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import RootLayout from './Layouts/RootLayout';
 import Nav from './Components/Nav'
 import Home from './Pages/Home';
@@ -34,6 +37,7 @@ import EditProductPage from './Pages/Vendor/EditProductPage';
 import AdminOrders from './Pages/Admin/AdminOrders';
 import UserOrderPage from './Pages/User/UserOrder';
 import AdminVendorDetails from './Pages/Admin/AdminVendorDetails';
+import Address from './Pages/User/Address';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -46,6 +50,8 @@ function App() {
   return (
     <div className='App'>
         <BrowserRouter>
+        <ToastContainer />
+
         <ScrollToTop />
           <Routes>
           <Route element={<RootLayout  cartCount={cartCount} />} >
@@ -59,13 +65,13 @@ function App() {
       <Route path='/Payment' element={<Payment/>} />
       <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />
+      <Route path='/Productlist/gender/:gender' element={<Productlist/>} />
       <Route path='/User/ProfilePage/' element={<ProfilePage />} />
       <Route path='/User/Profile/' element={<Profile />} />
       <Route path='/User/UserOrder/' element={<UserOrderPage />} />
+      <Route path='/User/Address/' element={<Address />} />
       <Route path='/Productdetails/:id' element={<Productdetails  addToCart={addToCart}  />} />
           </Route>
-
-
           {/* Admin Layout */}
         <Route element={<AdminLayout  />} >
         <Route index element={<Dashboard />} />
@@ -93,15 +99,9 @@ function App() {
       {/* <Route path='/Admin/Createproduct' element={<Createproduct />} /> */}
       {/* <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} /> */}
         {/* </Route> */}
-
-
-
-
           </Routes>
         </BrowserRouter>
     </div>
-
-          )
+  )
 }
-
 export default App

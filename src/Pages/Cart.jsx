@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { getCartItems } from "../api/apiServices";
+import { getCartItems , deleteItem } from "../api/apiServices";
 import { API_BASE_URL } from "../api/apiServices";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -53,14 +53,11 @@ function Cart() {
     );
   };
 
-  // Handle remove item from cart
-  // const removeItem = (id) => {
-  //   setCartItems(cartItems.filter((item) => item._id !== id));
-  // };
+ 
 
   const removeItem = async (id) => {
     try {
-      await deleteitem(id); // Call the delete API
+      await deleteItem(id); // Call the delete API
       setCartItems(cartItems.filter((item) => item._id !== id));
       alert('Product deleted successfully!');
       window.location.reload();
@@ -69,6 +66,18 @@ function Cart() {
       alert('Failed to delete product.');
     }
   };
+  // const removeItem = async (id) => {
+  //   try {
+  //     const productId = cartItems.find((item) => item._id === id)?.product.product_id;
+  //     await deleteItem(productId); // Call the delete API with product_id
+  //     setCartItems(cartItems.filter((item) => item._id !== id)); // Update state without reloading
+  //     alert('Product deleted successfully!');
+  //   } catch (error) {
+  //     console.error('Error deleting product:', error);
+  //     alert('Failed to delete product.');
+  //   }
+  // };
+  
 
   // Calculate total price of items in the cart
   const calculateTotalPrice = () => {
@@ -77,8 +86,6 @@ function Cart() {
       0
     );
   };
-
-  
 
 const calculateGrandTotal = () => {
   return calculateTotalPrice() + shippingFee;
@@ -99,224 +106,7 @@ const calculateGrandTotal = () => {
   console.log("Final cartItems:", cartItems); // Debugging the state
 
   return (
-    // <div className='p-8 pt-28'>
-    //   <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
-
-    //   {cartItems && cartItems.length === 0 ? (
-    //     <p>Your cart is empty.</p>
-    //   ) : (
-    //     <div className="p-8">
-    //       <h2 className="mt-5">Your Cart: <b>{cartItems.length} items</b></h2>
-    //       {/* Cart Items */}
-    //       {cartItems && cartItems.map((item) => (
-    //         <div key={item._id} className="flex items-center mb-4 border">
-    //           <img
-    //           src={`${API_BASE_URL}${item.product.images}`}
-    //           alt={item.product.name} className="w-16 h-16" />
-    //           <div className="ml-4 flex-grow">
-    //             <h3 className="text-lg">{item.product.name}</h3>
-    //             <p className="text-sm">Price:₹ {item.product.final_price}</p>
-    //             <p className="text-sm">Total: ₹{item.product.final_price * item.quantity}</p>
-    //           </div>
-
-            
-
-    //           <div className="flex items-center">
-    //             {/* Quantity Controls */}
-    //             <button
-    //               className="bg-gray-300 px-2 py-1 rounded"
-    //               onClick={() => decreaseQuantity(item._id)}>
-    //               -
-    //             </button>
-    //             <span className="px-2">{item.quantity}</span>
-    //             <button
-    //               className="bg-gray-300 px-2 py-1 rounded"
-    //               onClick={() => increaseQuantity(item._id)}>
-    //               +
-    //             </button>
-    //           </div>
-    //           <button
-    //             className="ml-4 text-red-500"
-    //             onClick={() => removeItem(item._id)}>
-    //                 <MdDeleteForever size={28} />
-    //                 </button>
-    //         </div>
-    //       ))}
-
-    //       {/* Cart Total */}
-    //       <div className="mt-4 text-right">
-    //         <h3 className="text-xl font-bold">Total:₹ {calculateTotalPrice()}</h3>
-    //       </div>
-
-    //       {/* Checkout Button */}
-    //       <div className="mt-4 text-right">
-    //         <button
-    //           onClick={handleProceedToPayment}
-    //           className="bg-blue-500 text-white px-4 py-2 rounded"
-    //         >
-    //           Proceed to Checkout
-    //         </button>
-    //       </div>
-    //     </div>
-    //   )}
-    // </div>
-
-
-//     <div className="p-8 pt-28">
-//   <h2 className="text-3xl font-bold mb-6">Shopping Cart</h2>
-
-//   {cartItems && cartItems.length === 0 ? (
-//     <p className="text-lg text-gray-600">Your cart is empty.</p>
-//   ) : (
-//     <div className="bg-white shadow-md rounded-lg p-6">
-//       <h2 className="mt-5 text-xl font-semibold">Your Cart: <b>{cartItems.length} items</b></h2>
-
-//       {/* Cart Items */}
-//       {cartItems && cartItems.map((item) => (
-//         <div key={item._id} className="flex items-center mb-4 p-4 bg-gray-50 border rounded-lg shadow-sm">
-//           <img
-//             src={`${API_BASE_URL}${item.product.images}`}
-//             alt={item.product.name} className="w-20 h-20 object-cover rounded-lg" 
-//           />
-//           <div className="ml-6 flex-grow">
-//             <h3 className="text-lg font-medium text-gray-900">{item.product.name}</h3>
-//             <p className="text-sm text-gray-600">Price: ₹{item.product.final_price}</p>
-//             <p className="text-sm text-gray-600">Total: ₹{item.product.final_price * item.quantity}</p>
-//           </div>
-
-//           {/* Quantity Controls */}
-//           <div className="flex items-center">
-//             <button
-//               className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded-lg transition-colors"
-//               onClick={() => decreaseQuantity(item._id)}
-//             >
-//               -
-//             </button>
-//             <span className="mx-2 text-lg">{item.quantity}</span>
-//             <button
-//               className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded-lg transition-colors"
-//               onClick={() => increaseQuantity(item._id)}
-//             >
-//               +
-//             </button>
-//           </div>
-
-//           {/* Remove Item Button */}
-//           <button
-//             className="ml-6 text-red-500 hover:text-red-600 transition-colors"
-//             onClick={() => removeItem(item._id)}
-//           >
-//             <MdDeleteForever size={28} />
-//           </button>
-//         </div>
-//       ))}
-
-//       {/* Cart Total */}
-//       <div className="mt-6 text-right">
-//         <h3 className="text-2xl font-bold text-gray-900">Total: ₹{calculateTotalPrice()}</h3>
-//       </div>
-
-//       {/* Checkout Button */}
-//       <div className="mt-6 text-right">
-//         <button
-//           onClick={handleProceedToPayment}
-//           className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition-colors"
-//         >
-//           Proceed to Checkout
-//         </button>
-//       </div>
-//     </div>
-//   )}
-// </div>
-
-//  <div className="p-8 pt-28">
-//   <h2 className="text-3xl font-bold mb-6">Shopping Cart</h2>
-
-//   {cartItems && cartItems.length === 0 ? (
-//     <p className="text-lg text-gray-600">Your cart is empty.</p>
-//   ) : (
-//     <div className="bg-white shadow-md rounded-lg p-6">
-//       <h2 className="mt-5 text-xl font-semibold">Your Cart: <b>{cartItems.length} items</b></h2>
-
-//       {/* Column Headers */}
-//       <div className="flex items-center justify-between py-2 border-b font-semibold text-gray-700 mt-4">
-//         <span className="flex-1 text-xl">Product</span>
-//         <span className="w-20 text-center text-xl mr-4">Price</span>
-//         <span className="w-32 text-center text-xl mr-6">Quantity</span>
-//         <span className="w-20 text-center text-xl">Total</span>
-//         <span className="w-10"></span> {/* Empty space for delete icon */}
-//       </div>
-
-//       {/* Cart Items */}
-//       {cartItems && cartItems.map((item) => (
-//         <div key={item._id} className="flex items-center mb-4 p-4 bg-gray-50 border rounded-lg shadow-sm">
-//           {/* Product Details */}
-//           <div className="flex-1 flex items-center">
-//             <img
-//               src={`${API_BASE_URL}${item.product.images}`}
-//               alt={item.product.name} className="w-20 h-20 object-cover rounded-lg" 
-//             />
-//             <div className="ml-4">
-//               <h3 className="text-lg font-medium text-gray-900">{item.product.name}</h3>
-//               <p className="text-sm text-gray-600">Color: {item.product.color}</p>
-//               <p className="text-sm text-gray-600">Size: {item.product.size}</p>
-//             </div>
-//           </div>
-
-//           {/* Price */}
-//           <div className="w-20 text-center">
-//             <p className="text-lg text-gray-800 mr-8">₹{item.product.final_price}</p>
-//           </div>
-
-//           {/* Quantity Controls */}
-//           <div className="w-32 text-center flex justify-center items-center">
-//             <button
-//               className="bg-gray-300 hover:bg-gray-400 px-2 py-1 rounded-l-lg transition-colors"
-//               onClick={() => decreaseQuantity(item._id)}>
-//               -
-//             </button>
-//             <span className="px-3 text-lg ">{item.quantity}</span>
-//             <button
-//               className="bg-gray-300 hover:bg-gray-400 px-2 py-1 rounded-r-lg transition-colors"
-//               onClick={() => increaseQuantity(item._id)}
-//             >
-//               +
-//             </button>
-//           </div>
-
-//           {/* Total Value */}
-//           <div className="w-20 text-center text-lg font-semibold text-gray-900">
-//             ₹{item.product.final_price * item.quantity}
-//           </div>
-
-//           {/* Remove Item Button */}
-//           <button
-//             className="w-10 text-red-500 hover:text-red-600 transition-colors text-center"
-//             onClick={() => removeItem(item._id)}
-//           >
-//             <MdDeleteForever size={28} />
-//           </button>
-//         </div>
-//       ))}
-
-//       {/* Cart Total */}
-//       <div className="mt-6 text-right">
-//         <h3 className="text-2xl font-bold text-gray-900">Total: ₹{calculateTotalPrice()}</h3>
-//       </div>
-
-//       {/* Checkout Button */}
-//       <div className="mt-6 text-right">
-//         <button
-//           onClick={handleProceedToPayment}
-//           className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition-colors"
-//         >
-//           Proceed to Checkout
-//         </button>
-//       </div>
-//     </div>
-//   )}
-// </div> 
-
+  
 <div className="p-4 md:p-8 pt-28">
   <h2 className="text-2xl md:text-3xl font-bold mb-6">Shopping Cart</h2>
 
@@ -329,9 +119,9 @@ const calculateGrandTotal = () => {
       {/* Column Headers */}
       <div className="hidden md:flex items-center justify-between py-2 border-b font-semibold text-gray-700 mt-4">
         <span className="flex-1 text-lg">Product</span>
-        <span className="w-20 text-center text-lg">Price</span>
-        <span className="w-32 text-center text-lg">Quantity</span>
-        <span className="w-20 text-center text-lg">Total</span>
+        <span className="w-32 text-center text-lg mr-12">Quantity</span>
+        <span className="w-20 text-center text-lg mr-10">Price</span>
+        <span className="w-20 text-center text-lg mr-10">Total</span>
         <span className="w-10"></span> {/* Empty space for delete icon */}
       </div>
 
@@ -347,7 +137,7 @@ const calculateGrandTotal = () => {
             <div className="ml-4">
               <h3 className="text-base md:text-lg font-medium text-gray-900">{item.product.name}</h3>
               <p className="text-sm text-gray-600">Color: {item.product.color}</p>
-              <p className="text-sm text-gray-600">Size: {item.product.size}</p>
+              <p className="text-sm text-gray-600">Size: {item.size}</p>
             </div>
           </div>
 
@@ -355,7 +145,6 @@ const calculateGrandTotal = () => {
 
           <div className=" flex gap-10 mt-6">
          
-
           {/* Quantity Controls */}
           <div className="mt-2 md:mt-0 w-full md:w-32 flex justify-center md:justify-center items-center">
             <button
@@ -386,7 +175,7 @@ const calculateGrandTotal = () => {
           {/* Remove Item Button */}
           <button
             className="mt-2 md:mt-0 w-full md:w-10 text-red-500 hover:text-red-600 transition-colors text-center"
-            onClick={() => removeItem(item._id)}
+            onClick={() => removeItem(item.product._id)}
           >
             <MdDeleteForever size={24} />
           </button>

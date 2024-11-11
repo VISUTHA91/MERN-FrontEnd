@@ -1,7 +1,5 @@
-
 import React from 'react';
-import { bg } from '../assets/Images';
-import { gender } from '../Constant';
+import { genders } from '../Constant';
 import { Link } from 'react-router-dom';
 
 function ShopbyGender() {
@@ -10,35 +8,20 @@ function ShopbyGender() {
       <div className=' flex text-3xl font-bold justify-center items-center '>
         <h1>Discover Your Look</h1>
       </div>
-      {/* <div className="flex flex-row flex-wrap gap-6 justify-center w-full items-center p-4  mt-8">
-        {gender.map((e) => (
-          <Link to={'/ProductList/'} key={e.id}>
-            <div className="flex flex-col items-center  md:w-48 lg:w-64 bg-gray-400 border border-1 border-black lg:h-80 shadow-2xl">
+      <div className="flex flex-row flex-wrap gap-6 justify-center w-full items-center p-4  mt-8">
+        {genders.map((e) => (
+          <Link
+            to={`/Productlist/gender/${e.gender}`}
+            key={e.id}>
+            <div className="relative w-48 h-96 md:w-48 md:h-56 lg:w-72 lg:h-80">
+              {/* Image */}
               <img
                 src={e.imgURL}
-                alt={e.catogory}
-                className="border rounded-full bg-gray-200 w-48 h-80 md:w-48 md:h-48 lg:w-48 lg:h-48 hover:scale-110 transition-transform duration-300"
+                className="w-full h-full object-cover border rounded-lg hover:scale-105 transition-transform duration-300"
               />
-              <div className="font-bold text-xl mt-10 lg:text-2xl text-center">
-                {e.catogory}
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div> */}
-
-<div className="flex flex-row flex-wrap gap-6 justify-center w-full items-center p-4  mt-8">
-        {gender.map((e) => (
-          <Link to={'/ProductList/'} key={e.id}>
-            {/* <div className="flex flex-col items-center  md:w-48 lg:w-64 bg-gray-400 border border-1 border-black lg:h-80 shadow-2xl"> */}
-              <div>
-              <img
-                src={e.imgURL}
-                alt={e.catogory}
-                className="border bg-gray-200 w-48 h-80 md:w-48 md:h-48 lg:w-72 lg:h-72 hover:scale-110 transition-transform duration-300"
-              />
-              <div className="font-bold text-xl mt-10 lg:text-2xl text-center bg-gray-200">
-                {e.catogory}
+              {/* Category Title Overlay */}
+              <div className="absolute inset-0 flex items-end  justify-center  font-semibold text-lg md:text-xl lg:text-lg">
+                <span className='bg-white w-3/4 text-center mb-3 rounded'>{e.name}</span>
               </div>
             </div>
           </Link>
@@ -47,6 +30,4 @@ function ShopbyGender() {
     </div>
   );
 }
-
 export default ShopbyGender;
-

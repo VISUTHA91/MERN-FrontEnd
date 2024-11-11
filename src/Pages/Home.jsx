@@ -4,13 +4,15 @@ import Hero from '../Components/Hero'
 import Catogory from './Catogory'
 import Standards from '../Components/Standards'
 import Supply from '../Components/Supply'
+import Besttshirt from '../Components/Besttshirt'
 
 function Home() {
   return (
     <>
     <Hero  />
     <Catogory />
-    {/* <Standards /> */}
+    <Standards />
+    <Besttshirt />
     <Supply />
   
     </>

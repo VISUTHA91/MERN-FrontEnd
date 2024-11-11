@@ -45,7 +45,7 @@ function ProfilePage() {
   return (
     <div className='bg-fuchsia-900'>
         <div className="container mx-auto p-8 ">
-        <h1 className="text-2xl font-bold mb-4 mt-12 text-white"> Your Account</h1>
+        <h1 className="text-2xl font-bold mb-4 mt-16 text-white"> Your Account</h1>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       {successMessage && <p className="text-green-500">{successMessage}</p>}
       <div className="bg-white  font-bold  justify-around sm:gap-4 shadow-md rounded-lg p-6 w-78">
@@ -55,7 +55,9 @@ function ProfilePage() {
         <Link to={'/User/Profile'} > 
         <div className='border rounded p-6 mb-2 hover:bg-gray-200 flex  gap-4 text-xl '> <BiSolidUserBadge  size={30}/>
         Your Profile</div></Link>
-         <Link to={'/User/Profile'} > 
+         <Link to={'/User/Address'} > 
+         {/* <Link to={`/User/${userId}/Address`}> */}
+
         <div className='border rounded p-6 mb-2 hover:bg-gray-200  flex gap-4 text-xl '> <FaLocationDot size={30} /> 
         Your Address</div> </Link>
         <div className='border rounded p-6 mb-2 hover:bg-gray-200 flex gap-4 text-xl'> <FaHeart  size={30}/>

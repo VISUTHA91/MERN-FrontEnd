@@ -606,7 +606,7 @@
 // export default Profile;
 
 import React, { useState, useEffect } from 'react';
-import { getUserProfile, updateUserProfile } from '../../api/apiServices';
+import { getUserProfile } from '../../api/apiServices';
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -627,7 +627,6 @@ function Profile() {
       try {
         const response = await getUserProfile(userData.id); // Pass userId from localStorage
         const fetchedUser = response.user || {};
-        // Ensure `addresses` is always an array
         setUser({ ...fetchedUser, addresses: fetchedUser.addresses || [] });
       } catch (error) {
         setErrorMessage('Failed to load user profile.');
@@ -663,24 +662,24 @@ function Profile() {
     });
   };
 
-  const handleUpdateProfile = async (updatedUser) => {
-    try {
-      const formData = new FormData();
-      formData.append('name', updatedUser.name);
-      formData.append('email', updatedUser.email);
-      formData.append('phone_number', updatedUser.phone_number);
-      const defaultAddress = updatedUser.addresses.find((address) => address.isDefault);
-      console.log('Updated user:', updatedUser);
-      console.log('Default address:', defaultAddress);
+  // const handleUpdateProfile = async (updatedUser) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('name', updatedUser.name);
+  //     formData.append('email', updatedUser.email);
+  //     formData.append('phone_number', updatedUser.phone_number);
+  //     const defaultAddress = updatedUser.addresses.find((address) => address.isDefault);
+  //     console.log('Updated user:', updatedUser);
+  //     console.log('Default address:', defaultAddress);
 
-      const response = await updateUserProfile(formData); // Send FormData to backend
-      setUser(response);
-      setSuccessMessage('Profile updated successfully!');
-      setIsEditing(false);
-    } catch (error) {
-      setErrorMessage('Failed to update profile.');
-    }
-  };
+  //     const response = await updateUserProfile(formData); // Send FormData to backend
+  //     setUser(response);
+  //     setSuccessMessage('Profile updated successfully!');
+  //     setIsEditing(false);
+  //   } catch (error) {
+  //     setErrorMessage('Failed to update profile.');
+  //   }
+  // };
 
   if (!user) {
     return <div>Loading...</div>;
@@ -693,10 +692,12 @@ function Profile() {
       {successMessage && <p className="text-green-500">{successMessage}</p>}
       {!isEditing ? (
         <div className="bg-white shadow-md rounded-lg p-6">
-          <div className="flex flex-col items-center mb-4">
+          <div className="flex bg-gray-100 flex-col justify-center items-center rounded mb-4">
             <div>
-              <img src={user.profilePicture || '/default-avatar.png'} alt="Profile" className="w-20 h-20 rounded-full mr-4" />
-              <div className="flex flex-col items-center">
+              <div className='flex items-center ml-14 mt-4'>
+              <img src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} alt="Profile" className="w-20 h-20 rounded-full" />
+              </div>
+              <div className="flex flex-col items-center mb-4">
                 <h2 className="text-xl font-semibold">{user.name}</h2>
                 <p>{user.email}</p>
                 <p>Phone Number: {user.phone_number}</p>
@@ -705,7 +706,7 @@ function Profile() {
           </div>
 
           {/* Display multiple addresses */}
-          <div className="mb-4 w-full">
+          {/* <div className="mb-4 w-full">
             <h3 className="font-semibold">Address</h3>
             {user.addresses && user.addresses.length > 0 ? (
               user.addresses.map((address, index) => (
@@ -724,12 +725,11 @@ function Profile() {
             ) : (
               <p>No address provided</p>
             )}
-          </div>
+          </div> */}
 
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             Edit Profile
           </button>
         </div>
@@ -770,7 +770,7 @@ function Profile() {
           </div>
 
           {/* Edit Address Fields */}
-          {user.addresses && user.addresses.map((address, index) => (
+          {/* {user.addresses && user.addresses.map((address, index) => (
             <div key={index} className="mb-4">
               <label htmlFor="flatNo" className="block text-sm font-medium text-gray-700">Flat No</label>
               <input
@@ -831,7 +831,7 @@ function Profile() {
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Add Address
-          </button>
+          </button> */}
 
           <button
             onClick={() => handleUpdateProfile(user)}

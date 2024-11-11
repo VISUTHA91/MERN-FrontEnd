@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import { getUserProfile } from '../api/apiServices';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -86,9 +88,15 @@ function Nav({ cartCount }) {
     localStorage.removeItem("userData")
     setIsAuthenticated(false);
     setUser(null);
-    alert('Logged Out');
-        navigate("/")
-        window.location.reload();
+    // alert('Logged Out');
+
+        // navigate("/")
+        // window.location.reload();
+        toast.success("Logged Out Successfully");
+        setTimeout(() => {
+          navigate("/");
+      }, 5000);
+
   };
   // const handleClick = () => {
   //   getUserProfile(user.id)
@@ -149,9 +157,9 @@ function Nav({ cartCount }) {
                 </button>
                 {isAboutDropdownOpen && (
                   <ul className="absolute left-0  py-2 w-48 rounded-md shadow-lg bg-white text-black z-20">
-                    <li><Link to={'/product1'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 1</Link></li>
-                    <li><Link to={'/product2'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 2</Link></li>
-                    <li><Link to={'/product3'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Product 3</Link></li>
+                    <li><Link to={'/product1'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Men</Link></li>
+                    <li><Link to={'/product2'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Women</Link></li>
+                    <li><Link to={'/product3'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Kids</Link></li>
                   </ul>
                 )}
               </>
@@ -200,20 +208,12 @@ function Nav({ cartCount }) {
                 <div className="absolute right-0 mt-2 w-35 bg-white rounded-md shadow-lg">
                     {user.role === 'admin' ? (
                     <Link to={'/Admin/Dashboard'} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                    {/* // onClick={() => navigate('/Admin/Dashboard')} */}
                     Dashboard
                     </Link>
                     ) : (
-                      // <Link to={'/User/Profile'} 
-                      <Link 
-                      to={'/User/ProfilePage'} 
-                      // to={`/User/Profile/${user.name}`}
-                      // to='#'
-                        // onClick={handleClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                        Profile
-                        </Link>
-                    // {/* <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a> */}
+                      <Link to={'/User/ProfilePage'}className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                      Profile
+                      </Link>
                     )}
                   <a href="/" onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout
                   </a>

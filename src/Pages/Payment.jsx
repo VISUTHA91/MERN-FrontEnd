@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
+import { fetchUserAddresses } from '../api/apiServices';
 
 
-const Payment = () => {
+const Payment = ({ userId }) => {
     
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const [addresses, setAddresses] = useState([
-    {
-      id: 1,
-      name: 'John Doe',
-      address: '123 Street',
-      city: 'New York',
-      state: 'NY',
-      postalCode: '10001',
-      country: 'USA',
-    },
-  ]);
+  const [addresses, setAddresses] = useState([]);
   const [newAddress, setNewAddress] = useState({
     name: '',
     address: '',
@@ -34,6 +25,22 @@ const Payment = () => {
   const handlePaymentMethodChange = (e) => {
     setSelectedPaymentMethod(e.target.value);
   };
+
+
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      try {
+        let data = await fetchUserAddresses(userId);
+        console.log("Data received from API:", data);
+        setAddresses(data); 
+      } catch (error) {
+        console.error("Error fetching addresses:", error.message);
+        setAddresses(); // Set empty array on error to maintain array structure
+      }
+    };
+  
+    fetchAddresses();
+  }, [userId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,15 +86,15 @@ const Payment = () => {
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4 mt-14">Payment Details</h2>
 
-        <h3 className="text-xl font-semibold mb-2">Select Billing Address</h3>
+        <h3 className="text-xl font-semibold mb-2">Select Shipping Address</h3>
 
         {/* List of addresses */}
-        {addresses.map((address) => (
+        {addresses.addresses && addresses.addresses.map((address) => (
           <div key={address.id} className={`border p-4 mb-4 ${defaultAddress === address.id ? 'border-blue-500' : 'border-gray-300'} rounded-lg`}>
             <div className="flex justify-between">
               <div>
-                <p className="font-semibold">{address.name}</p>
-                <p>{address.address}, {address.city}, {address.state}</p>
+                <p className="font-semibold">{address.street}</p>
+                <p>{address.area}, {address.city}, {address.state}</p>
                 <p>{address.postalCode}, {address.country}</p>
               </div>
               <div className="flex items-center space-x-2">

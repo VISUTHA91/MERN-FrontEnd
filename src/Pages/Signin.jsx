@@ -4,6 +4,8 @@ import { FaUnlock } from "react-icons/fa";
 import { login } from "../assets/Images";
 import * as apiCalls from "../api/apiServices.jsx"
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -25,16 +27,13 @@ export default function Signin() {
 
   const registerUser = async (e) => {
     e.preventDefault();
-    // console.log(user)
     try {
       const data = await apiCalls.userLogin(user); // Correctly passing the 'user' object
-      // console.log("Login In Successful:", data);
+      toast.success("Login Successful!");
       localStorage.setItem("authToken", data.token);
-      localStorage.setItem("userData", JSON.stringify({ role: data.user.role ,name:data.user.name ,id:data.user.id})); // Store user name
-      // console.log("hello",data.user);
+      localStorage.setItem("userData", JSON.stringify({ role: data.user.role ,name:data.user.name ,id:data.user.id}));
       navigate("/")
       window.location.reload();
-      // Storing token if needed
     } catch (error) {
       console.error("Login failed:", error.message || error);
       alert(data.message)
@@ -82,6 +81,7 @@ export default function Signin() {
               <p className="whitespace-nowrap">
                 Don't have an account?
                 <a href="Signup" className="font-semibold underline"> Register here. </a>
+                <ToastContainer position="top-right" autoClose={3000} />
               </p>
             </div>
           </div>

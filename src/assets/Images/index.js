@@ -29,8 +29,13 @@ import bgimage from './bgimage.jpg'
 import menn from './menn.png'
 import womenn from './womenn.png'
 import kidss from './kidss.png'
-
-
+import bannerr from './bannerr.png'
+import bestbannerbg from './bestbannerbg.png'
+import OnlineSupport from './OnlineSupport.png'
+import paymentsecure from'./paymentsecure.png'
+import EasyReturns from './EasyReturns.png'
+import Shipping from './Shipping.png'
+import TopQuality from './TopQuality.png'
 
 
 export {
@@ -64,4 +69,11 @@ export {
     menn,
     womenn,
     kidss,
+    bannerr,
+    bestbannerbg,
+    OnlineSupport,
+    paymentsecure,
+    EasyReturns,
+    Shipping,
+    TopQuality,
 }
