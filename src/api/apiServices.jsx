@@ -116,6 +116,17 @@ export const getAllVendors = async () => {
   }
 };
 
+// fetch all Products List(admin)
+export const getallProducts = async () => {
+  try {
+    const response = await axiosInstance.get(`${API_BASE_URL}admin/productList`); // Fetches categories from the backend
+    return response.data; // Assuming the categories are in response.data
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
+};
+
 
 // Vendor Product Creation
 export const createProduct = async (formData) => {
@@ -183,7 +194,7 @@ export const EditProduct = async ( productData) => { // Make sure to pass the id
 export const deleteProduct = async (productId) => {
   console.log(productId)
   try {
-    const response = await axiosInstance.post(`${API_BASE_URL}vendor/deleteproduct`
+    const response = await axiosInstance.post(`${API_BASE_URL}admin/deleteproduct`
       , { productId });
     return response.data;
   } catch (error) {
@@ -280,9 +291,6 @@ export const setDefaultAddress = async (userId, addressId) => {
   }
 };
 
-
-
-
 //  Get User Profile for User Side
 
 export const getUserProfile = async (UserId) => {
@@ -336,7 +344,7 @@ export const getProductsByCategory = async (categoryName) => {
 
 
 
- // Get products by gender
+//  // Get products by gender
 export const getProductsByGender = async (gender) => {
   // console.log("..............",gender)
   try {
@@ -435,7 +443,7 @@ export const getVendorById = async (vendorId) => {
 export const getCartItems = async () => {
   try {
     const response = await axiosInstance.get(`${API_BASE_URL}listCartById`); // Fetches categories from the backend
-    return response.data; // Assuming the categories are in response.data
+    return response.data;
   } catch (error) {
     console.error('Error fetching categories:', error);
     throw error;
@@ -473,12 +481,62 @@ export const addCart = async (cartItem) => {
 };
 
 // Apply Filters
-export const applyFilters = async (filters) => {
+export const applyFilters = async (filters ,categoryId) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}filterProducts`, filters);
+    console.log("before send",filters)
+    const response = await axios.post(`${API_BASE_URL}filterProducts`, {
+      // params: {
+        categoryId,
+        // categoryName, // Add categoryName to the params
+        ...filters, // Spread the filter options
+      // }
+    });
+    // const response = await axios.post(`${API_BASE_URL}filterProducts`, filters);
     return response.data;
   } catch (error) {
     console.error('Error applying filters:', error);
     throw error;
+  }
+};
+
+
+
+export const getProductsByFilter = async ({ category, gender }) => {
+  try {
+    const params = {};
+    if (category) params.category = category;
+    if (gender) params.gender = gender;
+
+    const response = await axios.get(`${API_BASE_URL}filterProducts`, { params });
+    return response.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw new Error("Failed to fetch products");
+  }
+};
+
+// Shop By Price
+export const getProductsByPrice = async (price) => {
+  try {
+    console.log("before send",price)
+    const response = await axios.post(`${API_BASE_URL}productByPrice`, { price });
+    return response; // Return the response data to be handled by the calling function
+  } catch (error) {
+    console.error('Error sending price:', error);
+    throw error; // Re-throw the error to be handled in the component
+  }
+};
+
+// Update Cart Item
+export const updateCartItemQuantity = async (cartId,id, quantity) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}updateCart`, {cartId, id,quantity });
+    if (response.status === 200) {
+      console.log("Cart updated:", response.data);
+    } else {
+      throw new Error("Failed to update cart item");
+    }
+  } catch (error) {
+    console.error("Error updating cart item:", error);
   }
 };

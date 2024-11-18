@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { green, yellow } from '../assets/Images'; // Update or remove these imports if not used
-import { applyFilters } from '../api/apiServices';
 import * as apiCalls from "../api/apiServices.jsx"
+import { applyFilters } from '../api/apiServices.jsx';
 
-function Filtercard({ updateFilterOptions }) {
+// function Filtercard({ updateFilterOptions }) {
+  function Filtercard({ updateFilterOptions, categoryName , categoryId }) {
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [products, setProducts] = useState();
 
   const [selectedPrice, setSelectedPrice] = useState({
     option1: false,
@@ -23,10 +26,10 @@ function Filtercard({ updateFilterOptions }) {
     Yellow: false,
   });
   const [selectedSize, setSelectedSize] = useState({
-    s: false,
-    m: false,
-    l: false,
-    xl: false,
+    S: false,
+    M: false,
+    L: false,
+    XL: false,
   });
 
   const handleColorChange = (colorName) => {
@@ -52,26 +55,30 @@ function Filtercard({ updateFilterOptions }) {
     }));
   };
 
-  const handleSubmit = (event) => {
+  
+ 
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log('Selected Prices:', selectedPrice);
-    // console.log('Selected Colors:', selectedColor);
-    // console.log('Selected Sizes:', selectedSize);
+  
+    const filters = {
+      price: Object.keys(selectedPrice).filter((key) => selectedPrice[key]),
+      color: Object.keys(selectedColor).filter((key) => selectedColor[key]),
+      size: Object.keys(selectedSize).filter((key) => selectedSize[key]),
+    };
     
-    updateFilterOptions(selectedPrice, selectedColor, selectedSize);
-      const filters = {
-        price: Object.keys(selectedPrice).filter((key) => selectedPrice[key]),
-        color: Object.keys(selectedColor).filter((key) => selectedColor[key]),
-        size: Object.keys(selectedSize).filter((key) => selectedSize[key]),
-      };
-      try {
-        const result = apiCalls.applyFilters(filters);
-        console.log('Filtered Results:', result);
-      } catch (error) {
-        console.error('Failed to apply filters:', error);
+    try {
+      const filteredData = await applyFilters( filters ,categoryId);
+      const Data = filteredData.data || filteredData;
+
+      updateFilterOptions(Data); // Pass the filtered data to ProductList
+      console.log("Filtered Results:", Data);
+    } catch (error) {
+      console.error("Failed to apply filters:", error);
     }
   };
-
+ 
+ 
   const clearFilters = () => {
     setSelectedColor({
       blue: false,
@@ -84,21 +91,22 @@ function Filtercard({ updateFilterOptions }) {
       yellow: false,
     });
     setSelectedPrice({
-      option1: false,
-      option2: false,
-      option3: false,
-      option4: false,
+      "0 - 300": false,
+      "300 - 499": false,
+      "599 - 899": false,
+      "899 - 1500": false,
     });
     setSelectedSize({
-      s: false,
-      m: false,
-      l: false,
-      xl: false,
+      S: false,
+      M: false,
+      L: false,
+      XL: false,
     });
+    window.location.reload();
   };
 
   return (
-    <div>
+    <div className='h-full'>
       {/* Hamburger Menu Button */}
       <button
         className="lg:hidden p-2 border rounded-lg bg-blue-500 text-white"
@@ -109,11 +117,11 @@ function Filtercard({ updateFilterOptions }) {
 
       {/* Filter Card */}
       <div
-        className={`fixed inset-0 bg-white p-4 mt-28 shadow-lg transition-transform transform ${
+        className={`fixed inset-0 bg-white p-4 h-full shadow-lg transition-transform transform ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         } lg:relative lg:translate-x-0 lg:bg-white lg:shadow-none`}
       >
-        <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center ">
+        <div className="flex flex-col lg:flex-row lg:justify-between mt-28 items-start lg:items-center ">
           <h1 className="text-lg font-semibold mb-2 lg:mb-0">Filters:</h1>
           <button
             onClick={clearFilters}
@@ -128,8 +136,10 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="option1"
-                checked={selectedPrice.option1}
+                // name="option1"
+                // checked={selectedPrice.option1}
+                name="0 - 300"
+                checked={selectedPrice["0 - 300"]}
                 onChange={handlePriceChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -138,8 +148,10 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="option2"
-                checked={selectedPrice.option2}
+                // name="option2"
+                // checked={selectedPrice.option2}
+                name="300 - 499"
+                checked={selectedPrice["300 - 499"]}
                 onChange={handlePriceChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -148,8 +160,10 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="option3"
-                checked={selectedPrice.option3}
+                // name="option3"
+                // checked={selectedPrice.option3}
+                name="500 - 899"
+                checked={selectedPrice["500 - 899"]}
                 onChange={handlePriceChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -158,8 +172,10 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="option4"
-                checked={selectedPrice.option4}
+                // name="option4"
+                // checked={selectedPrice.option4}
+                name="900 - 1500"
+                checked={selectedPrice["900 - 1500"]}
                 onChange={handlePriceChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -232,8 +248,8 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="s"
-                checked={selectedSize.s}
+                name="S"
+                checked={selectedSize.S}
                 onChange={handleSizeChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -242,8 +258,8 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="m"
-                checked={selectedSize.m}
+                name="M"
+                checked={selectedSize.M}
                 onChange={handleSizeChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -252,8 +268,8 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="l"
-                checked={selectedSize.l}
+                name="L"
+                checked={selectedSize.L}
                 onChange={handleSizeChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -262,8 +278,8 @@ function Filtercard({ updateFilterOptions }) {
             <label>
               <input
                 type="checkbox"
-                name="xl"
-                checked={selectedSize.xl}
+                name="XL"
+                checked={selectedSize.XL}
                 onChange={handleSizeChange}
                 className="mr-2 h-4 w-4"
               />{' '}
@@ -280,5 +296,45 @@ function Filtercard({ updateFilterOptions }) {
         </div>
   )
 }
-export default Filtercard;
-       
+
+
+
+export default Filtercard
+
+
+ // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  
+  //   const filters = {
+  //     price: Object.keys(selectedPrice).filter((key) => selectedPrice[key]),
+  //     color: Object.keys(selectedColor).filter((key) => selectedColor[key]),
+  //     size: Object.keys(selectedSize).filter((key) => selectedSize[key]),
+  //   };
+  //   try {
+  //     // const result = await applyFilters(filters); 
+  //     // const resultData = result.data || result;
+  //     updateFilterOptions( filters.price, filters.color, filters.size);
+  //     // Assume applyFilters is an API call
+  //     console.log("Filtered Results:", filters)
+  //   } catch (error) {
+  //     console.error("Failed to apply filters:", error);
+  //   }
+  // };
+  
+  
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  
+  //   const filters = {
+  //     price: Object.keys(selectedPrice).filter((key) => selectedPrice[key]),
+  //     color: Object.keys(selectedColor).filter((key) => selectedColor[key]),
+  //     size: Object.keys(selectedSize).filter((key) => selectedSize[key]),
+  //   };
+  //   try {
+  //     // Send the selected filter options to ProductList
+  //     updateFilterOptions(filters.price, filters.color, filters.size);
+  //     console.log("Filtered Results:", filters);
+  //   } catch (error) {
+  //     console.error("Failed to apply filters:", error);
+  //   }
+  // };

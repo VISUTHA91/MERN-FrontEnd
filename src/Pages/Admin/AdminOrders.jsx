@@ -121,7 +121,7 @@ const  AdminOrders = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-full pt-10 p-6">
+    <div className="bg-gray-100 h-full pt-10 p-6">
       <h1 className="text-2xl font-bold text-gray-800  mt-10 mb-6">My Orders</h1>
       <div className="bg-white rounded-lg shadow-md p-4">
         <table className="min-w-full table-auto">

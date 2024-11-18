@@ -66,6 +66,8 @@ function App() {
       <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />
       <Route path='/Productlist/gender/:gender' element={<Productlist/>} />
+      {/* <Route path='/Productlist/gender/women' element={<Productlist/>} /> */}
+      <Route path='/Productlist' element={<Productlist/>} />
       <Route path='/User/ProfilePage/' element={<ProfilePage />} />
       <Route path='/User/Profile/' element={<Profile />} />
       <Route path='/User/UserOrder/' element={<UserOrderPage />} />
@@ -75,7 +77,7 @@ function App() {
           {/* Admin Layout */}
         <Route element={<AdminLayout  />} >
         <Route index element={<Dashboard />} />
-        <Route path='/Admin/Dashboard' element={<Dashboard />} />
+      <Route path='/Admin/Dashboard' element={<Dashboard />} />
       <Route path='/Admin/Userlist' element={<Userlist />} />
       <Route path='/Admin/VendorList' element={<VendorList />} />
       <Route path='/Admin/VendorDetails/:id' element={<VendorDetails />} />

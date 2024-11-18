@@ -19,6 +19,7 @@ import ReactCursorPosition from 'react-cursor-position';
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { kids } from '../assets/Images';
+import ModalAlert from '../Components/ModalAlert';
 
 
 
@@ -98,6 +99,8 @@ function Productdetails({ _id, images, price }) {
 
     if (!token) {
       alert('Please login to add items to your cart.');
+      // showAlert("Please login to add items to your cart.!");
+
       navigate("/Signin")
 
       return;
@@ -162,7 +165,7 @@ function Productdetails({ _id, images, price }) {
           {/* <ZoomImage imgSrc={activeImage ? activeImage : `${API_BASE_URL}${product.images[0]}`} /> */}
           {/* <ZoomImage imgSrc={imageSrc} /> */}
 
-          {/* <ReactCursorPosition> */}
+          <ReactCursorPosition>
             <ReactImageMagnify {...{
               smallImage: {
                 alt: 'Wristwatch by Ted Baker London',
@@ -193,7 +196,7 @@ function Productdetails({ _id, images, price }) {
               },
               enlargedImagePosition: 'over'
             }} />
-          {/* </ReactCursorPosition> */}
+          </ReactCursorPosition>
 
 
           <div className="flex gap-2 mt-4">

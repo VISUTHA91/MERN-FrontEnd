@@ -20,7 +20,7 @@ function AdminVendorDetails() {
       }, [vendorId]);
 
 
- if (!vendor) {
+ if (!vendorId) {
     return <div>Loading...</div>;
   }
   return (

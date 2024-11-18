@@ -107,12 +107,12 @@ const Footer = () => {
     //     <p>Designed and Developed by Evvi</p>
     //   </div>
     // </footer>
-    <footer className="bg-fuchsia-900 text-white py-10 w-full">
-  <div className="container grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
+    <footer className="bg-fuchsia-900 text-white OpenSans py-10 w-full">
+  <div className="container  grid grid-cols-1 md:grid-cols-4 gap-8 px-4 ml-10">
     {/* Company Info */}
     <div>
       <h3 className="text-xl font-bold mb-4">Evvi Tees</h3>
-      <p>
+      <p className="w-48">
         Our store, where you can find the best deals on quality products.
       </p>
       <p className="mt-2">© 2024 Evvi Tees. All rights reserved.</p>
@@ -203,7 +203,6 @@ const Footer = () => {
     <p>Designed and Developed by Evvi</p>
   </div>
 </footer>
-
   );
 };
 

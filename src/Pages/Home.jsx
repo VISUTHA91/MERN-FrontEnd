@@ -13,8 +13,7 @@ function Home() {
     <Catogory />
     <Standards />
     <Besttshirt />
-    <Supply />
-  
+    <Supply />  
     </>
     
   )

@@ -72,26 +72,26 @@ export const genders=[
         gender:"kids"
     }
 ]
-export const price =[
+export const price = [
     {
         id:1,
         imgURL:priceblue,
-        category:"299"
+        price:"299"
     },
     {
         id:2,
         imgURL:priceblack,
-        category:"599"
+        price:"599"
     },
     {
         id:3,
         imgURL:pricewhite,
-        category:"799"
+        price:"799"
     },
     {
         id:4,
         imgURL:pricewhite,
-        category:"899"
+        price:"899"
     }
 ]
 

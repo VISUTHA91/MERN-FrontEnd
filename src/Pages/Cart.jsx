@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCartItems , deleteItem } from "../api/apiServices";
 import { API_BASE_URL } from "../api/apiServices";
 import { MdDeleteForever } from "react-icons/md";
+import { updateCartItemQuantity } from "../api/apiServices";
 
 
 function Cart() {
@@ -10,6 +11,7 @@ function Cart() {
   const [cartItems, setCartItems] = useState([]); // Default as an empty array
   const [loading, setLoading] = useState(true);   // Add loading state
   const [error, setError] = useState(null);       // Add error state
+  const [cartId, setCartId] = useState([]);       // Add error state
 
   const shippingFee = 0;
 
@@ -17,40 +19,45 @@ function Cart() {
     const fetchCartItems = async () => {
       try {
         const data = await getCartItems();  // Fetch data from API
-        // if (Array.isArray(data.cart)) {
-          setCartItems(data.cart.items);  // Only set if the data is an array
-        // } else {
-          // setCartItems([]);    // Fallback to an empty array
-        // }
+        setCartItems(data.cart.items);  // Only set if the data is an array
         console.log("Cart data:", data.cart.items);
+        setCartId(data.cart._id)
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-
     fetchCartItems();
   }, []);
 
-  // Handle increase quantity
-  const increaseQuantity = (id) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item._id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
+  const increaseQuantity = async (id) => {
+    const updatedCart = cartItems.map((item) =>
+      item._id === id ? { ...item, quantity: item.quantity + 1 } : item
     );
+    setCartItems(updatedCart);
+    try {
+      await updateCartItemQuantity( cartId, id, updatedCart.find(item => item._id === id).quantity);
+    } catch (error) {
+      console.error("Error updating cart item:", error);
+    }
   };
 
-  // Handle decrease quantity
-  const decreaseQuantity = (id) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item._id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
+
+
+
+  const decreaseQuantity = async (cartId,id) => {
+    const updatedCart = cartItems.map((item) =>
+      item._id === id && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
     );
+    setCartItems(updatedCart);
+    try {
+      await updateCartItemQuantity(cartId, id, updatedCart.find(item => item._id === id).quantity);
+    } catch (error) {
+      console.error("Error updating cart item:", error);
+    }
   };
 
  
@@ -66,17 +73,6 @@ function Cart() {
       alert('Failed to delete product.');
     }
   };
-  // const removeItem = async (id) => {
-  //   try {
-  //     const productId = cartItems.find((item) => item._id === id)?.product.product_id;
-  //     await deleteItem(productId); // Call the delete API with product_id
-  //     setCartItems(cartItems.filter((item) => item._id !== id)); // Update state without reloading
-  //     alert('Product deleted successfully!');
-  //   } catch (error) {
-  //     console.error('Error deleting product:', error);
-  //     alert('Failed to delete product.');
-  //   }
-  // };
   
 
   // Calculate total price of items in the cart
@@ -109,13 +105,11 @@ const calculateGrandTotal = () => {
   
 <div className="p-4 md:p-8 pt-28">
   <h2 className="text-2xl md:text-3xl font-bold mb-6">Shopping Cart</h2>
-
   {cartItems && cartItems.length === 0 ? (
-    <p className="text-lg text-gray-600">Your cart is empty.</p>
+    <p className="text-lg text-gray-600 ">Your cart is empty.</p>
   ) : (
     <div className="bg-white shadow-md rounded-lg p-4 md:p-6">
       <h2 className="text-lg md:text-xl font-semibold mt-5">Your Cart: <b>{cartItems.length} items</b></h2>
-
       {/* Column Headers */}
       <div className="hidden md:flex items-center justify-between py-2 border-b font-semibold text-gray-700 mt-4">
         <span className="flex-1 text-lg">Product</span>
@@ -140,9 +134,6 @@ const calculateGrandTotal = () => {
               <p className="text-sm text-gray-600">Size: {item.size}</p>
             </div>
           </div>
-
-
-
           <div className=" flex gap-10 mt-6">
          
           {/* Quantity Controls */}
@@ -159,8 +150,6 @@ const calculateGrandTotal = () => {
               +
             </button>
           </div>
-          
-
            {/* Price */}
            <div className="mt-2 md:mt-0 w-full md:w-20 text-center md:text-right">
             <p className="text-sm md:text-lg text-gray-800">₹{item.product.final_price}</p>
@@ -170,8 +159,7 @@ const calculateGrandTotal = () => {
           <div className="mt-2 md:mt-0 w-full md:w-20 text-center md:text-right text-sm md:text-lg font-semibold text-gray-900">
             ₹{item.product.final_price * item.quantity}
           </div>
-          
-
+        
           {/* Remove Item Button */}
           <button
             className="mt-2 md:mt-0 w-full md:w-10 text-red-500 hover:text-red-600 transition-colors text-center"
@@ -181,22 +169,7 @@ const calculateGrandTotal = () => {
           </button>
           </div>
         </div>
-      ))}
-
-      {/* Cart Total */}
-      {/* <div className="mt-6 text-right">
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Total: ₹{calculateTotalPrice()}</h3>
-      </div> */}
-
-      {/* Checkout Button */}
-      {/* <div className="mt-6 text-right">
-        <button
-          onClick={handleProceedToPayment}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold shadow-md transition-colors"
-        >
-          Proceed to Checkout
-        </button>
-      </div> */}
+      ))}     
 
 <div className="mt-6 bg-white p-6 rounded-lg shadow-lg text-right">
     <div className="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -227,21 +200,29 @@ const calculateGrandTotal = () => {
     {/* Checkout Button */}
     <button
       onClick={handleProceedToPayment}
-      className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-200 ease-in-out"
-    >
+      className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-200 ease-in-out">
       Proceed to Checkout
     </button>
   </div>
-
     </div>
   )}
 </div>
-
-
-
-
-
   );
 }
 
 export default Cart;
+
+ {/* Cart Total */}
+      {/* <div className="mt-6 text-right">
+        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Total: ₹{calculateTotalPrice()}</h3>
+      </div> */}
+
+      {/* Checkout Button */}
+      {/* <div className="mt-6 text-right">
+        <button
+          onClick={handleProceedToPayment}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold shadow-md transition-colors"
+        >
+          Proceed to Checkout
+        </button>
+      </div> */}

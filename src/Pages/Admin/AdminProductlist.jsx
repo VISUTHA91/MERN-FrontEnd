@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts, editProduct } from '../../api/apiServices';
+import { getallProducts, editProduct } from '../../api/apiServices';
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { getCategories } from '../../api/apiServices';
 import { deleteProduct } from '../../api/apiServices';
 
 function AdminProductlist() {
-  const [productlist, setProductlist] = useState([]);
+  // const [productlist, setProductlist] = useState({ data: [] });
+  const [productlist, setProductlist] = useState([] );
   const [showEdit, setShowEdit] = useState(false); // For modal visibility
   const [editProductId, setEditProductId] = useState(null); // To track which product is being edited
   const [productName, setProductName] = useState('');
@@ -20,111 +21,111 @@ function AdminProductlist() {
   const [categories, setCategories] = useState([]); // Store categories
   const [selectedCategory, setSelectedCategory] = useState({ id: "", name: "" });
 
-  // Fetch product list from the server
-  const fetchProductList = async () => {
-    try {
-      const response = await getProducts(); // Fetch products from backend
-      console.log("Fetched Data", response); // Log fetched data
-      setProductlist(response.data || response); // Store fetched products
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  };
-
+  // Fetch product list from the server  
   useEffect(() => {
-    fetchProductList(); // Fetch the product list when the component mounts
-  }, []);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchProductList = async () => {
       try {
-        const response = await getCategories();
-        setCategories(response.data || response); // Populate categories dropdown
+        const response = await getallProducts(); // Fetch products from backend
+        setProductlist(response.products); // Store fetched products
+        // console.log("2525252525",response)
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching products:', error);
       }
     };
-    fetchCategories();
-  }, [])
+    fetchProductList(); // Fetch the product list when the component mounts
+  },[]);
+
+  console.log("Fetched Data", productlist); // Log fetched data
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const response = await getCategories();
+  //       setCategories(response.data || response); // Populate categories dropdown
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, [])
 
   // Handle Edit Product (Open Edit Modal)
-  const handleShowEdit = (product) => {
-    setEditProductId(product._id);
-    setProductName(product.name);
-    setProductPrice(product.price);
-    setProductDescription(product.description);
-    setProductColor(product.color);
-    setProductGender(product.gender);
-    setProductSize(product.size);
-    setProductStock_Quantity(product.stock_quantity);
-    // setSelectedCategory(product.category.name)
-    // setSelectedCategory(product.category.id)
-    setSelectedCategory({
-      id: product.category._id, // Use the correct property for id
-      name: product.category.name,
-    });
+  // const handleShowEdit = (product) => {
+  //   setEditProductId(product._id);
+  //   setProductName(product.name);
+  //   setProductPrice(product.price);
+  //   setProductDescription(product.description);
+  //   setProductColor(product.color);
+  //   setProductGender(product.gender);
+  //   setProductSize(product.size);
+  //   setProductStock_Quantity(product.stock_quantity);
+  //   // setSelectedCategory(product.category.name)
+  //   // setSelectedCategory(product.category.id)
+  //   setSelectedCategory({
+  //     id: product.category_id.category._id, // Use the correct property for id
+  //     name: product.category_id.category_id.name,
+  //   });
     
     
 
-    setShowEdit(true); // Show the modal
-  };
+  //   setShowEdit(true); // Show the modal
+  // };
 
  
-  const handleCategoryChange = (e) => {
-    const selectedId = e.target.value;
-    const selectedCategoryObj = categories.find((category) => category._id === selectedId);
-    setSelectedCategory({
-      id: selectedId,
-      name: selectedCategoryObj ? selectedCategoryObj.name : "",
-    });
-  };
+  // const handleCategoryChange = (e) => {
+  //   const selectedId = e.target.value;
+  //   const selectedCategoryObj = categories.find((category) => category._id === selectedId);
+  //   setSelectedCategory({
+  //     id: selectedId,
+  //     name: selectedCategoryObj ? selectedCategoryObj.name : "",
+  //   });
+  // };
 
 
-  const handleEditSubmit = async (event) => {
-    event.preventDefault(); // Prevent page reload
+  // const handleEditSubmit = async (event) => {
+  //   event.preventDefault(); // Prevent page reload
 
-    // Ensure the state variables are populated correctly
-    console.log('Submitting:', {
-      editProductId,
-      productName,
-      productPrice,
-      productDescription,
-      productImage,
-      productColor,
-      productGender,
-      productSize,
-      productStock_Quantity,
-      // selectedCategory,
+  //   // Ensure the state variables are populated correctly
+  //   console.log('Submitting:', {
+  //     editProductId,
+  //     productName,
+  //     productPrice,
+  //     productDescription,
+  //     productImage,
+  //     productColor,
+  //     productGender,
+  //     productSize,
+  //     productStock_Quantity,
+  //     // selectedCategory,
     
-    });
+  //   });
 
-    try {
-      const formData = new FormData();
-      formData.append('name', productName);
-      formData.append('price', productPrice);
-      formData.append('description', productDescription);
-      formData.append('color', productColor);
-      formData.append('size', productSize);
-      formData.append('gender', productGender);
-      formData.append('stock_quantity', productStock_Quantity);
-      formData.append('categoryId', selectedCategory.id);
-      formData.append('categoryName', selectedCategory.name);
-      // formData.append('description', productDescription);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('name', productName);
+  //     formData.append('price', productPrice);
+  //     formData.append('description', productDescription);
+  //     formData.append('color', productColor);
+  //     formData.append('size', productSize);
+  //     formData.append('gender', productGender);
+  //     formData.append('stock_quantity', productStock_Quantity);
+  //     formData.append('categoryId', selectedCategory.id);
+  //     formData.append('categoryName', selectedCategory.name);
+  //     // formData.append('description', productDescription);
 
-      if (productImage) {
-        formData.append('images', productImage); // Append the image if it was updated
-      }
+  //     if (productImage) {
+  //       formData.append('images', productImage); // Append the image if it was updated
+  //     }
 
-      console.log('Form Data:', Array.from(formData.entries())); // Debug: log form data
-      await editProduct(editProductId, formData); // Call the editProduct API service
+  //     console.log('Form Data:', Array.from(formData.entries())); // Debug: log form data
+  //     await editProduct(editProductId, formData); // Call the editProduct API service
 
-      setSuccessMessage('Product updated successfully!');
-      setShowEdit(false);
-      fetchProductList(); // Refresh the product list after editing
-    } catch (error) {
-      console.error('Error updating product:', error);
-    }
-  };
+  //     setSuccessMessage('Product updated successfully!');
+  //     setShowEdit(false);
+  //     fetchProductList(); // Refresh the product list after editing
+  //   } catch (error) {
+  //     console.error('Error updating product:', error);
+  //   }
+  // };
 
 // Handle Delete Function
 const handleDelete = async (productId) => {
@@ -142,10 +143,10 @@ const handleDelete = async (productId) => {
   return (
     <div className=' border-black mt-12 mr-8'>
       <h1 className="text-2xl font-bold mb-4">Product Details</h1>
-      <br /><br />
+          <div className='w-full'>
+    {/* {productlist && productlist.length > 0 ? ( */}
+      {productlist?.length > 0 ? (
 
-      <div className='w-full  border  border-black rounded-xl'>
-        {productlist.length > 0 ? (
           <table className="min-w-full bg-white border-collapse border  rounded-2xl border-gray-200">
             <thead className='border  border-black rounded-2xl'>
               <tr className="bg-gray-100 border rounded-xl">
@@ -153,7 +154,7 @@ const handleDelete = async (productId) => {
                 <th className="py-2 px-4 border">Name</th>
                 <th className="py-2 px-4 border">Category</th>
                 <th className="py-2 px-4 border">Price</th>
-                <th className="py-2 px-4 border">Size</th>
+                <th className="py-2 px-4 border">Size & Quantity</th>
                 <th className="py-2 px-4 border">Color</th>
                 <th className="py-2 px-4 border">Gender</th>
                 <th className="py-2 px-4 border">Quantity</th>
@@ -161,7 +162,9 @@ const handleDelete = async (productId) => {
               </tr>
             </thead>
             <tbody>
-              {productlist.map((product) => (
+              {/* {productlist.map((product) => ( */}
+                {productlist?.map((product) => (
+
                 <tr key={product._id} className="hover:bg-gray-50">
                   <td className="py-2 px-4 lg:flex flex-wrap ">
                   {product.images.slice(0, 5).map((image, index) => (
@@ -176,10 +179,21 @@ const handleDelete = async (productId) => {
                   ))}
                   </td>
                   <td className="py-2 px-4 border">{product.name}</td>
-                  <td className="py-2 px-4 border">{product.category.name}</td>
-                  <td className="py-2 px-4 border">{product.price}</td>
+                  <td className="py-2 px-4 border">{product.category_id.name}</td>
+                  <td className="py-2 px-4 border">{product.final_price}</td>
+                  {/* <td className="py-2 px-4 border">{product.size}</td> */}
+                  <td className="py-2 px-4 border">
+  {Array.isArray(product.variants) ? (
+    product.variants.map((v, index) => (
+      <span key={index} className="inline-block mr-2">
+        {v.size} - {v.stock}
+      </span>
+    ))
+  ) : (
+    <span>No sizes available</span>
+  )}
+</td>
                   <td className="py-2 px-4 border">{product.color}</td>
-                  <td className="py-2 px-4 border">{product.size}</td>
                   <td className="py-2 px-4 border">{product.gender}</td>
                   <td className="py-2 px-4 border">{product.stock_quantity}</td>
                   <td className="py-10 px-4 flex gap-2">
@@ -192,12 +206,12 @@ const handleDelete = async (productId) => {
                     >
                       <MdDeleteForever size={24} />
                     </button>
-                    <button
+                    {/* <button
                       className="text-white bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded"
                       onClick={() => handleShowEdit(product)}
                     >
                       <MdEdit size={24} />
-                    </button>
+                    </button> */}
                   </td>
                 </tr>
               ))}
@@ -207,7 +221,7 @@ const handleDelete = async (productId) => {
           <p>No products available</p>
         )}
 
-        {showEdit && (
+        {/* {showEdit && (
           <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-md max-h-[90%]  overflow-y-auto">
               <h2 className="text-lg font-bold mb-4 mt-14">Edit Product</h2>
@@ -342,7 +356,7 @@ const handleDelete = async (productId) => {
               </form>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

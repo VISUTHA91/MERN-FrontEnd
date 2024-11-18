@@ -20,11 +20,11 @@ function Dashboard() {
 
 
   const [currentPage, setCurrentPage] = useState('Maincontent');
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   const renderPageContent = () => {
     switch (currentPage) {
@@ -32,10 +32,8 @@ function Dashboard() {
         return <Maincontent />;
       case 'Category':
         return <AdminCategory />;
-      case 'All':
+      case 'Products':
         return <AdminProductlist />;
-      case 'Create':
-        return <Createproduct />;
       case 'Users':
         return <Userlist />;
       case 'Orders':
@@ -50,7 +48,7 @@ function Dashboard() {
     <div className="flex ">
       {/* Side Content */}
       <div className="w-58">
-        <div className=" mt-20 w-58 h-full bg-fuchsia-900 p-8 text-xl">
+        <div className=" mt-20 w-58  h-full bg-fuchsia-900 p-8 text-xl">
           <ul className="space-y-4">
             <li>
               <button
@@ -105,11 +103,12 @@ function Dashboard() {
             <li>
               <div className="relative group">
                 <button className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
-                  onClick={toggleDropdown}>
+                  // onClick={toggleDropdown}>
+                  onClick={() => setCurrentPage('Products')}>
                   <GrProductHunt />
-                  Product
+                  Products
                 </button>
-                {isOpen && (
+                {/* {isOpen && (
 
                   <div className=" group-hover:block absolute w-36 left-0 mt-2 bg-gray-700 rounded shadow-lg">
                     <ul className="space-y-2 py-2">
@@ -131,7 +130,7 @@ function Dashboard() {
                       </li>
                     </ul>
                   </div>
-                )}
+                )} */}
               </div>
             </li>
 
@@ -166,7 +165,7 @@ function Dashboard() {
               </button>
             </li>
 
-            <li>
+            {/* <li>
               <button
                 onClick={() => setCurrentPage('Reviews')}
                 className="flex items-center text-gray-300 hover:text-white gap-2"
@@ -174,7 +173,7 @@ function Dashboard() {
                 <MdReviews />
                 Reviews
               </button>
-            </li>
+            </li> */}
           </ul>
           {/* </nav> */}
         </div>

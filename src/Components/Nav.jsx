@@ -28,7 +28,7 @@ function Nav({ cartCount }) {
 
   const Links = [
     { name: "HOME", link: "/Home" },
-    { name: "PRODUCTS", link: "/Product" },
+    { name: "PRODUCTS" },
     { name: "CONTACT", link: "/Contact" },
   ];
 
@@ -75,7 +75,7 @@ function Nav({ cartCount }) {
       setIsAuthenticated(true);
     }
   }, []);
-
+// console.log(user.id)
 
   const toggleDropdown = () => {
     // setIsDropdownOpen(!isDropdownOpen);
@@ -89,7 +89,6 @@ function Nav({ cartCount }) {
     setIsAuthenticated(false);
     setUser(null);
     // alert('Logged Out');
-
         // navigate("/")
         // window.location.reload();
         toast.success("Logged Out Successfully");
@@ -142,24 +141,28 @@ function Nav({ cartCount }) {
       </div>
 
       {/* Main Navigation */}
-      <ul className={`md:flex md:items-center md:static bg-fuchsia-900 md:bg-transparent z-[-1] md:z-auto left-0 w-full gap-20 md:w-auto transition-all duration-500 ease-in-out ${open ? 'top-16 p-6' : 'top-[-490px]'} absolute`}>
+      {/* <ul className={`md:flex md:items-center md:static bg-fuchsia-900 md:bg-transparent z-[-1] md:z-auto left-0 w-full gap-20 md:w-auto transition-all duration-500 ease-in-out ${open ? 'top-16 p-6' : 'top-[-490px]'} absolute`}>
         {Links.map((link) => (
           <li key={link.name} className="relative md:ml-4 mt-4 md:mt-0 font-semibold">
             {link.name === "PRODUCTS" ? (
               <>
                 <button
+                  onMouseEnter={() => setIsAboutDropdownOpen(true)}
+                  // onMouseLeave={() => setIsAboutDropdownOpen(false)}
                   // onMouseOver={() => setIsAboutDropdownOpen(true)}
                   // onMouseOut={() => setIsAboutDropdownOpen(false)}
-                  onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
-                  className="hover:text-blue-400 duration-500"
+                  // onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
+                  className="hover:text-blue-400"
                 >
                   {link.name}
                 </button>
                 {isAboutDropdownOpen && (
                   <ul className="absolute left-0  py-2 w-48 rounded-md shadow-lg bg-white text-black z-20">
-                    <li><Link to={'/product1'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Men</Link></li>
-                    <li><Link to={'/product2'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Women</Link></li>
-                    <li><Link to={'/product3'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Kids</Link></li>
+                    <li><Link to={'/Productlist/gender/men'}
+                    className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Men</Link></li>
+                    <li><Link to={'/Productlist/gender/women'}
+                    className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Women</Link></li>
+                    <li><Link to={'/Productlist/gender/kids'} className="block px-4 py-2 hover:bg-blue-400 hover:text-white">Kids</Link></li>
                   </ul>
                 )}
               </>
@@ -170,7 +173,63 @@ function Nav({ cartCount }) {
             )}
           </li>
         ))}
-      </ul>
+      </ul> */}
+
+<ul
+  className={`md:flex md:items-center md:static bg-fuchsia-900 md:bg-transparent z-[-1] md:z-auto left-0 w-full gap-20 md:w-auto transition-all duration-500 ease-in-out ${
+    open ? 'top-16 p-6' : 'top-[-490px]'
+  } absolute`}
+>
+  {Links.map((link) => (
+    <li
+      key={link.name}
+      className="relative md:ml-4 mt-4 md:mt-0 font-semibold"
+      onMouseEnter={() => link.name === "PRODUCTS" && setIsAboutDropdownOpen(true)}
+      onMouseLeave={() => link.name === "PRODUCTS" && setIsAboutDropdownOpen(false)}
+    >
+      {link.name === "PRODUCTS" ? (
+        <>
+          <button className="hover:text-blue-400">{link.name}</button>
+          {isAboutDropdownOpen && (
+            <ul className="absolute left-0 py-2 w-48 rounded-md shadow-lg bg-white text-black z-20">
+              <li>
+                <Link
+                  to={'/Productlist/gender/men'}
+                  className="block px-4 py-2 hover:bg-blue-400 hover:text-white"
+                  onClick={() => setIsAboutDropdownOpen(false)}
+                >
+                  Men
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={'/Productlist/gender/women'}
+                  className="block px-4 py-2 hover:bg-blue-400 hover:text-white"
+                  onClick={() => setIsAboutDropdownOpen(false)}
+                >
+                  Women
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={'/Productlist/gender/kids'}
+                  className="block px-4 py-2 hover:bg-blue-400 hover:text-white"
+                  onClick={() => setIsAboutDropdownOpen(false)}
+                >
+                  Kids
+                </Link>
+              </li>
+            </ul>
+          )}
+        </>
+      ) : (
+        <Link to={link.link} className="hover:text-blue-500 duration-500">
+          {link.name}
+        </Link>
+      )}
+    </li>
+  ))}
+</ul>
 
       {/* Right Section */}
       <div className="flex  items-center text-white justify-between gap-2 lg:gap-6 mr-10">
@@ -191,7 +250,9 @@ function Nav({ cartCount }) {
         {/* Cart and User */}
         <div className="flex items-center lg:gap-8 gap-2 ">
           {/* Cart Icon */}
-          <Link to={'/Cart'}>
+          <Link
+          //  to={'/Cart'}>
+          to={isAuthenticated ? '/Cart' : '/Signin'}>
             <Badge color="secondary" badgeContent={cartCount}>
               <BsFillHandbagFill size={28} className="cursor-pointer" />
             </Badge>
