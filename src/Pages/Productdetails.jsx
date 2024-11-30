@@ -151,10 +151,6 @@ function Productdetails({ _id, images, price }) {
   if (error) {
     return <div>{error}</div>;
   }
-
-
-
-
   const imageSrc = activeImage || `${API_BASE_URL}${product.images[0]}`;
 
 

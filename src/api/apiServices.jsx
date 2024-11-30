@@ -277,19 +277,55 @@ export const addAddress = async (userId, address) => {
   return response.data;
 };
 
-// Set as default Address
-export const setDefaultAddress = async (userId, addressId) => {
+export const setDefaultAddress = async ( addressId) => {
+  console.log("apiservices:",addressId)
   try {
-    // const response = await  axiosInstance.post(`${API_BASE_URL}${userId}/addresses/${addressId}`);
-    const response = await  axiosInstance.get(`${API_BASE_URL}setDefault`,User.authMiddleware,
-      Address.setDefaultAddress);
-    
+    const url = `${API_BASE_URL}setDefault`;
+
+    // Send addressId in the request body
+    const response = await axiosInstance.put(url, {
+      addressId: addressId, // or simply `addressId` in ES6 shorthand
+    });
+
     return response.data;
   } catch (error) {
     console.error("Error setting default address:", error.message);
     throw error;
   }
 };
+
+
+// Update/Edit address
+export const updateAddress = async (userId, addressId, updatedAddress) => {
+  try {
+    const response = await axiosInstance.put(`${API_BASE_URL}updateAddress`,
+      updatedAddress, // Axios automatically converts JS object to JSON
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response.data; // Return the updated address from the API
+  } catch (error) {
+    console.error("Error updating address:", error.message);
+    throw error;
+  }
+};
+// Remove address
+export const removeAddress = async (addressId) => {
+  try {
+    const response = await axiosInstance.delete(`${API_BASE_URL}deleteAddress`, {
+      data: { addressId }, // Pass addressId in the request body
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error removing address:", error.message);
+    throw error;
+  }
+};
+
+
 
 //  Get User Profile for User Side
 
@@ -306,27 +342,23 @@ export const getUserProfile = async (UserId) => {
 };
 
 // Update or Edit User Profile
-export const updateUserProfile = async (updatedUser) => {
-  try {
-    const formData = new FormData();
-    formData.append('name', updatedUser.name);
-    formData.append('email', updatedUser.email);
-    formData.append('address', updatedUser.address);
-    // if (updatedUser.profilePicture) {
-    //   formData.append('profilePicture', updatedUser.profilePicture);
-    // }
 
-    const response = await axios.put(`${API_URL}/user/profile`, formData
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      // },
-    );
-    return response;
+export const updateUserProfile = async (user) => {
+    try {
+      const payload = {
+        name: user.name,
+        email: user.email,
+        phone_number: user.phone_number,
+        // defaultAddress: user.addresses.find((address) => address.isDefault),
+      };
+    const response = await axiosInstance.put(`${API_BASE_URL}updateUser`, payload);
+    return response; // Ensure this matches the backend response format
   } catch (error) {
     console.error('Error updating profile:', error);
     throw error;
   }
 };
+
 
 
 //  User Side Product list by Category

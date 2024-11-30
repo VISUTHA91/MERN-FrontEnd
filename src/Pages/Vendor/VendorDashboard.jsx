@@ -133,16 +133,14 @@ function VendorDashboard() {
                                 </button>
                             </li>
 
-                            <li>
+                            {/* <li>
                                 <button
                                     onClick={() => setCurrentPage('Users')}
                                     className="flex items-center text-gray-300 hover:text-white gap-2">
                                     <HiOutlineUserGroup className=' rounded mt-1 text-4xl lg:text-base' />
-                                    {/* Users */}
                                     <span className="hidden lg:block">Users</span>
-
                                 </button>
-                            </li>
+                            </li> */}
                             <li>
                                 <button
                                     onClick={() => setCurrentPage('Reviews')}

@@ -20,11 +20,6 @@ function Dashboard() {
 
 
   const [currentPage, setCurrentPage] = useState('Maincontent');
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const toggleDropdown = () => {
-  //   setIsOpen(!isOpen);
-  // };
 
   const renderPageContent = () => {
     switch (currentPage) {
@@ -47,8 +42,8 @@ function Dashboard() {
   return (
     <div className="flex ">
       {/* Side Content */}
-      <div className="w-58">
-        <div className=" mt-20 w-58  h-full bg-fuchsia-900 p-8 text-xl">
+      <div className="w-58 ">
+        <div className="mt-20 w-58 h-full bg-fuchsia-900 p-8 text-xl">
           <ul className="space-y-4">
             <li>
               <button
@@ -108,29 +103,7 @@ function Dashboard() {
                   <GrProductHunt />
                   Products
                 </button>
-                {/* {isOpen && (
-
-                  <div className=" group-hover:block absolute w-36 left-0 mt-2 bg-gray-700 rounded shadow-lg">
-                    <ul className="space-y-2 py-2">
-                      <li>
-                        <button
-                          onClick={() => setCurrentPage('All')}
-                          className="flex items-center text-gray-300 hover:text-black gap-2">
-                          <FaShoppingBasket className='mt-1' />
-                          All
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          onClick={() => setCurrentPage('Create')}
-                          className="flex items-center text-gray-300 hover:text-black gap-2">
-                          <GoPlus className='mt-1' />
-                          Create
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                )} */}
+              
               </div>
             </li>
 

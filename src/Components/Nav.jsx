@@ -24,6 +24,8 @@ function Nav({ cartCount }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [openDropdown, setOpenDropdown] = React.useState(null);
+
 
 
   const Links = [

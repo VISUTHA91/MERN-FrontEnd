@@ -607,6 +607,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { getUserProfile } from '../../api/apiServices';
+import { updateUserProfile } from '../../api/apiServices';
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -662,24 +663,26 @@ function Profile() {
     });
   };
 
-  // const handleUpdateProfile = async (updatedUser) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('name', updatedUser.name);
-  //     formData.append('email', updatedUser.email);
-  //     formData.append('phone_number', updatedUser.phone_number);
-  //     const defaultAddress = updatedUser.addresses.find((address) => address.isDefault);
-  //     console.log('Updated user:', updatedUser);
-  //     console.log('Default address:', defaultAddress);
-
-  //     const response = await updateUserProfile(formData); // Send FormData to backend
-  //     setUser(response);
-  //     setSuccessMessage('Profile updated successfully!');
-  //     setIsEditing(false);
-  //   } catch (error) {
-  //     setErrorMessage('Failed to update profile.');
-  //   }
-  // };
+  const handleUpdateProfile = async (user) => {
+    try {
+      const formData = new FormData();
+      formData.append('name', user.name || '');
+      formData.append('email', user.email || '');
+      formData.append('phone_number', user.phone_number || '');
+      const defaultAddress = user.addresses.find((address) => address.isDefault);
+      console.log('Updated user:', user.name);
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+      const response = await updateUserProfile(user); // Send FormData to backend
+      setUser(response);
+      window.location.reload();
+      setSuccessMessage('Profile updated successfully!');
+      // setIsEditing(false);
+    } catch (error) {
+      setErrorMessage('Failed to update profile.');
+    }
+  };
 
   if (!user) {
     return <div>Loading...</div>;
@@ -687,7 +690,7 @@ function Profile() {
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-4 mt-16">{user.name} Your Profile</h1>
+      <h1 className="text-2xl font-bold mb-4 mt-16"> Your Account</h1>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       {successMessage && <p className="text-green-500">{successMessage}</p>}
       {!isEditing ? (
@@ -704,28 +707,6 @@ function Profile() {
               </div>
             </div>
           </div>
-
-          {/* Display multiple addresses */}
-          {/* <div className="mb-4 w-full">
-            <h3 className="font-semibold">Address</h3>
-            {user.addresses && user.addresses.length > 0 ? (
-              user.addresses.map((address, index) => (
-                <div key={index} className={`border p-4 mb-2 ${address.isDefault ? 'bg-green-100' : 'bg-white'}`}>
-                  <p>{address.flatNo}, {address.area}, {address.city}, {address.state}, {address.country}</p>
-                  <p>Mobile: {address.mobile}</p>
-                  {address.landmark && <p>Landmark: {address.landmark}</p>}
-                  <button
-                    onClick={() => handleSetDefaultAddress(index)}
-                    className="text-blue-500 underline mt-2"
-                  >
-                    {address.isDefault ? 'Default Address' : 'Set as Default'}
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No address provided</p>
-            )}
-          </div> */}
 
           <button
             onClick={() => setIsEditing(true)}

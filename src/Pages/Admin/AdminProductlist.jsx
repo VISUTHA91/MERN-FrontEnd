@@ -147,18 +147,18 @@ const handleDelete = async (productId) => {
     {/* {productlist && productlist.length > 0 ? ( */}
       {productlist?.length > 0 ? (
 
-          <table className="min-w-full bg-white border-collapse border  rounded-2xl border-gray-200">
-            <thead className='border  border-black rounded-2xl'>
-              <tr className="bg-gray-100 border rounded-xl">
+          <table className="min-w-full bg-white border-collapse border rounded-xl border-gray-200">
+            <thead className='border'>
+              <tr className="bg-gray-600 text-white rounded-2xl">
                 <th className="py-2 px-4 border rounded">Image</th>
-                <th className="py-2 px-4 border">Name</th>
-                <th className="py-2 px-4 border">Category</th>
-                <th className="py-2 px-4 border">Price</th>
-                <th className="py-2 px-4 border">Size & Quantity</th>
-                <th className="py-2 px-4 border">Color</th>
-                <th className="py-2 px-4 border">Gender</th>
-                <th className="py-2 px-4 border">Quantity</th>
-                <th className="py-2 px-4 border">Action</th>
+                <th className="py-2 px-4 border rounded">Name</th>
+                <th className="py-2 px-4 border rounded">Category</th>
+                <th className="py-2 px-4 border rounded">Price</th>
+                <th className="py-2 px-4 border rounded">Size & Quantity</th>
+                <th className="py-2 px-4 border rounded">Color</th>
+                <th className="py-2 px-4 border rounded">Gender</th>
+                <th className="py-2 px-4 border rounded">Quantity</th>
+                <th className="py-2 px-4 border rounded">Action</th>
               </tr>
             </thead>
             <tbody>

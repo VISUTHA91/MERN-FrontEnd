@@ -19,4 +19,7 @@ export default defineConfig({
       os: 'rollup-plugin-node-builtins',
     }
   },
+  server: {
+    host: true // Exposes the server on the network
+  }
 })

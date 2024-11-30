@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 function AdminVendorDetails() {
     const { vendorId } = useParams(); // Get vendor_id from the route
 
-
-
     useEffect(() => {
         getVendorById(vendorId)
           .then((response) => {

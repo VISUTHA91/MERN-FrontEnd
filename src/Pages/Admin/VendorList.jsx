@@ -262,7 +262,7 @@ function VendorList() {
       <div className='mr-12'>
         <h1 className="text-2xl font-bold mt-24">Vendor Details</h1>
         {vendorlist && (
-          <table className="w-full bg-white border border-gray-600 rounded-lg shadow-lg ">
+          <table className="w-full bg-white mt-8 border border-gray-600 rounded-lg shadow-lg ">
             <thead>
               <tr className="bg-gray-200">
                 <th className="py-2 px-4 border-b">S.No</th>
@@ -284,7 +284,7 @@ function VendorList() {
                       {vendor.name}
                     </Link>
                   </td>
-                  <td className="py-2 px-4 border-b">{vendor.email}</td>
+                  <td className="py-4 px-4 border-b">{vendor.email}</td>
                   <td className="py-2 px-4 border-b">{vendor.phone_number}</td>
                   <td className="py-2 px-4 border-b">
                     <select

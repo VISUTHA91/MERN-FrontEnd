@@ -43,10 +43,7 @@ function Cart() {
     }
   };
 
-
-
-
-  const decreaseQuantity = async (cartId,id) => {
+  const decreaseQuantity = async (id) => {
     const updatedCart = cartItems.map((item) =>
       item._id === id && item.quantity > 1
         ? { ...item, quantity: item.quantity - 1 }
@@ -61,6 +58,29 @@ function Cart() {
   };
 
  
+  // const decreaseQuantity = async (cartId, id) => {
+  //   const updatedCart = cartItems.map((item) =>
+  //     item._id === id && item.quantity > 1
+  //       ? { ...item, quantity: item.quantity - 1 }
+  //       : item
+  //   );
+  
+  //   setCartItems(updatedCart);
+  //   console.log("Updated Cart:", updatedCart);
+  
+  //   try {
+  //     const updatedItem = updatedCart.find((item) => item._id === id);
+  //     if (!updatedItem) {
+  //       console.error(`Item with id ${id} not found in updatedCart`);
+  //       return;
+  //     }
+  //     console.log(`Updating item ${id} with quantity: ${updatedItem.quantity}`);
+  //     await updateCartItemQuantity(cartId, id, updatedItem.quantity);
+  //   } catch (error) {
+  //     console.error("Error updating cart item:", error);
+  //   }
+  // };
+
 
   const removeItem = async (id) => {
     try {
@@ -86,9 +106,13 @@ function Cart() {
 const calculateGrandTotal = () => {
   return calculateTotalPrice() + shippingFee;
 };
+const totalPrice = calculateTotalPrice(); // Invoke the function to get the total price
+const grandTotal = calculateGrandTotal();
 
   const handleProceedToPayment = () => {
-    navigate('/payment');
+
+    // Invoke the function to get the total price
+    navigate('/payment',{state:{totalPrice , grandTotal}});
   };
 
   if (loading) {
@@ -201,7 +225,7 @@ const calculateGrandTotal = () => {
     <button
       onClick={handleProceedToPayment}
       className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-200 ease-in-out">
-      Proceed to Checkout
+      Proceed to Buy
     </button>
   </div>
     </div>
