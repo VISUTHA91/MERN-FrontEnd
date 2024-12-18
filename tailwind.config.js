@@ -9,6 +9,15 @@ export default {
       comforter:[ 'Comforter', 'cursive'],
       NotoSans:['Noto Sans', 'sans-serif']
       },
+      keyframes: {
+        slideDown: {
+          '0%': { opacity: '0', transform: 'translateY(-60px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 300ms ease-in-out forwards',
+      },
     },
   },
   plugins: [],

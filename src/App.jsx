@@ -51,7 +51,6 @@ function App() {
     <div className='App'>
         <BrowserRouter>
         <ToastContainer />
-
         <ScrollToTop />
           <Routes>
           <Route element={<RootLayout  cartCount={cartCount} />} >

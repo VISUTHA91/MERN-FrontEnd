@@ -9,6 +9,7 @@ import { getProductsByFilter } from '../api/apiServices';
 import { getProductsByPrice } from '../api/apiServices';
 import { FaBoxOpen } from 'react-icons/fa'; // Optional icon for better visuals
 import NoProductsMessage from '../Components/NoProductsMessage';
+import Triangle from  'react-loader-spinner'
 
 
 
@@ -51,8 +52,10 @@ function Productlist() {
         const productData = response.data.products || response.data;
         setProducts(productData);
         setFilteredProducts(productData);
-        setMessage(response.data.message); // Store the message in state
+        setMessage(response.data.message); 
+        setTimeout(() =>{
         setLoading(false);
+      },1000);
 
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -71,9 +74,9 @@ function Productlist() {
     setProducts(filteredData.products) // Set filtered products from API response
   };
     
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
   if (error) {
     return <div className='mt-28'>{error}</div>;
   }
@@ -97,6 +100,17 @@ function Productlist() {
         <div>
           {/* <h2 className='font-palanquin capitalize text-4xl lg:max-w-lg font-bold ml-2'>Our Products</h2> */}
         </div>
+        {loading ? (
+          <Triangle
+          visible={true}
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="triangle-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          />
+        ):(
         <div className='flex flex-wrap gap-4 justify-center md:flex-row  md-flex-wrap '>
           {products && products.length > 0 ? (
             products.map((product) => (
@@ -107,7 +121,7 @@ function Productlist() {
           ) : (
           <NoProductsMessage />
           )}
-        </div>
+        </div>)}
       </div>
     </div>
   );

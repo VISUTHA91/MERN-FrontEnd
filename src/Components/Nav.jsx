@@ -198,8 +198,7 @@ function Nav({ cartCount }) {
                 <Link
                   to={'/Productlist/gender/men'}
                   className="block px-4 py-2 hover:bg-blue-400 hover:text-white"
-                  onClick={() => setIsAboutDropdownOpen(false)}
-                >
+                  onClick={() => setIsAboutDropdownOpen(false)}>
                   Men
                 </Link>
               </li>
@@ -253,11 +252,17 @@ function Nav({ cartCount }) {
         <div className="flex items-center lg:gap-8 gap-2 ">
           {/* Cart Icon */}
           <Link
-          //  to={'/Cart'}>
           to={isAuthenticated ? '/Cart' : '/Signin'}>
-            <Badge color="secondary" badgeContent={cartCount}>
-              <BsFillHandbagFill size={28} className="cursor-pointer" />
+          {isAuthenticated ? (
+            user.role === 'admin' ? (
+              null
+            ):(<Badge color="secondary" badgeContent={cartCount}>
+              <BsFillHandbagFill  size={28} className="cursor-pointer" />
             </Badge>
+            )
+          ):(<Badge color="secondary" badgeContent={cartCount}>
+            <BsFillHandbagFill  size={28} className="cursor-pointer" />
+          </Badge>)}
           </Link>
 
           {/* User Dropdown */}

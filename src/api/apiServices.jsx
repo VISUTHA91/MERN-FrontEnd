@@ -1,3 +1,45 @@
+// import axios from "axios";
+
+// // Base URL for your API
+// export const API_BASE_URL = "http://192.168.20.5:3000/";
+
+// const axiosInstance = axios.create({
+//   baseURL: API_BASE_URL,
+// });
+
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     // Retrieve token from local storage
+//     const token = localStorage.getItem('authToken');
+
+//     // If token exists, set it in the Authorization header
+//     if (token) {
+//       config.headers['Authorization'] = token;
+//     }
+
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
+// axiosInstance.interceptors.response.use(
+//   async(response) => {
+//     // Check if the token is expired (statusCode === 700)
+//     if (response.data?.statusCode === 700) {
+//       // Remove the auth token from local storage
+//       await localStorage.removeItem('authToken');
+//       await localStorage.removeItem('userData');
+      
+//       // Redirect the user to the login page
+//       window.location.href = "/Signin";
+//     }
+
+//     return response;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
+
 import axios from "axios";
 
 // Base URL for your API
@@ -22,25 +64,31 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 axiosInstance.interceptors.response.use(
-  (response) => {
-    // Check if the token is expired (statusCode === 700)
-    if (response.data?.statusCode === 700) {
-      // Remove the auth token from local storage
-      localStorage.removeItem('authToken');
+  async (response) => {
+    try {
+      if (response.data?.statusCode === 700) {
+        // Remove the auth token from local storage
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
 
-      // Redirect the user to the login page
-      window.location.href = "/Signin";
+        alert("Session expired. Please log in again.");
+        window.location.href = "/Signin";
+      }
+    } catch (error) {
+      console.error("Error handling token expiration:", error);
     }
 
     return response;
   },
   (error) => {
+    console.error("API Error:", error.response || error.message);
     return Promise.reject(error);
   }
 );
 
 
-// Registration function
+
+// User Registration function
 export const registerUser = async (userData) => {
   try {
     // console.log(userData);
@@ -359,6 +407,8 @@ export const updateUserProfile = async (user) => {
   }
 };
 
+// Get All Products
+
 
 
 //  User Side Product list by Category
@@ -570,5 +620,15 @@ export const updateCartItemQuantity = async (cartId,id, quantity) => {
     }
   } catch (error) {
     console.error("Error updating cart item:", error);
+  }
+};
+
+export const confirmPayment = async (cartId,address_id) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}createOrder`, { cartId ,address_id});
+    return response.data; // Return the response data to the caller
+  } catch (error) {
+    console.error('Error confirming payment:', error);
+    throw error; // Re-throw the error for handling in the calling function
   }
 };

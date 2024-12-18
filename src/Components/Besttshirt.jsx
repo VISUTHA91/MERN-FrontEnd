@@ -78,9 +78,11 @@ return (
         <p className="text-sm md:text-base mt-4 md:mt-10">
           T-Shirt that Keep you Moving
         </p>
+        {/* <Link to={#}> */}
         <button className="mt-6 px-6 py-3 bg-white text-fuchsia-900 font-semibold rounded-full hover:bg-gray-100 transition-colors">
           Explore
         </button>
+        {/* </Link> */}
       </div>
 
       {/* Right Image */}

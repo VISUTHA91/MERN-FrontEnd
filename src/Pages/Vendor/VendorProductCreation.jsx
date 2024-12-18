@@ -142,6 +142,7 @@ const VendorProductCreation = () => {
 
         try {
             await createProduct(formData);
+            alert("Product Created Successfully");
         } catch (error) {
             console.error("Error creating product:", error); // Log the whole error object
             if (error.response) {

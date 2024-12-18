@@ -86,8 +86,8 @@ const Footer = () => {
 
     {/* Social Media */}
     <div>
-      <h3 className="text-xl font-bold mb-4">Follow Us</h3>
-      <div className="flex space-x-4">
+      <h3 className="text-xl font-bold mb-4 ml-8">Follow Us</h3>
+      <div className="flex space-x gap-4 lg:flex-row sm:flex-col sm:ml-8">
         <a href="https://facebook.com" className="hover:transition duration-300 ease-in-out transform hover:scale-110">
           <BsFacebook size={30} />
         </a>

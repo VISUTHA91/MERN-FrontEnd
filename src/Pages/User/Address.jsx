@@ -14,6 +14,7 @@ const Address = ({ userId }) => {
     pin:'',
     state: '',
     country: 'India',
+    phone:'',
     isDefault: false,
   });
 
@@ -94,6 +95,7 @@ const Address = ({ userId }) => {
         pin: '',
         state: '',
         country: 'India',
+        phone:'',
         isDefault: false,
       });
     } catch (error) {
@@ -114,7 +116,7 @@ const Address = ({ userId }) => {
           isDefault: addr._id === addressId,
         }));
       });
-      window.location.reload();
+      // window.location.reload();
       // console.log("addresspage:",addressId)
     } catch (error) {
       console.error("Error setting default address:", error.message);
@@ -138,7 +140,9 @@ const Address = ({ userId }) => {
                 <p>{address.area} </p>
                   <p>{address.city} </p>
                   <p>{address.state} </p>
+                  <p>{address.pin} </p>
                     <p>{address.country}</p>
+                    <p>{address.phone}</p>
               <button
                 onClick={() => handleSetDefault(address._id)}
                 className={`mt-10  border-2 rounded p-2 text-sm ${address.isDefault ? 'text-blue-500 border-blue-500' : 'text-gray-600 border-gray-500'}`}>
@@ -211,6 +215,14 @@ const Address = ({ userId }) => {
               value={newAddress.country}
               onChange={handleInputChange}
               placeholder="Country"
+              className="p-2 border rounded-lg"
+            />
+              <input
+              type="number"
+              name="phone"
+              value={newAddress.phone}
+              onChange={handleInputChange}
+              placeholder="Phone"
               className="p-2 border rounded-lg"
             />
             <label className="inline-flex items-center">

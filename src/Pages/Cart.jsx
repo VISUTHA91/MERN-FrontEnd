@@ -106,13 +106,13 @@ function Cart() {
 const calculateGrandTotal = () => {
   return calculateTotalPrice() + shippingFee;
 };
-const totalPrice = calculateTotalPrice(); // Invoke the function to get the total price
-const grandTotal = calculateGrandTotal();
 
   const handleProceedToPayment = () => {
-
+    const totalPrice = calculateTotalPrice(); // Invoke the function to get the total price
+const grandTotal = calculateGrandTotal();
+console.log("cartPage",grandTotal)
     // Invoke the function to get the total price
-    navigate('/payment',{state:{totalPrice , grandTotal}});
+    navigate('/payment', {state: {totalPrice , grandTotal,cartId}});
   };
 
   if (loading) {
