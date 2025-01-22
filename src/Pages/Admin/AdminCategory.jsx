@@ -482,9 +482,6 @@ function AdminCategory() {
                       Cancel
                     </button>
                   </div>
-
-
-                
                 </form>
               </div>
             </div>
