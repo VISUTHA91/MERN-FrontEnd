@@ -92,10 +92,10 @@ export const registerUser = async (userData) => {
     // console.log(userData);
     const response = await axiosInstance.post(`${API_BASE_URL}register`, userData);
     return response.data; // Return the response data (e.g., user details)
-    if (response.status === 700) {
+    // if (response.status === 700) {
 
-      console.log(" Time Out");
-    }
+    //   console.log(" Time Out");
+    // }
   } catch (error) {
     throw error.response ? error.response.data.message : new Error("Registration failed");
   }
@@ -305,9 +305,9 @@ export const editCategory = async (categoryId, formData) => {
 };
 
 // api.js or within the component
-export const fetchSubcategories = async (subcategoryId) => {
+export const fetchSubcategories = async () => {
   try {
-    const response = await axiosInstance.post(`${API_BASE_URL}/subCategorybyCategory,subcategoryId}`); // Replace with your endpoint
+    const response = await axiosInstance.post(`${API_BASE_URL}/subCategorybyCategory,{subcategoryId}`); // Replace with your endpoint
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`);
     }
