@@ -3,6 +3,8 @@ import { getallProducts, editProduct } from '../../api/apiServices';
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { getCategories } from '../../api/apiServices';
 import { deleteProduct } from '../../api/apiServices';
+import PropTypes from "prop-types";
+
 
 function AdminProductlist() {
   // const [productlist, setProductlist] = useState({ data: [] });
@@ -140,13 +142,90 @@ const handleDelete = async (productId) => {
   }
 };
 
+String.prototype.toCamelCase = function () {
+  return this.replace(/^([A-Z])|\s(\w)/g, function (match, p1, p2) {
+    if (p2) return p2.toUpperCase();
+    return p1.toLowerCase();
+  });
+};
+
+const Switch = (props) => {
+  const { className, label, noText, theme, large } = props;
+  let switchClass = `${className} relative flex items-center`;
+  let id = label.toCamelCase();
+
+  // Conditional styling based on props
+  if (large) switchClass += " w-16 h-8";
+  else switchClass += " w-14 h-6";
+
+  if (noText) switchClass += " no-text";
+  if (theme === "success") switchClass += " bg-green-500";
+
+  return (
+    <div className={`${switchClass}`}>
+      <label htmlFor={id} className="relative flex items-center cursor-pointer">
+        <input
+          type="checkbox"
+          id={id}
+          role="switch"
+          className="peer sr-only"
+        />
+        <span
+          className={`
+            absolute left-0 top-0 h-full w-full rounded-full 
+            bg-gray-900 peer-checked:bg-blue-500
+          `}
+        ></span>
+        {!noText && (
+          <span
+            className={`
+              absolute top-0 left-0 w-full h-full flex justify-between px-2 
+              items-center text-xs text-white font-bold
+            `}
+            data-on="ON"
+            data-off="OFF"
+          >
+            <span className="peer-checked:opacity-0">OFF</span>
+            <span className="opacity-0 peer-checked:opacity-100">ON</span>
+          </span>
+        )}
+        <span
+          className={`
+            absolute left-0 top-0 h-5 w-5 bg-white rounded-full shadow 
+            transform peer-checked:translate-x-8 transition-all
+          `}
+        ></span>
+      </label>
+    </div>
+  );
+};
+
+Switch.propTypes = {
+  className: PropTypes.string,
+  theme: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  noText: PropTypes.bool,
+  large: PropTypes.bool,
+};
+
+Switch.defaultProps = {
+  className: "switch",
+  noText: false,
+  large: false,
+  theme: "",
+};
+
+
+
   return (
     <div className=' border-black mt-12 mr-8'>
-      <h1 className="text-2xl font-bold mb-4">Product Details</h1>
+      <div>
+      <h1 className="text-2xl font-bold mb-4">Product Details</h1> 
+      <Switch label="Switch One" large />
+    </div>
           <div className='w-full'>
     {/* {productlist && productlist.length > 0 ? ( */}
       {productlist?.length > 0 ? (
-
           <table className="min-w-full bg-white border-collapse border rounded-xl border-gray-200">
             <thead className='border'>
               <tr className="bg-gray-600 text-white rounded-2xl">
@@ -199,7 +278,6 @@ const handleDelete = async (productId) => {
                   <td className="py-10 px-4 flex gap-2">
                     <button
                       className="text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded"
-                    // Add delete functionality if needed
                     onClick={() => {
                       handleDelete(product._id);
                     }}
@@ -220,6 +298,14 @@ const handleDelete = async (productId) => {
         ) : (
           <p>No products available</p>
         )}
+      </div>
+    </div>
+  );
+}
+
+export default AdminProductlist;
+
+
 
         {/* {showEdit && (
           <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50">
@@ -357,9 +443,3 @@ const handleDelete = async (productId) => {
             </div>
           </div>
         )} */}
-      </div>
-    </div>
-  );
-}
-
-export default AdminProductlist;

@@ -33,7 +33,6 @@ function VendorLogin() {
       // console.log("hello",data.user);
       navigate("/Vendor/VendorDashboard")
       window.location.reload();
-      // Storing token if needed
     } catch (error) {
       console.error("Login failed:", error.message || error);
       alert(error.message)

@@ -44,6 +44,7 @@ import axios from "axios";
 
 // Base URL for your API
 export const API_BASE_URL = "http://192.168.20.5:3000/";
+// export const API_BASE_URL = "http://192.168.31.166:3000/";
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -53,16 +54,14 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Retrieve token from local storage
     const token = localStorage.getItem('authToken');
-
-    // If token exists, set it in the Authorization header
     if (token) {
       config.headers['Authorization'] = token;
     }
-
     return config;
   },
   (error) => Promise.reject(error)
 );
+
 axiosInstance.interceptors.response.use(
   async (response) => {
     try {
@@ -70,14 +69,12 @@ axiosInstance.interceptors.response.use(
         // Remove the auth token from local storage
         localStorage.removeItem('authToken');
         localStorage.removeItem('userData');
-
         alert("Session expired. Please log in again.");
         window.location.href = "/Signin";
       }
     } catch (error) {
       console.error("Error handling token expiration:", error);
     }
-
     return response;
   },
   (error) => {
@@ -125,6 +122,9 @@ export const getCategories = async () => {
     throw error;
   }
 };
+
+
+
 
 
 
@@ -235,9 +235,6 @@ export const EditProduct = async ( productData) => { // Make sure to pass the id
 };
 
 
-
-
-
 // Product Delete
 export const deleteProduct = async (productId) => {
   console.log(productId)
@@ -254,7 +251,7 @@ export const deleteProduct = async (productId) => {
 
 // CategoryCreation
 export const createCategory = async (formData) => {
-  console.log(formData)
+  console.log("Category Name with sub Category",formData)
 
   const response = await axiosInstance.post(`${API_BASE_URL}admin/categoryCreate`, formData);
   return response.data;
@@ -305,6 +302,24 @@ export const editCategory = async (categoryId, formData) => {
     throw error; // Rethrow the error to be handled in the component
   }
 };
+
+
+
+// api.js or within the component
+export const fetchSubcategories = async (subcategoryId) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}/subCategorybyCategory,subcategoryId}`); // Replace with your endpoint
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching subcategories:", error);
+    return []; // Return an empty array on failure
+  }
+};
+
 
 // Get User Address by UserID
 export const fetchUserAddresses = async (userId) => {

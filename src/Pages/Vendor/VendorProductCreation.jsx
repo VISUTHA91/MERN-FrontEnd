@@ -11,6 +11,7 @@ const VendorProductCreation = () => {
         variants: [{ size: "", stock: "" }],
         gender: '',
         category: '',
+        subcategories: [{ name: ''}],
         MRP: '',
         offer_percentage: '',
         gst_percentage: '',
@@ -22,12 +23,17 @@ const VendorProductCreation = () => {
     });
 
     const [categories, setCategories] = useState([]);
+    const [subcategories, setSubCategories] = useState([]);
+
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await getCategories(); // Fetch categories from backend
-                // console.log("Fetched Data",response)
+                console.log("Fetched Data",response.data)
                 setCategories(response.data); // Store fetched categories
+                // setSubCategories(response.data.subcategories);
+                // console.log("Fetched Data",response.data.subcategories)
+                // Store fetched categories
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
@@ -36,7 +42,7 @@ const VendorProductCreation = () => {
     }, []);
 
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         const { name, value, files } = e.target;
 
         if (name === 'images') {
@@ -45,6 +51,15 @@ const VendorProductCreation = () => {
                 images: [...prevData.images, ...Array.from(files)]  // Append new images
             }));
         }
+        else if (name === "category") {
+            // Fetch subcategories using the reusable function
+            const subcategoryList = await fetchSubcategories(value);
+            setSubCategories(subcategoryList);
+          }
+
+
+
+
         else if (name in product.product_details[0]) {
             // Update product_details array
             setProduct((prevData) => ({
@@ -112,6 +127,8 @@ const VendorProductCreation = () => {
         product.images.forEach((image, index) => {
             formData.append(`images`, image); // Add images one by one
         });
+
+        
         if (product.variants && product.variants.length > 0) {
             product.variants.forEach((sizeData, index) => {
                 formData.append(`variants[${index}][size]`, sizeData.size);
@@ -178,6 +195,33 @@ const VendorProductCreation = () => {
                                         categories.map((category) => (
                                             <option key={category._id} value={category._id}>
                                                 {category.name}
+                                            </option>
+                                        ))) :
+                                    (
+                                        <option disabled>Loading categories...</option>
+                                    )}
+
+                            </select>
+                        </div>
+
+                        <div className="mb-4 ">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="subcategory">
+                               Sub Category
+                            </label>
+                            <select
+                                type="text"
+                                name="subcategories"
+                                value={product.subcategories || ""}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                                <option value="" disabled>Select a  Subcategory</option>
+                                {Array.isArray(subcategories) && subcategories.length > 0 ? (
+                                    console.log("Subcategories",subcategories),
+                                        subcategories.map((subcategory) => (
+                                            <option key={subcategory._id} 
+                                            value={subcategory._id}>
+                                                {subcategory.name}
                                             </option>
                                         ))) :
                                     (
@@ -403,7 +447,23 @@ const VendorProductCreation = () => {
                             />
                         </div>
 
-                        {/* Original Price */}
+                        {/* MRP Price */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="MRP">
+                                MRP.Price
+                            </label>
+                            <input
+                                type="number"
+                                name="MRP"
+                                id='MRP'
+                                value={product.MRP}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            // required
+                            />
+                        </div>
+
+                            {/* Selling Price */}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="MRP">
                                 MRP.Price

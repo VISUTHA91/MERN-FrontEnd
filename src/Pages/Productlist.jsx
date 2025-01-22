@@ -9,7 +9,8 @@ import { getProductsByFilter } from '../api/apiServices';
 import { getProductsByPrice } from '../api/apiServices';
 import { FaBoxOpen } from 'react-icons/fa'; // Optional icon for better visuals
 import NoProductsMessage from '../Components/NoProductsMessage';
-import Triangle from  'react-loader-spinner'
+import {Triangle} from 'react-loader-spinner'
+import Loader from '../Components/Loader';
 
 
 
@@ -101,15 +102,18 @@ function Productlist() {
           {/* <h2 className='font-palanquin capitalize text-4xl lg:max-w-lg font-bold ml-2'>Our Products</h2> */}
         </div>
         {loading ? (
-          <Triangle
-          visible={true}
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="triangle-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          />
+          // <div className='flex mt-32 justify-center items-center'>
+          // <Triangle
+          // visible={true}
+          // height="80"
+          // width="80"
+          // color="#701a75"
+          // ariaLabel="triangle-loading"
+          // wrapperStyle={{}}
+          // wrapperClass=""
+          // />
+          // </div>
+          <Loader />
         ):(
         <div className='flex flex-wrap gap-4 justify-center md:flex-row  md-flex-wrap '>
           {products && products.length > 0 ? (

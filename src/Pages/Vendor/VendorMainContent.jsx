@@ -119,7 +119,7 @@ function VendorMainContent() {
 
 
         </div> */}
-        <div className='bg-gray-90 flex'>
+        <div className=' flex'>
 
         <LineChart
           width={450}

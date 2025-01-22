@@ -25,11 +25,8 @@ function Signup() {
     
       const handleSubmit = async(e) => {
         e.preventDefault();
-        // Perform form submission logic here, like sending data to your API
-        // console.log("Form data submitted:", userData);
         const data = await apiCalls.registerUser(userData);
         try {
-          // console.log(data) // Correctly passing the 'user' object
           console.log("Registration  Successful:", data);
           localStorage.setItem("authToken", data.token); // Storing token if needed
         } catch (error) {
@@ -37,18 +34,14 @@ function Signup() {
           console.error("Registration failed:", error.message || error);
         }
         navigate("/Signin")
-
       };
     
       return (
-    
         <div className="flex justify-center items-center h-full bg-fuchsia-900">
           <form
             onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-lg shadow-md mt-24 w-80"
-          >
+            className="bg-white p-8 rounded-lg shadow-md mt-24 w-80">
             <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-        
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                 Name
@@ -61,11 +54,9 @@ function Signup() {
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Your Name"
-                required
-              />
+                required/>
             </div>
-
-
+            
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phonenumber">
                 PhoneNo

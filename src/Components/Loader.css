@@ -1,0 +1,28 @@
+/* Loader.css */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f0f0f0;
+  }
+  
+  .jumping-word {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #900566; /* You can change this color */
+    animation: jump 1s ease-in-out infinite;
+  }
+  
+  @keyframes jump {
+    0% {
+      transform: translateY(0); /* Starting position */
+    }
+    50% {
+      transform: translateY(-10px); /* The word moves up */
+    }
+    100% {
+      transform: translateY(0); /* Returns to starting position */
+    }
+  }
+  
