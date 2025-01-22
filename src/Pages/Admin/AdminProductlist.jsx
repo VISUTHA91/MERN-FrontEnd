@@ -250,7 +250,7 @@ Switch.defaultProps = {
 
                     <img
                     key={index}
-                      src={`http://192.168.20.5:3000/${image}`}
+                      src={`http://localhost:3000/${image}`}
                       alt={`Product Image ${index + 1}`}
                       height="25"
                       width="30"
