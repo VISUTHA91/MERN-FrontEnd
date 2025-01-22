@@ -73,7 +73,9 @@ function AdminCategory() {
 
     const formData = new FormData();
     formData.append('name', categoryName);
-    formData.append('subCategories', subCategories);
+    // formData.append('subCategories', subCategories);
+    formData.append('subCategories', JSON.stringify(subCategories));
+
     formData.append('storeType', storeType);
     formData.append('images', images);
 
@@ -143,8 +145,8 @@ function AdminCategory() {
       formData.append('subCategories', subCategories) // Append image if selected
       formData.append('storeType', storeType) // Append image if selected
 
-      if (images) {
-        formData.append('images', newImage);
+      if (newImage) {
+        formData.append('newImage', newImage);
       }
 
       // Call API to update category
@@ -167,7 +169,7 @@ function AdminCategory() {
 
   const handleSubCategoryChange = (index, value) => {
     const updatedSubCategories = [...subCategories];
-    updatedSubCategories[index] = value;
+    updatedSubCategories[index].name = value;
     setSubCategories(updatedSubCategories);
   };
   const handleAddSubCategory = () => {
