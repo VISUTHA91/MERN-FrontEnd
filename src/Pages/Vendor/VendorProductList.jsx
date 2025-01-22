@@ -95,7 +95,7 @@ function VendorProductList() {
                   {product.images.slice(0, 5).map((image, index) => (
                     <img
                       key={index}
-                      src={`http://localhost:3000/${image}`}
+                      src={`http://192.168.20.5:3000/${image}`}
                       alt={`Product Image ${index + 1}`}
                       height="15"
                       width="10"

@@ -136,7 +136,7 @@ function ShopbyCategory() {
                state={{ categoryId: category._id }}>
                 <div className='flex flex-col justify-center items-center mt-4 ml-8 w-40 '>
                    <img
-                    src={`http://localhost:3000/${category.image}`}
+                    src={`http://192.168.20.5:3000/${category.image}`}
                     className='border rounded-xl bg-gray-400 hover:scale-110 transition-transform duration-300 object-cover h-48 w-48'
                     alt={category.name}/>
                   <div className='text-bold text-2xl mt-4'>{category.name}</div>

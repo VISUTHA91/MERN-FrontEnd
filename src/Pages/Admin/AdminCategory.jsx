@@ -7,10 +7,6 @@ import { FcPlus } from "react-icons/fc";
 import { createCategory } from '../../api/apiServices';
 import { deleteCategory } from '../../api/apiServices';
 import { editCategory } from '../../api/apiServices';
-
-
-
-
 function AdminCategory() {
   const [categories, setCategories] = useState([]);
   // const [subCategoryName, setSubCategoryName] = useState('');
@@ -74,7 +70,7 @@ function AdminCategory() {
     const formData = new FormData();
     formData.append('name', categoryName);
     // formData.append('subCategories', subCategories);
-    formData.append('subCategories', JSON.stringify(subCategories));
+    formData.append('subCategories', subCategories);
 
     formData.append('storeType', storeType);
     formData.append('images', images);
@@ -115,7 +111,7 @@ function AdminCategory() {
       setErrorMessage('Failed to delete category.');
       console.error('Error deleting category:', error);
     }
-    // window.location.reload();
+    window.location.reload();
   };
 
 
@@ -124,7 +120,8 @@ function AdminCategory() {
     setEditCategoryId(category._id);
     setCategoryName(category.name); // Set current name in input field
     setCurrentImage(category.image); // Set current image for ()
-    setSubCategories(category.subcategories); // Set current subcategories
+    setSubCategories(category.subcategories);
+    console.log(".............", category.subcategories) // Set current subcategories
     setShowEditModal(true); // Show the modal
   };
 
@@ -142,13 +139,22 @@ function AdminCategory() {
     try {
       const formData = new FormData();
       formData.append('name', categoryName);
-      formData.append('subCategories', subCategories) // Append image if selected
+      // formData.append('subCategories', subCategories) // Append image if selected
+      const normalizedSubCategories = subCategories.map((sub) =>
+        typeof sub === "string" ? { name: sub } : sub
+      );
+
+      formData.append('subCategories', JSON.stringify(normalizedSubCategories));
+
+      // formData.append('subCategories', JSON.stringify(subCategories));
       formData.append('storeType', storeType) // Append image if selected
 
       if (newImage) {
         formData.append('newImage', newImage);
       }
-
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
       // Call API to update category
       await editCategory(editCategoryId, formData);
       // Success: Display message and reset inputs
@@ -158,7 +164,7 @@ function AdminCategory() {
       // Refresh categories list
       const { data } = await getCategories();
       setCategories(data.data);
-      setReload((prev) => !prev); 
+      setReload((prev) => !prev);
 
     } catch (error) {
       console.error('Error updating category:', error);
@@ -169,12 +175,16 @@ function AdminCategory() {
 
   const handleSubCategoryChange = (index, value) => {
     const updatedSubCategories = [...subCategories];
-    updatedSubCategories[index].name = value;
+    updatedSubCategories[index] = value;
     setSubCategories(updatedSubCategories);
   };
   const handleAddSubCategory = () => {
     setSubCategories([...subCategories, '']); // Add a new empty input
   };
+
+
+
+
   const handleRemoveSubCategory = (index) => {
     const updatedSubCategories = subCategories.filter((_, i) => i !== index);
     setSubCategories(updatedSubCategories);
@@ -193,20 +203,20 @@ function AdminCategory() {
   };
 
 
-  const handleAddSubcategory = (categoryId, subcategoryName) => {
-    const updatedCategories = categories.map((category) =>
-      category._id === categoryId
-        ? {
-          ...category,
-          subcategories: [
-            ...category.subcategories,
-            { name: subcategoryName, _id: Date.now() }, // Add the new subcategory
-          ],
-        }
-        : category
-    );
-    setCategories(updatedCategories); // Update the categories state
-  };
+  // const handleAddSubcategory = (categoryId, subcategoryName) => {
+  //   const updatedCategories = categories.map((category) =>
+  //     category._id === categoryId
+  //       ? {
+  //         ...category,
+  //         subcategories: [
+  //           ...category.subcategories,
+  //           { name: subcategoryName, _id: Date.now() }, // Add the new subcategory
+  //         ],
+  //       }
+  //       : category
+  //   );
+  //   setCategories(updatedCategories); // Update the categories state
+  // };
 
 
 
@@ -287,7 +297,7 @@ function AdminCategory() {
                       </td>
                       <td style={{ padding: '12px 16px' }}>
                         <img
-                          src={`http://localhost:3000/${category.image}`}
+                          src={`http://192.168.20.5:3000/${category.image}`}
                           alt="Category"
                           style={{
                             borderRadius: '6px',
@@ -368,8 +378,19 @@ function AdminCategory() {
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
               <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 mt-28 h-96 overflow-auto">
                 <h2 className="text-2xl mb-4">Edit Category</h2>
-                {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
-                {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
+                {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
+                {/* {successMessage && <p className="text-green-500 mt-4">{successMessage}</p>} */}
+                {successMessage && (
+                 <div className="bg-green-500 text-white px-4 py-2 rounded shadow-md fixed top-4 right-4 flex items-center">
+                 <p className="mr-4">{successMessage}</p>
+                 <button
+                   onClick={() => setSuccessMessage('')}
+                   className="bg-red-500 text-white px-2 py-1 rounded"
+                 >
+                   ✖
+                 </button>
+               </div>
+                )}
                 <form onSubmit={handleEditSubmit}>
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Category Name</label>
@@ -385,7 +406,7 @@ function AdminCategory() {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Current Image</label>
                     {currentImage && (
                       <img
-                        src={`http://localhost:3000/${currentImage}`}
+                        src={`http://192.198.20.5:3000/${currentImage}`}
                         alt="Current"
                         className="mb-4"
                         height="100"
@@ -419,12 +440,12 @@ function AdminCategory() {
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Subcategories</label>
                     <ul className="mb-4">
-                      {subCategories.map((sub,index) => (
+                      {subCategories.map((sub, index) => (
                         <li key={index} className="flex items-center justify-between">
                           <input
                             type="text"
                             value={sub.name}
-                            onChange={(e) => handleSubCategoryChange(index,e.target.value)}
+                            onChange={(e) => handleSubCategoryChange(index, e.target.value)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           />
                           <button
@@ -446,7 +467,7 @@ function AdminCategory() {
                     </button>
                   </div>
 
-                    <div className="mb-4">
+                  <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="storetype">
                       Store Type
                     </label>
@@ -609,110 +630,3 @@ function AdminCategory() {
 }
 export default AdminCategory
 
-// {showCreateForm && (
-//   <div
-//     className="fixed  inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-//     onClick={() => setShowCreateForm(false)} // Close modal when clicking outside
-//   >
-//     <div
-//       className="bg-white shadow-md rounded-lg px-6 pt-4 pb-8 w-full max-w-lg mt-6 h-full overflow-y-auto overflow-hidden "
-//       onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking inside
-//     >
-//       <h1 className="text-center text-2xl mb-4 border bg-gray-600 text-white rounded-lg p-2">
-//         Create Category
-//       </h1>
-//       <form onSubmit={handleSubmit}>
-//         {/* Category Name */}
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="categoryname">
-//             Category Name
-//           </label>
-//           <input
-//             type="text"
-//             id="categoryname"
-//             value={categoryName}
-//             onChange={(e) => setCategoryName(e.target.value)}
-//             className="block w-full p-2 border rounded"
-//             required
-//           />
-//         </div>
-//         {/* Subcategories */}
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2">Subcategories</label>
-//           {subCategories.map((subCategory, index) => (
-//             <div key={index} className="flex items-center mb-2">
-//               <input
-//                 type="text"
-//                 value={subCategory}
-//                 onChange={(e) => handleSubCategoryChange(index, e.target.value)}
-//                 className="block w-full p-2 border rounded"
-//                 placeholder={`Subcategory ${index + 1}`}
-//               />
-//               <button
-//                 type="button"
-//                 onClick={() => handleRemoveSubCategory(index)}
-//                 className="ml-2 text-red-500 hover:text-red-700"
-//               >
-//                 Remove
-//               </button>
-//             </div>
-//           ))}
-//           <button
-//             type="button"
-//             onClick={handleAddSubCategory}
-//             className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
-//           >
-//             Add
-//           </button>
-//         </div>
-//         {/* Store Type */}
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="storetype">
-//             Store Type
-//           </label>
-//           <select
-//             id="storetype"
-//             value={storeType}
-//             onChange={(e) => setStoreType(e.target.value)}
-//             className="block w-full p-2 border rounded"
-//             required
-//           >
-//             <option value="">Select Store Type</option>
-//             <option value="online">Online</option>
-//             <option value="offline">Offline</option>
-//           </select>
-//         </div>
-//         {/* Category Image */}
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="images">
-//             Category Image
-//           </label>
-//           <input
-//             type="file"
-//             id="images"
-//             onChange={handleImageChange}
-//             className="block w-full p-2 border rounded"
-//             accept="image/*"
-//             required
-//           />
-//         </div>
-//         {/* Submit Button */}
-//         <div className="flex items-center justify-between">
-//           <button
-//             type="submit"
-//             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-//           >
-//             Create Category
-//           </button>
-//           <button
-//             type="button"
-//             className="text-gray-500 hover:text-gray-700"
-//             onClick={() => setShowCreateForm(false)}
-//           >
-//             Cancel
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   </div>
-// )}

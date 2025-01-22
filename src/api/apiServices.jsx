@@ -1,7 +1,7 @@
 // import axios from "axios";
 
 // // Base URL for your API
-// export const API_BASE_URL = "http://localhost:3000/";
+// export const API_BASE_URL = "http://192.168.20.5:3000/";
 
 // const axiosInstance = axios.create({
 //   baseURL: API_BASE_URL,
@@ -43,7 +43,7 @@
 import axios from "axios";
 
 // Base URL for your API
-export const API_BASE_URL = "http://localhost:3000/";
+export const API_BASE_URL = "http://192.168.20.5:3000/";
 // export const API_BASE_URL = "http://192.168.31.166:3000/";
 
 const axiosInstance = axios.create({
@@ -304,14 +304,12 @@ export const editCategory = async (categoryId, formData) => {
 };
 
 // api.js or within the component
-export const fetchSubcategories = async (subcategoryId) => {
+export const fetchSubcategories = async (categoryId) => {
+  console.log("category id",categoryId)
   try {
-    const response = await axiosInstance.post(`${API_BASE_URL}/subCategorybyCategory,subcategoryId}`); // Replace with your endpoint
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
-    }
-    const data = await response.json();
-    return data;
+    const response = await axiosInstance.post(`${API_BASE_URL}vendor/subCategorybyCategory`,{categoryId});
+    console.log("SubCategory",response)
+    return response;
   } catch (error) {
     console.error("Error fetching subcategories:", error);
     return []; // Return an empty array on failure

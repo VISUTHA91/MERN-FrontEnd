@@ -36,7 +36,7 @@
 //           } ${index >= 3 && "hidden sm:block"}`}
 //           style={{
 //             // backgroundImage: `url(${panel.imageUrl})`,
-//             backgroundImage:`url(http://localhost:3000/${category.image})`,
+//             backgroundImage:`url(http://192.168.20.5:3000/${category.image})`,
 //             backgroundSize: "cover",
 //             backgroundPosition: "center",
 //             borderRadius: "12px",
@@ -99,7 +99,7 @@
 //                   activeIndex === index ? "flex-[5]" : "flex-1"
 //                 } ${index >= 3 && "hidden sm:block"}`}
 //                 style={{
-//                   backgroundImage: `url(http://localhost:3000/${category.image})`,
+//                   backgroundImage: `url(http://192.168.20.5:3000/${category.image})`,
 //                   backgroundSize: "cover",
 //                   backgroundPosition: "center",
 //                   borderRadius: "12px",
@@ -157,7 +157,7 @@
             
 //             <div>
 //                     <img
-//                     src={`http://localhost:3000/${category.image}`} 
+//                     src={`http://192.168.20.5:3000/${category.image}`} 
 //                     className={`relative cursor-pointer transition-all duration-700 ease-in-out overflow-hidden 
 //                         ${activeIndex === index ? "flex-[5]" : "flex-1"} 
 //                         ${index >= 3 ? "hidden sm:block" : ""}`}
@@ -231,7 +231,7 @@ function ShopCategory() {
                 }}
               >
                 <img
-                  src={`http://localhost:3000/${category.image}`}
+                  src={`http://192.168.20.5:3000/${category.image}`}
                   alt={category.name}
                   className="w-full h-full object-cover rounded-lg"
                 />
