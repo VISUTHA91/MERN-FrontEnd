@@ -490,6 +490,7 @@ function AdminCategory() {
         </div>
         <div className=' bg-blue mt-4'>
 
+
           {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
           {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
           {showCreateForm && (
