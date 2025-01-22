@@ -697,7 +697,7 @@ function EditProductPage() {
                   {existingImages.map((image, index) => (
                     <div key={index} className="relative">
                       <img
-                        src={`http://192.168.20.5:3000/${image}`}
+                        src={`http://localhost:3000/${image}`}
                         alt="Product" className="w-24 h-24 object-cover" />
                       <button
                         type="button"
