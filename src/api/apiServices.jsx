@@ -303,8 +303,6 @@ export const editCategory = async (categoryId, formData) => {
   }
 };
 
-
-
 // api.js or within the component
 export const fetchSubcategories = async (subcategoryId) => {
   try {

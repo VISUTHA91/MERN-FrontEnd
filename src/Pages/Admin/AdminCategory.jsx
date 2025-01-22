@@ -144,7 +144,7 @@ function AdminCategory() {
       formData.append('storeType', storeType) // Append image if selected
 
       if (images) {
-        formData.append('images', images);
+        formData.append('images', newImage);
       }
 
       // Call API to update category
@@ -156,7 +156,7 @@ function AdminCategory() {
       // Refresh categories list
       const { data } = await getCategories();
       setCategories(data.data);
-      // setReload((prev) => !prev); 
+      setReload((prev) => !prev); 
 
     } catch (error) {
       console.error('Error updating category:', error);
@@ -262,8 +262,8 @@ function AdminCategory() {
                   >
                     Category Name
                   </th>
-                  <th style={{ padding: '', width: '100px' }}>Image</th>
-                  <th style={{ padding: '', width: '80px' }}>Action</th>
+                  <th style={{ padding: '12px 16px', width: '100px' }}>Image</th>
+                  <th style={{ padding: '12px 16px', width: '80px' }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -283,7 +283,7 @@ function AdminCategory() {
                       <td style={{ padding: '12px 16px', width: '50px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {category.name}
                       </td>
-                      <td style={{ padding: '' }}>
+                      <td style={{ padding: '12px 16px' }}>
                         <img
                           src={`http://192.168.20.5:3000/${category.image}`}
                           alt="Category"
@@ -417,12 +417,12 @@ function AdminCategory() {
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Subcategories</label>
                     <ul className="mb-4">
-                      {subCategories.map((sub, index) => (
+                      {subCategories.map((sub,index) => (
                         <li key={index} className="flex items-center justify-between">
                           <input
                             type="text"
                             value={sub.name}
-                            onChange={(e) => handleSubCategoryChange(index, e.target.value)}
+                            onChange={(e) => handleSubCategoryChange(index,e.target.value)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           />
                           <button
