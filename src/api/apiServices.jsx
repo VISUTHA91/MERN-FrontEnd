@@ -1,6 +1,7 @@
 // import axios from "axios";
 
 // // Base URL for your API
+
 // export const API_BASE_URL = "http://192.168.20.5:3000/";
 
 // const axiosInstance = axios.create({
@@ -91,10 +92,10 @@ export const registerUser = async (userData) => {
     // console.log(userData);
     const response = await axiosInstance.post(`${API_BASE_URL}register`, userData);
     return response.data; // Return the response data (e.g., user details)
-    if (response.status === 700) {
+    // if (response.status === 700) {
 
-      console.log(" Time Out");
-    }
+    //   console.log(" Time Out");
+    // }
   } catch (error) {
     throw error.response ? error.response.data.message : new Error("Registration failed");
   }
