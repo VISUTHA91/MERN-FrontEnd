@@ -44,7 +44,7 @@ function Dashboard() {
       {/* Side Content */}
       <div className="w-58">
         <div className="mt-16 w-58 h-screen bg-fuchsia-900 p-8 text-xl">
-          <ul className="space-y-4 ">
+          <ul className="space-y-4">
             <li>
               <button
                 onClick={() => setCurrentPage('Maincontent')}

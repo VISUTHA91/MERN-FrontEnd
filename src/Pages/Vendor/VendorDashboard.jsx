@@ -83,17 +83,17 @@ function VendorDashboard() {
         {/* Side Content */}
         {/* <div className="w-full lg:w-64">
                     <div className="lg:w-58 h-full lg:h-full bg-fuchsia-900 p-8 text-xl"> */}
-        <div className="w-38 sm:w-48 md:w-56 lg:w-64 "> {/* Smaller width for mobile, larger for bigger screens */}
+        <div className="w-38 sm:w-48 md:w-40 lg:w-64 "> {/* Smaller width for mobile, larger for bigger screens */}
           <div className="lg:w-58 h-full lg:h-full bg-fuchsia-900 p-8 text-xl">
             {/* <p>Welcome: {vendor}</p> */}
 
-            <ul className="space-y-4 mt-8">
+            <ul className="space-y-4 mt-8 ">
               <li>
                 <button
                   onClick={() => setCurrentPage('Maincontent')}
                   className="flex items-center text-gray-300 hover:text-black gap-2">
                   <TbLayoutDashboard className=' rounded text-4xl lg:text-base' />
-                  <span className="hidden lg:block">Dashboard</span>
+                  <span className="hidden lg:block md:space-x-6">Dashboard</span>
                 </button>
               </li>
 
@@ -119,7 +119,7 @@ function VendorDashboard() {
                 <button
                   onClick={() => setCurrentPage('Create')}
                   className="flex items-center text-gray-300 hover:text-black gap-2">
-                  <GoPlus className='mt-1   border rounded text-4xl lg:text-base' />
+                  <GoPlus className='mt-1 border rounded text-4xl lg:text-base' />
                   {/* Create Product */}
                   <span className="hidden lg:block">Create Product</span>
                 </button>
@@ -143,7 +143,7 @@ function VendorDashboard() {
                 <button
                   className="flex items-center text-gray-300 hover:text-white gap-2">
                   <IoCloudOfflineOutline className=' rounded mt-1 text-4xl lg:text-base' />
-                  Offline Store</button>
+                  <span className="hidden lg:block">Offline Store</span></button>
                 {/* {isAboutDropdownOpen && (
                     <ul className="absolute left-0 py-2 w-48 rounded-md shadow-lg bg-white text-black z-20">
                       <li>

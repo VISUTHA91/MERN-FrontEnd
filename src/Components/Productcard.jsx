@@ -17,7 +17,7 @@ function Productcard({_id, name, MRP, final_price, images}) {
       
       <div className='bg-gray-200 rounded-xl'>
         <img 
-                    src={`http://localhost:3000/${images[0]}`}
+                    src={`http://192.168.20.5:3000/${images[0]}`}
                     alt={name}  className='h-48 w-56 '></img>
       </div>
       {/* <div className='justify-start items-start'><p>Men's Cotton Stretch Solid Polo T-Shirt (Regular Fit)</p></div> */}
