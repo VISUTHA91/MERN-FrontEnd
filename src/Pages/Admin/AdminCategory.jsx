@@ -73,7 +73,7 @@ function AdminCategory() {
 
     const formData = new FormData();
     formData.append('name', categoryName);
-    formData.append('SubCategories', subCategories);
+    formData.append('subCategories', subCategories);
     formData.append('storeType', storeType);
     formData.append('images', images);
 
@@ -285,7 +285,7 @@ function AdminCategory() {
                       </td>
                       <td style={{ padding: '12px 16px' }}>
                         <img
-                          src={`http://192.168.20.5:3000/${category.image}`}
+                          src={`http://localhost:3000/${category.image}`}
                           alt="Category"
                           style={{
                             borderRadius: '6px',
@@ -383,7 +383,7 @@ function AdminCategory() {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Current Image</label>
                     {currentImage && (
                       <img
-                        src={`http://192.168.20.5:3000/${currentImage}`}
+                        src={`http://localhost:3000/${currentImage}`}
                         alt="Current"
                         className="mb-4"
                         height="100"
