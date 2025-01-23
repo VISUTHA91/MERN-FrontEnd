@@ -148,7 +148,7 @@ function ShopbyCategory() {
 
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState('');
-  const sliderWidth = `${categories.length * 12}rem`; // Assuming each slide is 12rem wide
+  const sliderWidth = `${categories.length * 14}rem`; // Assuming each slide is 12rem wide
 
   const settings = {
     className: "center",
@@ -242,7 +242,7 @@ function ShopbyCategory() {
               key={category._id}
               state={{ categoryId: category._id }}
             >
-              <div className="flex flex-col justify-center items-center mt-4 w-40 ">
+              <div className="flex flex-col justify-center items-center mt-4 w-40  ml-4 ">
                 <img
                   src={`http://192.168.20.5:3000/${category.image}`}
                   className="border rounded-xl bg-gray-400 hover:scale-110 transition-transform duration-300 object-cover h-48 w-48"

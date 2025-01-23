@@ -82,8 +82,9 @@ function AdminCategory() {
 
     try {
       await createCategory(formData);
-      // Call API to create category
-      setSuccessMessage('Category created successfully!');
+      console.log('Category Created Successfully!');
+      setSuccessMessage('Category Created Successfully!');
+      console.log('Success message set:', 'Category created successfully!');
       setCategoryName('');
       setSubCategories('');
       setStoreType('');
@@ -111,7 +112,7 @@ function AdminCategory() {
       setErrorMessage('Failed to delete category.');
       console.error('Error deleting category:', error);
     }
-    window.location.reload();
+    // window.location.reload();
   };
 
 
@@ -222,7 +223,7 @@ function AdminCategory() {
 
   return (
     <div className='mt-14'>
-      <div className='flex gap-32'>
+      <div className='flex gap-44'>
         <h1 className="text-2xl font-bold ml-2">Category Details</h1>
         <div>
           <button onClick={() => setShowCreateForm(!showCreateForm)}
@@ -231,8 +232,8 @@ function AdminCategory() {
           </button>
         </div>
       </div>
-      <div className=' lg:flex lg:flex-row sm:flex-col w-full gap-2'>
-        <div className=' bg-rose'>
+      <div className='lg:flex lg:flex-row sm:flex-col w-full gap-2'>
+        <div className='mb-0'>
           {categories && (
             <table
               style={{
@@ -240,7 +241,7 @@ function AdminCategory() {
                 borderRadius: '12px',
                 boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                 marginTop: '1rem',
-                marginBottom: '2.5rem',
+                // marginBottom: '2.5rem',
                 width: '50%',
                 overflow: 'hidden',
                 borderCollapse: 'collapse',
@@ -360,8 +361,11 @@ function AdminCategory() {
                           <strong> Count</strong>
                           <ul>
                             {category.subcategories.map((subcategory) => (
-                              <li key={subcategory._id} style={{ padding: '4px 0' }}>
-                                {subcategory.name}<span className='bg-green-500 text-white text-center px-3 py-2 rounded-full'> {subcategory.product_count}</span>
+                              <li key={subcategory._id} className="flex items-center justify-between p-3 bg-gray-100 hover:bg-gray-200  shadow-md transition-all duration-200 ease-in-out">
+                                <span className="text-lg font-semibold text-gray-700">{subcategory.name}</span>
+                                <span className="bg-green-500 text-white text-sm font-bold py-1 px-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out">
+                                  {subcategory.product_count}
+                                </span>
                               </li>
                             ))}
                           </ul>
@@ -379,19 +383,19 @@ function AdminCategory() {
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
               <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 mt-28 h-96 overflow-auto">
                 <h2 className="text-2xl mb-4">Edit Category</h2>
-                {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
-                {/* {successMessage && <p className="text-green-500 mt-4">{successMessage}</p>} */}
+                {/* {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
+                {successMessage && <p className="text-green-500 mt-4">{successMessage}</p>}
                 {successMessage && (
-                 <div className="bg-green-500 text-white px-4 py-2 rounded shadow-md fixed top-4 right-4 flex items-center">
-                 <p className="mr-4">{successMessage}</p>
-                 <button
-                   onClick={() => setSuccessMessage('')}
-                   className="bg-red-500 text-white px-2 py-1 rounded"
-                 >
-                   ✖
-                 </button>
-               </div>
-                )}
+                  <div className="bg-green-500 text-white px-4 py-2 rounded shadow-md fixed top-4 right-4 flex items-center">
+                    <p className="mr-4">{successMessage}</p>
+                    <button
+                      onClick={() => setSuccessMessage('')}
+                      className="bg-red-500 text-white px-2 py-1 rounded"
+                    >
+                      ✖
+                    </button>
+                  </div>
+                )} */}
                 <form onSubmit={handleEditSubmit}>
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Category Name</label>
@@ -513,10 +517,21 @@ function AdminCategory() {
           {/* Close Edit Form */}
         </div>
         <div className=' bg-blue mt-4'>
-
-
           {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
-          {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
+          {/* {successMessage && <p className="text-red-500 mb-4">{successMessage}</p>} */}
+        
+                  {successMessage && (
+                    console.log("Success Message",successMessage),
+      <div className="bg-green-500 text-white px-4 py-2 rounded shadow-md fixed top-4 right-4 flex items-center">
+        <p className="mr-4">{successMessage}</p>
+        <button
+          onClick={() => setSuccessMessage('')}
+          className="bg-red-500 text-white px-2 py-1 rounded"
+        >
+          ✖
+        </button>
+      </div>
+    )}
           {showCreateForm && (
             <div
               className="fixed  inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"

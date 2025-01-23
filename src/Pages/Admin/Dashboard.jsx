@@ -40,9 +40,9 @@ function Dashboard() {
     }
   };
   return (
-    <div className="flex ">
+    <div className="flex">
       {/* Side Content */}
-      <div className="w-58">
+      <div className="w-58 mb-0">
         <div className="mt-16 w-58 h-screen bg-fuchsia-900 p-8 text-xl">
           <ul className="space-y-4">
             <li>
