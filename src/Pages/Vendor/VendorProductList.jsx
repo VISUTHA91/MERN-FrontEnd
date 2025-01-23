@@ -104,8 +104,6 @@ function VendorProductList() {
                 </td>
                 <td className="py-2 px-4 border-b">{product.category_id.name}</td>
                 <td className="py-2 px-4 border-b">{product.color}</td>
-
-
                 <td className="py-2 px-4 border-b">
                   {Array.isArray(product.size) ? (
                     product.size.join(', ') // Join sizes with a comma

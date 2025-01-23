@@ -84,7 +84,7 @@ function VendorDashboard() {
         {/* <div className="w-full lg:w-64">
                     <div className="lg:w-58 h-full lg:h-full bg-fuchsia-900 p-8 text-xl"> */}
         <div className="w-38 sm:w-48 md:w-40 lg:w-64 "> {/* Smaller width for mobile, larger for bigger screens */}
-          <div className="lg:w-58 h-full lg:h-full bg-fuchsia-900 p-8 text-xl">
+          <div className="lg:w-58 h-screen lg:h-screen bg-fuchsia-900 p-8 text-xl">
             {/* <p>Welcome: {vendor}</p> */}
 
             <ul className="space-y-4 mt-8 ">

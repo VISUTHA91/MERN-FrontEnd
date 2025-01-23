@@ -166,7 +166,7 @@ const VendorProductCreation = ({ categoryId }) => {
         formData.append('color', product.color);
         formData.append('gender', product.gender);
         formData.append('category', product.category);
-        // formData.append('subCategory', product.subCategory);
+        formData.append('subCategory', product.subcategories);
         formData.append('MRP', product.MRP);
         formData.append('selling_price', product.selling_price);
         formData.append('offer_percentage', product.offer_percentage);
@@ -196,8 +196,6 @@ const VendorProductCreation = ({ categoryId }) => {
                 });
             });
         }
-
-
         if (product.seller_details && product.seller_details.length > 0) {
             product.seller_details.forEach((details, index) => {
                 Object.keys(details).forEach((key) => {
@@ -257,33 +255,7 @@ const VendorProductCreation = ({ categoryId }) => {
                             </select>
                         </div>
 
-                        {/* <div className="mb-4 ">
-                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="subcategory">
-                               Sub Category
-                            </label>
-                            <select
-                                type="text"
-                                name="subcategories"
-                                value={product.subcategories || ""}
-                                onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required>
-                                <option value="" disabled>Select a  Subcategory</option>
-                                {Array.isArray(subCategories) && subCategories.length > 0 ? (
-                                    console.log("Subcategories",subCategories),
-                                        subCategories.map((subcategory) => (
-
-                                            <option key={subcategory._id} 
-                                            value={subcategory._id}>
-                                                {subcategory.name}
-                                            </option>
-                                        ))) :
-                                    (
-                                        <option disabled>Loading categories...</option>
-                                    )}
-
-                            </select>
-                        </div> */}
+                       
 
 
 <div className="mb-4 ">
@@ -681,3 +653,30 @@ const VendorProductCreation = ({ categoryId }) => {
 };
 
 export default VendorProductCreation;
+ {/* <div className="mb-4 ">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="subcategory">
+                               Sub Category
+                            </label>
+                            <select
+                                type="text"
+                                name="subcategories"
+                                value={product.subcategories || ""}
+                                onChange={handleChange}
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                                <option value="" disabled>Select a  Subcategory</option>
+                                {Array.isArray(subCategories) && subCategories.length > 0 ? (
+                                    console.log("Subcategories",subCategories),
+                                        subCategories.map((subcategory) => (
+
+                                            <option key={subcategory._id} 
+                                            value={subcategory._id}>
+                                                {subcategory.name}
+                                            </option>
+                                        ))) :
+                                    (
+                                        <option disabled>Loading categories...</option>
+                                    )}
+
+                            </select>
+                        </div> */}

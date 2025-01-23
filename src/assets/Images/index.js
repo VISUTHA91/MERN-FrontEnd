@@ -36,8 +36,7 @@ import paymentsecure from'./paymentsecure.png'
 import EasyReturns from './EasyReturns.png'
 import Shipping from './Shipping.png'
 import TopQuality from './TopQuality.png'
-
-
+import noproduct from './noproduct.png'
 export {
     banner,
     blue,
@@ -76,4 +75,5 @@ export {
     EasyReturns,
     Shipping,
     TopQuality,
+    noproduct,
 }
