@@ -356,7 +356,8 @@ function AdminCategory() {
                     {expandedCategory === category._id && (
                       <tr style={{ backgroundColor: '#f3f4f6', cursor: 'default' }}>
                         <td colSpan="4" style={{ padding: '12px 16px' }}>
-                          <strong>Subcategories:</strong>
+                          <strong>Subcategories &  </strong>
+                          <strong> Count</strong>
                           <ul>
                             {category.subcategories.map((subcategory) => (
                               <li key={subcategory._id} style={{ padding: '4px 0' }}>
