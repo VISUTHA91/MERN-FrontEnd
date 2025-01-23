@@ -303,12 +303,14 @@ export const editCategory = async (categoryId, formData) => {
 };
 
 // api.js or within the component
+
 export const fetchSubcategories = async (categoryId) => {
   console.log("category id",categoryId)
   try {
     const response = await axiosInstance.post(`${API_BASE_URL}vendor/subCategorybyCategory`,{categoryId});
     console.log("SubCategory",response)
     return response;
+
   } catch (error) {
     console.error("Error fetching subcategories:", error);
     return []; // Return an empty array on failure
