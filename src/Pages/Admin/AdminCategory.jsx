@@ -360,7 +360,7 @@ function AdminCategory() {
                           <ul>
                             {category.subcategories.map((subcategory) => (
                               <li key={subcategory._id} style={{ padding: '4px 0' }}>
-                                {subcategory.name} {subcategory.product_count}
+                                {subcategory.name}<span className='bg-green-500 text-white text-center px-3 py-2 rounded-full'> {subcategory.product_count}</span>
                               </li>
                             ))}
                           </ul>
