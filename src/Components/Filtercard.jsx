@@ -117,7 +117,7 @@ import { applyFilters } from '../api/apiServices.jsx';
 
       {/* Filter Card */}
       <div
-        className={`fixed inset-0 bg-white p-4 h-full shadow-lg transition-transform transform ${
+        className={`fixed inset-0 bg-white  p-4 h-full shadow-lg transition-transform transform ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         } lg:relative lg:translate-x-0 lg:bg-white lg:shadow-none`}
       >

@@ -241,7 +241,7 @@ function VendorDashboard() {
           </div>
         </div>
         {/* Main Content */}
-        <div className='mt-10  lg:ml-14 ml-6 mr-6'>
+        <div className='mt-4 h-screen overflow-auto scrollbar scrollbar-hide lg:ml-14 ml-6 mr-6'>
           {renderPageContent()}
         </div>
       </div>

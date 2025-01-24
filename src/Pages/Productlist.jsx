@@ -102,17 +102,6 @@ function Productlist() {
           {/* <h2 className='font-palanquin capitalize text-4xl lg:max-w-lg font-bold ml-2'>Our Products</h2> */}
         </div>
         {loading ? (
-          // <div className='flex mt-32 justify-center items-center'>
-          // <Triangle
-          // visible={true}
-          // height="80"
-          // width="80"
-          // color="#701a75"
-          // ariaLabel="triangle-loading"
-          // wrapperStyle={{}}
-          // wrapperClass=""
-          // />
-          // </div>
           <Loader />
         ):(
         <div className='flex flex-wrap gap-4 justify-center md:flex-row  md-flex-wrap '>

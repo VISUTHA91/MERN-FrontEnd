@@ -71,18 +71,18 @@ return (
     <div className="flex flex-col md:flex-row justify-between items-center md:items-start w-full md:w-3/4">
       
       {/* Left Content */}
-      <div className="text-white w-full md:w-1/2 lg:w-96 p-4 rounded-md mb-6 md:mr-12 text-center md:text-left">
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mt-4 md:mt-10 leading-8 md:leading-10">
+      <div className=" w-full md:w-1/2 lg:w-96 p-4 rounded-md mb-6 md:mr-12 text-center md:text-left">
+        <h2 className="text-xl text-white md:text-2xl lg:text-3xl font-bold mt-4 md:mt-10 leading-8 md:leading-10">
           Enjoy up Your vacations in the Best T-shirts
         </h2>
-        <p className="text-sm md:text-base mt-4 md:mt-10">
+        <p className="text-sm md:text-base text-white mt-4 md:mt-10">
           T-Shirt that Keep you Moving
         </p>
-        {/* <Link to={#}> */}
-        <button className="mt-6 px-6 py-3 bg-white text-fuchsia-900 font-semibold rounded-full hover:bg-gray-100 transition-colors">
+        <Link to={"#"} >
+        <button className="mt-6 px-6 py-3 bg-white text-fuchsia-900 hover:text-white font-semibold rounded-full hover:bg-fuchsia-900 transition-colors" type='button'>
           Explore
         </button>
-        {/* </Link> */}
+        </Link>
       </div>
 
       {/* Right Image */}

@@ -30,6 +30,7 @@ function VendorProductList() {
     }
   };
 
+
   useEffect(() => {
     fetchProductList(); // Fetch the product list when the component mounts
   }, []);
@@ -69,10 +70,10 @@ function VendorProductList() {
   // }
 
   return (
-    <div className=' border-black mt-8 mr-8'>
-      <h1 className="text-2xl font-bold mt-8 ml-10">Product List</h1>
+    <div className=' border-black mt-2 mr-8 h-screen overflow-auto scrollbar scrollbar-hide'>
+      <h1 className="text-2xl font-bold mt-4 ml-10">Product List</h1>
       {productlist && productlist.length > 0 ? (
-        <table className="w-full bg-white border border-gray-600 rounded-lg shadow-lg ml-18 mb-10 mt-4">
+        <table className="w-full bg-white border border-gray-600 rounded-lg shadow-lg ml-18 mt-4">
           <thead>
             <tr className="bg-gray-200">
               <th className="py-2 px-4 border-b">S.No</th>
@@ -105,11 +106,24 @@ function VendorProductList() {
                 <td className="py-2 px-4 border-b">{product.category_id.name}</td>
                 <td className="py-2 px-4 border-b">{product.color}</td>
                 <td className="py-2 px-4 border-b">
-                  {Array.isArray(product.size) ? (
-                    product.size.join(', ') // Join sizes with a comma
+                  {/* {Array.isArray(product.variants.map((size,index) ? (
+                    product.size.join(',') // Join sizes with a comma
                   ) : (
                     product.size // If it's not an array, just display the value
-                  )}
+                  )))} */}
+
+{Array.isArray(product.variants) ? (
+  product.variants.map((variant, index) => (
+    variant.size && Array.isArray(variant.size) ? (
+      variant.size.join(",") // Join sizes with a comma
+    ) : (
+      variant.size // If it's not an array, just display the value
+    )
+  )).join(", ") // Join all sizes from map with a comma
+) : (
+  product.size // If `product.variants` is not an array, display `product.size`
+)}
+
                 </td>
                 <td className="py-2 px-4 border-b">{product.MRP}</td>
                 <td className="py-2 px-4 border-b">{product.total_stock}</td>

@@ -5,6 +5,7 @@ import Catogory from './Catogory'
 import Standards from '../Components/Standards'
 import Supply from '../Components/Supply'
 import Besttshirt from '../Components/Besttshirt'
+import FloatingButton from '../Components/FloatingButton'
 
 function Home() {
   return (
@@ -14,6 +15,7 @@ function Home() {
     <Standards />
     <Besttshirt />
     <Supply />  
+    <FloatingButton />
     </>
     
   )

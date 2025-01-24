@@ -81,7 +81,7 @@ export default function Signin() {
               <p className="whitespace-nowrap">
                 Don't have an account?
                 <a href="Signup" className="font-semibold underline"> Register here. </a>
-                <ToastContainer position="top-right" autoClose={3000} />
+                <ToastContainer position="top-right" autoClose={2000} />
               </p>
             </div>
           </div>

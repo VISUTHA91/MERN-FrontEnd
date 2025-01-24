@@ -4,6 +4,7 @@ import { getCartItems , deleteItem } from "../api/apiServices";
 import { API_BASE_URL } from "../api/apiServices";
 import { MdDeleteForever } from "react-icons/md";
 import { updateCartItemQuantity } from "../api/apiServices";
+import { FaBoxOpen } from 'react-icons/fa'; // Optional icon for better visuals
 
 
 function Cart() {
@@ -30,6 +31,7 @@ function Cart() {
     };
     fetchCartItems();
   }, []);
+  console.log("Final cartItems:", cartItems); // Debugging the state
 
   const increaseQuantity = async (id) => {
     const updatedCart = cartItems.map((item) =>
@@ -115,23 +117,14 @@ console.log("cartPage",grandTotal)
     navigate('/payment', {state: {totalPrice , grandTotal,cartId}});
   };
 
-  if (loading) {
-    return <div>Loading...</div>;  // Display loading indicator
-  }
+  
 
-  if (error) {
-    return <div>Error: {error}</div>;  // Display error message
-  }
-
-  console.log("Final cartItems:", cartItems); // Debugging the state
 
   return (
-  
 <div className="p-4 md:p-8 pt-28">
-  <h2 className="text-2xl md:text-3xl font-bold mb-6">Shopping Cart</h2>
-  {cartItems && cartItems.length === 0 ? (
-    <p className="text-lg text-gray-600 ">Your cart is empty.</p>
-  ) : (
+  <h2 className="text-2xl md:text-3xl font-bold mb-6 mt-20">Shopping Cart</h2>
+  {/* {cartItems && cartItems.length > 0 ? ( */}
+  {cartItems && cartItems.length > 0 ? (
     <div className="bg-white shadow-md rounded-lg p-4 md:p-6">
       <h2 className="text-lg md:text-xl font-semibold mt-5">Your Cart: <b>{cartItems.length} items</b></h2>
       {/* Column Headers */}
@@ -199,7 +192,7 @@ console.log("cartPage",grandTotal)
     <div className="flex flex-col md:flex-row justify-between items-center mb-6">
       {/* Total Items */}
       <div className="text-lg md:text-xl font-semibold text-gray-700 mb-4 md:mb-0">
-      Price Detaills: <span className="text-blue-600">( {cartItems.length} Items )</span>
+      Order Details: <span className="text-blue-600">( {cartItems.length} Items )</span>
       </div>
 
       {/* Subtotal Price */}
@@ -213,14 +206,12 @@ console.log("cartPage",grandTotal)
       <p className="text-lg md:text-xl font-semibold text-gray-700 mb-1 ">Shipping Fee:</p>
       <span className="text-lg md:text-xl font-semibold text-blue-600">₹{shippingFee}</span>
     </div>
-
     {/* Grand Total Price */}
     <div className="flex flex-col md:flex-row justify-end items-center mb-6">
       <h3 className="text-xl font-bold text-gray-900">
         Grand Total: <span className="text-blue-600">₹{calculateGrandTotal()}</span>
       </h3>
     </div>
-
     {/* Checkout Button */}
     <button
       onClick={handleProceedToPayment}
@@ -229,6 +220,18 @@ console.log("cartPage",grandTotal)
     </button>
   </div>
     </div>
+  ):(       
+       <div className="flex flex-col items-center justify-center h-64 bg-gray-100 rounded-lg shadow-md p-6">
+            <FaBoxOpen className="text-gray-400 text-6xl mb-4" />
+            <h2 className="text-gray-700 text-lg font-semibold">
+              Your Cart Is Empty
+            </h2>
+             {/* <Link to={#}> */}
+        <button className="mt-6 px-6 py-3 bg-fuchsia-900 text-white font-semibold rounded-full hover:bg-gray-100 hover:text-fuchsia-900 hover:border-2 transition-colors">
+          Explore
+        </button>
+        {/* </Link> */}
+          </div>
   )}
 </div>
   );
@@ -250,3 +253,13 @@ export default Cart;
           Proceed to Checkout
         </button>
       </div> */}
+
+
+
+      // if (loading) {
+      //   return <div>Loading...</div>;  // Display loading indicator
+      // }
+    
+      // if (error) {
+      //   return <div>Error: {error}</div>;  // Display error message
+      // }

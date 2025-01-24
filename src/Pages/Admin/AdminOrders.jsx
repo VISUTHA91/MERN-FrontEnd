@@ -1,41 +1,31 @@
 import React, { useState } from 'react';
 import Modal from '../../Components/Modal';
+import { useEffect } from 'react';
+// import { getOrderDetails } from '../api/apiServices';
 
-const orders = [
-  {
-    orderId: '123456',
-    date: '2024-10-18',
-    status: 'Delivered',
-    total: '₹150',
-    products: [
-      { name: 'Product 1', imageUrl: 'https://via.placeholder.com/100', price: '₹50', vendorId: 'V001' },
-      { name: 'Product 2', imageUrl: 'https://via.placeholder.com/100', price: '₹100', vendorId: 'V002' },
-    ],
-  },
-  {
-    orderId: '123457',
-    date: '2024-10-10',
-    status: 'Shipped',
-    total: '₹1020',
-    products: [
-      { name: 'Product 3', imageUrl: 'https://via.placeholder.com/100', price: '₹1020', vendorId: 'V003' },
-    ],
-  },
-  {
-    orderId: '123485',
-    date: '2024-10-23',
-    status: 'Delivered',
-    total: '₹500',
-    products: [
-      { name: 'Product 4', imageUrl: 'https://via.placeholder.com/100', price: '₹350', vendorId: 'V001' },
-      { name: 'Product 5', imageUrl: 'https://via.placeholder.com/100', price: '₹150', vendorId: 'V002' },
-    ],
-  },
-];
 
-const  AdminOrders = () => {
+
+
+
+const  AdminOrders = ({ orderId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchOrderDetails = async () => {
+      try {
+        const data = await getOrderDetails();
+        setOrder(data);
+      } catch (err) {
+        setError(err.message);
+      } 
+    };
+
+    fetchOrderDetails();
+  }, [orderId]);
 
   const handleViewDetails = (order) => {
     setSelectedOrder(order);  // Set the selected order details
@@ -62,7 +52,7 @@ const  AdminOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {order && order.map((order) => (
               <tr key={order.orderId} className="border-b">
                 <td className="px-4 py-2">{order.orderId}</td>
                 <td className="px-4 py-2">{order.date}</td>
@@ -129,3 +119,36 @@ const  AdminOrders = () => {
 };
 
 export default AdminOrders;
+
+
+// const orders = [
+//   {
+//     orderId: '123456',
+//     date: '2024-10-18',
+//     status: 'Delivered',
+//     total: '₹150',
+//     products: [
+//       { name: 'Product 1', imageUrl: 'https://via.placeholder.com/100', price: '₹50', vendorId: 'V001' },
+//       { name: 'Product 2', imageUrl: 'https://via.placeholder.com/100', price: '₹100', vendorId: 'V002' },
+//     ],
+//   },
+//   {
+//     orderId: '123457',
+//     date: '2024-10-10',
+//     status: 'Shipped',
+//     total: '₹1020',
+//     products: [
+//       { name: 'Product 3', imageUrl: 'https://via.placeholder.com/100', price: '₹1020', vendorId: 'V003' },
+//     ],
+//   },
+//   {
+//     orderId: '123485',
+//     date: '2024-10-23',
+//     status: 'Delivered',
+//     total: '₹500',
+//     products: [
+//       { name: 'Product 4', imageUrl: 'https://via.placeholder.com/100', price: '₹350', vendorId: 'V001' },
+//       { name: 'Product 5', imageUrl: 'https://via.placeholder.com/100', price: '₹150', vendorId: 'V002' },
+//     ],
+//   },
+// ];

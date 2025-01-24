@@ -3,6 +3,8 @@ import { createProduct, getCategories } from '../../api/apiServices';
 import { useEffect } from 'react';
 import { MdDeleteForever } from "react-icons/md";
 import { fetchSubcategories } from '../../api/apiServices';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const VendorProductCreation = ({ categoryId }) => {
@@ -208,7 +210,9 @@ const VendorProductCreation = ({ categoryId }) => {
 
         try {
             await createProduct(formData);
-            alert("Product Created Successfully");
+            // alert("Product Created Successfully");
+                  toast.success("Created Successfully!");
+            
         } catch (error) {
             console.error("Error creating product:", error); // Log the whole error object
             if (error.response) {
@@ -610,6 +614,7 @@ const VendorProductCreation = ({ categoryId }) => {
                         id='images'
                         accept="images/*"
                         onChange={handleChange}
+                        multiple
                         className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     />
@@ -648,6 +653,8 @@ const VendorProductCreation = ({ categoryId }) => {
                     Create Product
                 </button>
             </form>
+                            <ToastContainer position="top-right" autoClose={1000} />
+            
         </div>
     );
 };

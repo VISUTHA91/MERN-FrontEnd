@@ -26,7 +26,7 @@ function Hero() {
       <p className=' font-NotoSans text-sm sm:text-base lg:text-lg mb-2 sm:mb-4'>
         Your journey to excellence starts here.
       </p>
-      <button className="bg-blue hover:text-black text-white font-bold py-2 px-4 rounded">
+      <button className="bg hover:text-black text-white font-bold py-2 px-4 rounded">
         Learn More
       </button>
     </div>

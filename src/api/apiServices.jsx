@@ -635,6 +635,7 @@ export const updateCartItemQuantity = async (cartId,id, quantity) => {
   }
 };
 
+// order creation
 export const confirmPayment = async (cartId,address_id) => {
   try {
     const response = await axiosInstance.post(`${API_BASE_URL}createOrder`, { cartId ,address_id});
@@ -642,5 +643,14 @@ export const confirmPayment = async (cartId,address_id) => {
   } catch (error) {
     console.error('Error confirming payment:', error);
     throw error; // Re-throw the error for handling in the calling function
+  }
+};
+//  Admin Get Orders
+export const getOrderDetails = async () => {
+  try {
+    const response = await axiosInstance.get(`${API_BASE_URL}admin/allOrders/`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Failed to fetch order details');
   }
 };

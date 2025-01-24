@@ -38,6 +38,7 @@ import AdminOrders from './Pages/Admin/AdminOrders';
 import UserOrderPage from './Pages/User/UserOrder';
 import AdminVendorDetails from './Pages/Admin/AdminVendorDetails';
 import Address from './Pages/User/Address';
+import Wishlist from './Pages/Wishlist';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -61,6 +62,7 @@ function App() {
       <Route path='/Signin' element={<Signin/>} />
       <Route path='/Signup' element={<Signup/>} />
       <Route path='/Cart' element={<Cart/>} />
+      <Route path='/Wishlist' element={<Wishlist/>} />
       <Route path='/Payment' element={<Payment/>} />
       <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />

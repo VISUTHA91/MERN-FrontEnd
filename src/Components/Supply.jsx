@@ -119,10 +119,10 @@ function Supply() {
             <p className="font-semibold text-xs sm:text-sm md:text-base">Sell all over India</p>
           </span>
         </div>
-        <Link to={'/Vendor/VendorSignup'} className="hover:underline">
+        <Link to={'/Vendor/VendorSignup'}>
 
         <button 
-          className="bg-white text-xs lg:text-xl text-fuchsia-900 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out mt-2 lg:mt-4 w-32 sm:w-32 lg:w-52 "
+          className="bg-white hover:bg-fuchsia-900 hover:text-white text-xs lg:text-xl text-fuchsia-900 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out mt-2 lg:mt-4 w-32 sm:w-32 lg:w-52 "
           type="button">
           Sign Up Now
         </button>

@@ -44,7 +44,7 @@ function VendorMainContent() {
         },
       ];
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-6 h-screen overflow-auto scrollbar scrollbar-hide'>
          <div className="flex-grow  p-22 ">
                 <h1 className="text-3xl font-semibold mb-8"> Vendor Dashboard</h1>
 
