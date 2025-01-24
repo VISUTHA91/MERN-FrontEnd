@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from '../../Components/Modal';
 import { useEffect } from 'react';
 // import { getOrderDetails } from '../api/apiServices';
+import { getallOrders } from '../../api/apiServices.jsx';
 
 
 
@@ -17,8 +18,10 @@ const  AdminOrders = ({ orderId }) => {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const data = await getOrderDetails();
+        const data = await getallOrders();
         setOrder(data);
+        console.log(",,.,.,.,.,.,.,",data);
+
       } catch (err) {
         setError(err.message);
       } 
@@ -52,10 +55,14 @@ const  AdminOrders = ({ orderId }) => {
             </tr>
           </thead>
           <tbody>
-            {order && order.map((order) => (
-              <tr key={order.orderId} className="border-b">
-                <td className="px-4 py-2">{order.orderId}</td>
-                <td className="px-4 py-2">{order.date}</td>
+            {/* {order && order?.map((Order) => (000 */}
+            {/* { order && order?.map((orderItem) => ( */}
+              {Array.isArray(order.orders) && order.orders.map((orderItem) => (
+              <tr key={orderItem.orderId} className="border-b">
+                <td className="px-4 py-2">{orderItem.
+razorpayOrderId
+}</td>
+                <td className="px-4 py-2">{orderItem.createdAt}</td>
                 <td className="px-4 py-2">
                   <span
                     className={`px-2 py-1 rounded-full text-white ${
