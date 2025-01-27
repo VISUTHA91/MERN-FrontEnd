@@ -19,7 +19,8 @@ const  AdminOrders = ({ orderId }) => {
     const fetchOrderDetails = async () => {
       try {
         const data = await getallOrders();
-        setOrder(data);
+        console.log("data",data);
+        setOrder(data.orders);
         console.log(",,.,.,.,.,.,.,",data);
 
       } catch (err) {
@@ -57,7 +58,7 @@ const  AdminOrders = ({ orderId }) => {
           <tbody>
             {/* {order && order?.map((Order) => (000 */}
             {/* { order && order?.map((orderItem) => ( */}
-              {Array.isArray(order.orders) && order.orders.map((orderItem) => (
+              {Array.isArray(order) && order.map((orderItem) => (
               <tr key={orderItem.orderId} className="border-b">
                 <td className="px-4 py-2">{orderItem.
 razorpayOrderId
@@ -76,7 +77,7 @@ razorpayOrderId
                     {order.status}
                   </span>
                 </td>
-                <td className="px-4 py-2">{order.total}</td>
+                <td className="px-4 py-2">{order.totalAmount}</td>
                 <td className="px-4 py-2">
                   <button
                     className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600"

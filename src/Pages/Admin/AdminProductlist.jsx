@@ -30,7 +30,8 @@ function AdminProductlist() {
   useEffect(() => {
     const fetchProductList = async () => {
       try {
-        const response = await getallProducts(); // Fetch products from backend
+        const response = await getallProducts(); 
+        console.log(response)// Fetch products from backend
         setProductlist(response.products); // Store fetched products
         // console.log("2525252525",response)
       } catch (error) {
@@ -223,8 +224,9 @@ function AdminProductlist() {
 
   // Filter products based on switch state
   const filteredProducts = productlist.filter(
-    (product) => product.storeType === (showOnline ? 'online' : 'offline')
+    (product) => product.category_id.storeType === (showOnline ? 'online' : 'offline')
   );
+  console.log("Filtered Products", filteredProducts);
 
 
   return (
@@ -267,6 +269,7 @@ function AdminProductlist() {
                 <th className="py-2 px-4 border rounded">Action</th>
               </tr>
             </thead>
+            
             <tbody>
               {/* {productlist.map((product) => ( */}
               {filteredProducts?.map((product) => (
@@ -283,8 +286,8 @@ function AdminProductlist() {
                     ))}
                   </td>
                   <td className="py-2 px-4 border">{product.name}</td>
-                  <td className="py-2 px-4 border">{product.category_id}</td>
-                  <td className="py-2 px-4 border">{product.sub_category_id}</td>
+                  <td className="py-2 px-4 border">{product.category_id.name}</td>
+                  <td className="py-2 px-4 border">{product.sub_category_id.name}</td>
                   <td className="py-2 px-4 border">{product.final_price}</td>
                   {/* <td className="py-2 px-4 border">{product.size}</td> */}
                   <td className="py-2 px-4 border">
@@ -300,7 +303,7 @@ function AdminProductlist() {
                   </td>
                   <td className="py-2 px-4 border">{product.color}</td>
                   <td className="py-2 px-4 border">{product.gender}</td>
-                  <td className="py-2 px-4 border">{product.stock_quantity}</td>
+                  <td className="py-2 px-4 border">{product.total_stock}</td>
                   <td className="py-10 px-4 flex gap-2">
                     <button
                       className="text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded"
@@ -320,6 +323,7 @@ function AdminProductlist() {
                 </tr>
               ))}
             </tbody>
+            
           </table>
         ) : (
           <div className="flex lg:ml-52 md:ml-18 items-center justify-center h-screen lg:-mt-24 md:-mt-20">

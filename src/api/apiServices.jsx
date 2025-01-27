@@ -649,6 +649,7 @@ export const confirmPayment = async (cartId,address_id) => {
 export const getallOrders = async () => {
   try {
     const response = await axiosInstance.get(`${API_BASE_URL}admin/allOrders`);
+    console.log(response)
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch order details');
