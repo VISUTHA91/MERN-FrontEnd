@@ -70,7 +70,7 @@ const UserOrderPage = () => {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id} className="border-b">
-                <td className="px-4 py-2">{order.order._id}</td>
+                <td className="px-4 py-2">{order.razorpayOrderId}</td>
                 <td className="px-4 py-2">{order.date}</td>
                 <td className="px-4 py-2">
                   <span

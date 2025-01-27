@@ -668,7 +668,7 @@ export const fetchDashboardStats = async () => {
 
 export const getOrdersByUser = async (userId) => {
   try {
-    const response = await axiosInstance.post(`${API_BASE_URL}user/getOrdersByUser`,{userId});
+    const response = await axiosInstance.post(`${API_BASE_URL}getOrdersByUser`,{userId});
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch order details');
