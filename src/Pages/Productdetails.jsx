@@ -328,7 +328,6 @@ function Productdetails({ _id, images, price }) {
 
         <div className='mt-8'>
           {sellerDetails ? (
-
             <SellerDetails
               name={sellerDetails.name}
               location={sellerDetails.location}

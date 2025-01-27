@@ -181,10 +181,37 @@ const handleConfirmPayment = async () => {
       console.log("2525252525255",cartId);
       const CartId = cartId; // Replace with actual cartId value
       const address_id = defaultAddress._id; // Replace with actual cartId value
-      console.log("CART id",CartId,address_id)
+      // console.log("CART id",CartId,address_id)
       const result = await confirmPayment(CartId,address_id);
-      console.log('Payment confirmed:', result);
-      setOrderCompleted(true); // Update state upon successful payment confirmation
+      // console.log('Payment confirmed:', result);
+      // setOrderCompleted(true); // Update state upon successful payment confirmation
+      const options = {
+        key: 'rzp_test_rDX5rrHKEQJju1', // Replace with your Razorpay Key ID
+        amount: order.data.amount,
+        currency: INR,
+        name: 'Evvi',
+        description: 'Test Transaction',
+        order_id: order.data.id,
+        handler: (response) => {
+            // Handle successful payment
+      
+            console.log('Payment Successful:', response);
+        },
+        prefill: {
+            name: 'Your Customer Name',
+            email: 'customer@example.com',
+            contact: '9999999999',
+        },
+        notes: {
+            address: 'Your Company Address',
+        },
+        theme: {
+            color: '#F37254',
+        },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
     } catch (error) {
       console.error('Payment confirmation failed:', error);
     }
@@ -461,11 +488,11 @@ const handleConfirmPayment = async () => {
                   onChange={handlePaymentMethodChange}
                   className="mr-2"
                 />
-                <label htmlFor="creditCard">Credit/Debit Card</label>
+                <label htmlFor="creditCard">Credit/Debit Card/UPI</label>
               </div>
 
               {/* UPI */}
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   type="radio"
                   id="upi"
@@ -476,9 +503,9 @@ const handleConfirmPayment = async () => {
                   className="mr-2"
                 />
                 <label htmlFor="debitCard">UPI(GPay/PhonePe)</label>
-              </div>
+              </div> */}
               {/* PayPal */}
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   type="radio"
                   id="paypal"
@@ -489,7 +516,7 @@ const handleConfirmPayment = async () => {
                   className="mr-2"
                 />
                 <label htmlFor="paypal">PayPal</label>
-              </div>
+              </div> */}
 
               {/* COD */}
               <div className="flex items-center">
@@ -508,7 +535,7 @@ const handleConfirmPayment = async () => {
 
 
             {/* Conditionally render payment details based on selected method */}
-            {selectedPaymentMethod === 'card' && (
+            {/* {selectedPaymentMethod === 'card' && (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold mb-2">Card Details</h3>
                 <input
@@ -569,7 +596,7 @@ const handleConfirmPayment = async () => {
               <div className="mt-6">
                 <p className="text-lg font-semibold">You will be redirected to PayPal for payment.</p>
               </div>
-            )}
+            )} */}
 
       {!orderCompleted ? (
             <button

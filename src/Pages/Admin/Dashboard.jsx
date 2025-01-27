@@ -42,8 +42,8 @@ function Dashboard() {
   return (
     <div className="flex">
       {/* Side Content */}
-      <div className="w-58 mb-0">
-        <div className="mt-16 w-58 h-screen bg-fuchsia-900 p-8 text-xl">
+      <div className="w-58 ">
+        <div className=" mt-16 w-58 h-screen bg-fuchsia-900 p-8 text-xl">
           <ul className="space-y-4">
             <li>
               <button
@@ -152,7 +152,7 @@ function Dashboard() {
         </div>
       </div>
       {/* Main Content */}
-      <div className='mt-8 ml-16 h-screen overflow-auto scrollbar-hide'>
+      <div className='m-4 mt-8 w-full h-screen overflow-auto scrollbar-hide'>
         {renderPageContent()}
       </div>
 

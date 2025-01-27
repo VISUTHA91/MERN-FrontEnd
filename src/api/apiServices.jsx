@@ -654,3 +654,24 @@ export const getallOrders = async () => {
     throw new Error(error.response?.data?.message || 'Failed to fetch order details');
   }
 };
+
+
+export const fetchDashboardStats = async () => {
+  try {
+    const response = await axiosInstance.get(`${API_BASE_URL}admin/profile`);
+    return response.data; // Return the API response data
+  } catch (error) {
+    console.error("Error fetching dashboard stats:", error);
+    throw error; // Throw error for the component to handle
+  }
+};
+
+export const getOrdersByUser = async (userId) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}user/getOrdersByUser`,{userId});
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Failed to fetch order details');
+  }
+};
+
