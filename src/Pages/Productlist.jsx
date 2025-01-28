@@ -11,6 +11,8 @@ import { FaBoxOpen } from 'react-icons/fa'; // Optional icon for better visuals
 import NoProductsMessage from '../Components/NoProductsMessage';
 import {Triangle} from 'react-loader-spinner'
 import Loader from '../Components/Loader';
+import FloatingButton from '../Components/FloatingButton'
+
 
 
 
@@ -78,9 +80,9 @@ function Productlist() {
   // if (loading) {
   //   return <div>Loading...</div>;
   // }
-  if (error) {
-    return <div className='mt-28'>{error}</div>;
-  }
+  // if (error) {
+  //   return <div className='mt-28'>{error}</div>;
+  // }
 
   return (
     <div className='flex lg:flex-row flex-col mb-4'>
@@ -116,6 +118,8 @@ function Productlist() {
           )}
         </div>)}
       </div>
+      <FloatingButton />
+
     </div>
   );
 }

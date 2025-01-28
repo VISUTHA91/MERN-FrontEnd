@@ -23,6 +23,7 @@ function EditProductPage() {
     variants: [{ size: "", stock: "" }],
     gender: '',
     category: '',
+    sub_category: [{}],
     MRP: '',
     offer_percentage: '',
     gst_percentage: '',
@@ -47,9 +48,19 @@ function EditProductPage() {
     fetchProduct();
   }, [id]);
 
-
-
-
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getCategories(); // Fetch categories from backend
+        // console.log("Fetched Data",response)
+        setCategories(response.data); // Store fetched categories
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
 
   useEffect(() => {
@@ -57,7 +68,8 @@ function EditProductPage() {
       console.log('Fetched Product:', product); // Debugging log
       setFormData({
         name: product.name,
-        category: product.category,
+        category: product.category.name,
+        sub_category: product.sub_category_id,
         MRP: product.MRP,
         color: product.color,
         description: product.description,
@@ -85,19 +97,7 @@ function EditProductPage() {
 
 
 
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await getCategories(); // Fetch categories from backend
-        // console.log("Fetched Data",response)
-        setCategories(response.data); // Store fetched categories
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
-  }, []);
+ 
 
 
 
@@ -199,16 +199,11 @@ function EditProductPage() {
       variants: [...formData.variants, newVariant],
     });
   };
-
   const removeSizeField = (index) => {
     const updatedSizes = editedProduct.variants.filter((_, i) => i !== index);
     setEditedProduct({ ...editedProduct, variants: updatedSizes });
     setFormData({ ...formData, variants: updatedSizes });
   };
-
-
-
-
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setFormData((prevData) => ({
@@ -243,9 +238,6 @@ function EditProductPage() {
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData((prev) => ({ ...prev, images: updatedImages }));
   };
-
-
-
   const onClose = () => {
 
     navigate('/Vendor/VendorProductList');
@@ -277,7 +269,6 @@ function EditProductPage() {
           productData.append(`variants[${index}][stock]`, variant.stock);
         });
       }
-
       // Handle product details
       if (formData.product_details) {
         formData.product_details.forEach((detail, index) => {
@@ -344,10 +335,6 @@ function EditProductPage() {
   //   }
   // };
 
-
-
-
-
   if (!product) return <div className='mt-10'>Loading.....</div>;
 
   return (
@@ -355,8 +342,6 @@ function EditProductPage() {
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full">
         <h2 className="text-lg font-bold mb-6">Edit Product</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-          {/* Left Column */}
           <div className="flex flex-col space-y-4">
             <div>
               <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-700">Product Name:</label>
@@ -385,6 +370,29 @@ function EditProductPage() {
                     {category.name}
                   </option>
                 ))}
+              </select>
+            </div>
+
+
+            <div>
+              <label htmlFor="sub_category" className="block mb-1 text-sm font-medium text-gray-700">
+                sub Category:</label>
+              <select
+                name="sub_category"
+                value={formData.sub_category_id[0] || ''}
+                onChange={handleChange}
+                required
+                className="border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring focus:ring-blue-300"
+              >
+                <option value="">Select Category</option>
+                {sub_category && sub_category.length > 0 ? (
+                 sub_category.map((subcategory) => (
+                  <option key={subcategory._id} value={subcategory.name}>
+                    {subcategory.name}
+                  </option>
+                ))):(
+                  <option value="">No Subcategories Available</option>
+                )}
               </select>
             </div>
 
@@ -437,10 +445,6 @@ function EditProductPage() {
                 className="border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring focus:ring-blue-300"
               />
             </div>
-
-
-
-
             {/* Size and Quantity Section */}
             <div className="mb-4">
               <label className="block mb-2 text-sm font-medium text-gray-700">Sizes & Quantities:</label>
@@ -553,12 +557,6 @@ function EditProductPage() {
                 />
               </div>
             </div>
-
-
-
-
-
-
           </div>
 
           {/* Right Column */}
@@ -617,7 +615,6 @@ function EditProductPage() {
                   className="shadow appearance-none border rounded w-full py-2 px-1 text-gray-700 focus:outline-none focus:ring focus:ring-blue-300"
                 />
               </div>
-
               <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium text-gray-700">Add New Images:</label>
                 <input
@@ -690,7 +687,6 @@ function EditProductPage() {
                   </div>
                 )}
               </div>
-
               <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium text-gray-700">Existing Product Images:</label>
                 <div className="flex flex-wrap gap-4">
@@ -710,10 +706,8 @@ function EditProductPage() {
                   ))}
                 </div>
               </div>
-
             </div>
           </div>
-
           {/* Action Buttons (Full Width) */}
           <div className="md:col-span-2 flex justify-between mt-6">
             <button type="button" onClick={onClose} className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
@@ -726,11 +720,8 @@ function EditProductPage() {
         </form>
       </div>
     </div>
-
-
   )
 }
-
 export default EditProductPage;
 
 // import React, { useState, useEffect } from 'react';

@@ -5,8 +5,6 @@ import { MdDeleteForever } from "react-icons/md";
 import { fetchSubcategories } from '../../api/apiServices';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
 const VendorProductCreation = ({ categoryId }) => {
     const [product, setProduct] = useState({
         name: '',
@@ -14,7 +12,7 @@ const VendorProductCreation = ({ categoryId }) => {
         variants: [{ size: "", stock: "" }],
         gender: '',
         category: '',
-        subcategories: [{ name: ''}],
+        subcategories: [{ name: '' }],
         MRP: '',
         selling_price: '',
         offer_percentage: '',
@@ -25,48 +23,38 @@ const VendorProductCreation = ({ categoryId }) => {
         country_of_origin: '',
         images: [],
     });
-
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
-
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await getCategories(); // Fetch categories from backend
-                console.log("Fetched Data",response.data)
+                console.log("Fetched Data", response.data)
                 setCategories(response.data); // Store fetched categories
-                // setSubCategories(response.data.subcategories);
-                // console.log("Fetched Data",response.data.subcategories)
-                // Store fetched categories
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
         fetchCategories();
     }, []);
-
-
     useEffect(() => {
         const loadSubcategories = async () => {
-          if (!categoryId) return; // Prevent API call if categoryId is not available
-    
-          setLoading(true);
-          setError(null); // Reset error before fetching
-          try {
-            const data = await fetchSubcategories(categoryId);
-            setSubCategories(data); // Set the fetched subcategories
-          } catch (err) {
-            setError("Failed to fetch subcategories.");
-            console.error("Error loading subcategories:", err);
-          } finally {
-            setLoading(false); // Ensure loading state is turned off
-          }
+            if (!categoryId) return; // Prevent API call if categoryId is not available
+
+            setLoading(true);
+            setError(null); // Reset error before fetching
+            try {
+                const data = await fetchSubcategories(categoryId);
+                setSubCategories(data); // Set the fetched subcategories
+            } catch (err) {
+                setError("Failed to fetch subcategories.");
+                console.error("Error loading subcategories:", err);
+            } finally {
+                setLoading(false); // Ensure loading state is turned off
+            }
         };
-    
         loadSubcategories();
-      }, [categoryId]);
-
-
+    }, [categoryId]);
     const handleChange = async (e) => {
         const { name, value, files } = e.target;
 
@@ -80,7 +68,7 @@ const VendorProductCreation = ({ categoryId }) => {
             // Fetch subcategories using the reusable function
             const subcategoryList = await fetchSubcategories(value);
             setSubCategories(subcategoryList);
-          }
+        }
         else if (name in product.product_details[0]) {
             // Update product_details array
             setProduct((prevData) => ({
@@ -100,35 +88,30 @@ const VendorProductCreation = ({ categoryId }) => {
             setProduct((prev) => ({
                 ...prev,
                 [name]: value,
-              }));
+            }));
         }
     };
 
     const handleCategoryChange = async (e) => {
         const selectedCategoryId = e.target.value;
-        console.log("Selected Category",selectedCategoryId)
+        console.log("Selected Category", selectedCategoryId)
         handleChange(e); // Update the category in the main handleChange
         const subcategoryList = await fetchSubcategories(selectedCategoryId);
         setSubCategories(subcategoryList.data.subCategories); // Update the subcategories
-        console.log("Sub ,.,.,.,.,.Category",subcategoryList)
+        console.log("Sub ,.,.,.,.,.Category", subcategoryList)
         setProduct((prev) => ({
             ...prev,
             category: selectedCategoryId, // Update category in the product state
             subcategories: '', // Reset subcategory value
         }));
     };
-
-      const handleSubcategoryChange = (e) => {
+    const handleSubcategoryChange = (e) => {
         const selectedSubcategoryId = e.target.value;
         setProduct((prev) => ({
-          ...prev,
-          subcategories: selectedSubcategoryId, // Update selected subcategory
+            ...prev,
+            subcategories: selectedSubcategoryId, // Update selected subcategory
         }));
-      };
-
-
-
-
+    };
     const handleColorChange = (e) => {
         setProduct({ ...product, color: e.target.value });
     };
@@ -148,18 +131,15 @@ const VendorProductCreation = ({ categoryId }) => {
             variants: [...product.variants, { size: "", stock: "" }],
         });
     };
-
     // Remove size field
     const removeSizeField = (index) => {
         const updatedSizes = product.variants.filter((_, i) => i !== index);
         setProduct({ ...product, variants: updatedSizes });
     };
-
     const handleRemoveNewImage = (index) => {
         const updatedImages = product.images.filter((_, i) => i !== index);
         setProduct((prevData) => ({ ...prevData, images: updatedImages }));
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Before Append", product)
@@ -180,8 +160,6 @@ const VendorProductCreation = ({ categoryId }) => {
         product.images.forEach((image, index) => {
             formData.append(`images`, image); // Add images one by one
         });
-
-        
         if (product.variants && product.variants.length > 0) {
             product.variants.forEach((sizeData, index) => {
                 formData.append(`variants[${index}][size]`, sizeData.size);
@@ -207,12 +185,11 @@ const VendorProductCreation = ({ categoryId }) => {
                 });
             });
         }
-
         try {
             await createProduct(formData);
             // alert("Product Created Successfully");
-                  toast.success("Created Successfully!");
-            
+            toast.success("Created Successfully!");
+
         } catch (error) {
             console.error("Error creating product:", error); // Log the whole error object
             if (error.response) {
@@ -238,10 +215,8 @@ const VendorProductCreation = ({ categoryId }) => {
                             <select
                                 type="text"
                                 name="category"
-                                value={product.category ||''}
-                                // onChange={handleChange}
+                                value={product.category || ''}
                                 onChange={handleCategoryChange} //
-                                  
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required>
                                 <option value="" disabled>Select a category</option>
@@ -258,32 +233,28 @@ const VendorProductCreation = ({ categoryId }) => {
 
                             </select>
                         </div>
-
-                       
-
-
-<div className="mb-4 ">
-  <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="subcategory">
-    Sub Category
-  </label>
-  <select
-    name="subcategories"
-    value={product.subcategories || ''}
-    onChange={handleSubcategoryChange} // Use the separate function for subcategory change
-    className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    required
-  >
-    <option value="" disabled>Select a Subcategory</option>
-    {console.log("subCategories in JSX:", subCategories)}
-    {subCategories && subCategories.length > 0
-      ? subCategories.map((subcategory) => (
-          <option key={subcategory._id} value={subcategory._id}>
-            {subcategory.name}
-          </option>
-        ))
-      : <option disabled>Loading subcategories...</option>}
-  </select>
-</div>
+                        <div className="mb-4 ">
+                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="subcategory">
+                                Sub Category
+                            </label>
+                            <select
+                                name="subcategories"
+                                value={product.subcategories || ''}
+                                onChange={handleSubcategoryChange} // Use the separate function for subcategory change
+                                className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            >
+                                <option value="" disabled>Select a Subcategory</option>
+                                {console.log("subCategories in JSX:", subCategories)}
+                                {subCategories && subCategories.length > 0
+                                    ? subCategories.map((subcategory) => (
+                                        <option key={subcategory._id} value={subcategory._id}>
+                                            {subcategory.name}
+                                        </option>
+                                    ))
+                                    : <option disabled>Loading subcategories...</option>}
+                            </select>
+                        </div>
 
                         {/* Product Name */}
                         <div className="mb-4">
@@ -302,7 +273,7 @@ const VendorProductCreation = ({ categoryId }) => {
                         </div>
 
                         {/* Gender */}
-                       
+
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="gender">
                                 Gender
@@ -504,7 +475,7 @@ const VendorProductCreation = ({ categoryId }) => {
                             />
                         </div>
 
-                            {/* Selling Price */}
+                        {/* Selling Price */}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="selling_price">
                                 Selling Price
@@ -535,8 +506,6 @@ const VendorProductCreation = ({ categoryId }) => {
                                 required
                             />
                         </div>
-
-
                         {/* GST %  */}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="gst_percentage">
@@ -551,8 +520,6 @@ const VendorProductCreation = ({ categoryId }) => {
                                 className="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
-
-
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="country_of_origin">
                                 Country of Origin
@@ -567,7 +534,6 @@ const VendorProductCreation = ({ categoryId }) => {
                             // required
                             />
                         </div>
-
                         {/* seller Detaills */}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="seller_name">
@@ -583,8 +549,6 @@ const VendorProductCreation = ({ categoryId }) => {
                                 required
                             />
                         </div>
-
-
                         {/* seller Location */}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="seller_location">
@@ -602,7 +566,6 @@ const VendorProductCreation = ({ categoryId }) => {
                         </div>
                     </div>
                 </div>
-
                 {/* Images */}
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="images">
@@ -653,14 +616,13 @@ const VendorProductCreation = ({ categoryId }) => {
                     Create Product
                 </button>
             </form>
-                            <ToastContainer position="top-right" autoClose={1000} />
-            
+            <ToastContainer position="top-right" autoClose={1000} />
+
         </div>
     );
 };
-
 export default VendorProductCreation;
- {/* <div className="mb-4 ">
+{/* <div className="mb-4 ">
                             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="subcategory">
                                Sub Category
                             </label>

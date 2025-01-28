@@ -45,18 +45,18 @@ function Maincontent() {
   return (
     <div className=''>
          <div className="flex-grow mt-14 p-6">
-                <div className='bg-white rounded-xl h-32 relative'>
+                <div className='bg-white rounded-xl lg:h-32 h-44 relative'>
                 <h1 className="text-3xl font-semibold ml-10">Welcome...</h1>
                 
-                {/* <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 m-8 mt-4 absolute">
-                    <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg">
-                        <div className="text-center text-xl">Total Amount</div>
-                        <div className="text-center text-2xl font-bold">1824657</div>
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 m-8 mt-8 absolute ">
+                    <div className="bg-blue-500 text-white p-4  rounded-lg shadow-lg lg:gap-10  sm:w-58 sm:h-10 md:w-32 md:h-20 lg:w-44 lg:h-24  ">
+                        <div className="text-center lg:text-xl md:text-md sm:text-sm">Total Amount</div>
+                        <div className="text-center lg:text-2xl md:text-md sm:text-sm font-bold">1824657</div>
                     </div>
 
-                    <div className="bg-green-500 text-white p-6 rounded-lg shadow-lg">
-                        <div className="text-center text-xl">Products</div>
-                        <div className="text-center text-2xl font-bold">789654</div>
+                    <div className="bg-green-500 text-white p-4 rounded-lg shadow-lg lg:w-44 lg:h-24 md:w-32 md:h-20 sm:h-16">
+                        <div className="text-center lg:text-xl sm:text-sm">Products</div>
+                        <div className="text-center lg:text-2xl sm:text-sm font-bold">789654</div>
                         <Link
                             to="/Admin/AdminProductlist"
                             className="block mt-4 text-center text-sm underline hover:text-gray-200"
@@ -64,9 +64,9 @@ function Maincontent() {
                         </Link>
                     </div>
 
-                    <div className="bg-red-500 text-white p-6 rounded-lg shadow-lg">
-                        <div className="text-center text-xl">Orders</div>
-                        <div className="text-center text-2xl font-bold">789654</div>
+                    <div className="bg-red-500 text-white p-4 rounded-lg shadow-lg lg:w-44 lg:h-24 md:w-32 md:h-20 sm:h-16">
+                        <div className="text-center lg:text-xl sm:text-sm">Orders</div>
+                        <div className="text-center lg:text-2xl sm:text-sm font-bold">789654</div>
                         <Link
                             to="/Admin/AdminOrders"
                             className="block mt-4 text-center text-sm underline hover:text-gray-200"
@@ -75,23 +75,22 @@ function Maincontent() {
                         </Link>
                     </div>
 
-                    <div className="bg-teal-500 text-white p-6 rounded-lg shadow-lg">
-                        <div className="text-center text-xl">Users</div>
-                        <div className="text-center text-2xl font-bold">784521</div>
+                    <div className="bg-teal-500 text-white p-4 rounded-lg shadow-lg lg:w-44 lg:h-24 md:w-32 md:h-20 sm:h-16">
+                        <div className="text-center lg:text-xl sm:text-sm">Users</div>
+                        <div className="text-center lg:text-2xl sm:text-sm font-bold">784521</div>
                         <Link
                             to="/Admin/Userlist"
-                            className="block mt-4 text-center text-sm underline hover:text-gray-200"
+                            className="block mt-4  hover:text-gray-200"
                         >
-                        
                         </Link>
                     </div>
 
-                    <div className="bg-yellow-500 text-white p-6 rounded-lg shadow-lg">
+                    <div className="bg-yellow-500 text-white p-4 rounded-lg shadow-lg  lg:w-44 lg:h-24 sm:h-16 md:w-32 md:h-20 sm:h-16">
                         <div className="text-center text-xl">Out of Stock</div>
                         <div className="text-center text-2xl font-bold">258</div>
                     </div>
-                </div> */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 m-4 md:m-8 mt-4 relative">
+                </div>
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 m-4 md:m-8 mt-4 relative">
     <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg flex flex-col justify-center items-center">
         <div className="text-center text-lg md:text-xl">Total Amount</div>
         <div className="text-center text-xl md:text-2xl font-bold">1824657</div>
@@ -109,13 +108,13 @@ function Maincontent() {
     </div>
 
     <div className="bg-red-500 text-white p-6 rounded-lg shadow-lg flex flex-col justify-center items-center">
+    <Link
+            to="/Admin/AdminOrders"
+            className="block mt-4 text-center text-sm hover:text-gray-200"
+        >
         <div className="text-center text-lg md:text-xl">Orders</div>
         <div className="text-center text-xl md:text-2xl font-bold">789654</div>
-        <Link
-            to="/Admin/AdminOrders"
-            className="block mt-4 text-center text-sm underline hover:text-gray-200"
-        >
-            View Orders
+        
         </Link>
     </div>
 
@@ -134,8 +133,7 @@ function Maincontent() {
         <div className="text-center text-lg md:text-xl">Out of Stock</div>
         <div className="text-center text-xl md:text-2xl font-bold">258</div>
     </div>
-</div>
-
+</div> */}
                 </div>
             </div>
 

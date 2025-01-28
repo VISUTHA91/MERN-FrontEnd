@@ -9,11 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function VendorProductList() {
   const [productlist, setProductlist] = useState([]);
   const navigate = useNavigate();
-
-  // const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-
   const fetchProductList = async () => {
     try {
       const response = await getProducts(); // Fetch products from backend
@@ -29,16 +25,12 @@ function VendorProductList() {
       console.error('Error fetching products:', error);
     }
   };
-
-
   useEffect(() => {
-    fetchProductList(); // Fetch the product list when the component mounts
+    fetchProductList(); 
   }, []);
-
   const handleEdit = (product) => {
     setSelectedProduct(product);
     navigate(`/Vendor/EditProductPage/${product._id}`);
-
   };
 
   const handleUpdate = async (productId, updatedData) => {
@@ -65,9 +57,7 @@ function VendorProductList() {
     }
   };
 
-  // if (loading) {
-  //   return <div>Loading...</div>; // Show loading state while fetching data
-  // }
+
 
   return (
     <div className=' border-black mt-2 mr-8 h-screen overflow-auto scrollbar scrollbar-hide'>
@@ -80,6 +70,7 @@ function VendorProductList() {
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">Image</th>
               <th className="py-2 px-4 border-b">Category</th>
+              <th className="py-2 px-4 border-b">SubCategory</th>
               <th className="py-2 px-4 border-b">Color</th>
               <th className="py-2 px-4 border-b">Size</th>
               <th className="py-2 px-4 border-b">MRP</th>
@@ -104,24 +95,19 @@ function VendorProductList() {
                   ))}
                 </td>
                 <td className="py-2 px-4 border-b">{product.category_id.name}</td>
+                <td className="py-2 px-4 border-b">{product.sub_category_id.name}</td>
                 <td className="py-2 px-4 border-b">{product.color}</td>
                 <td className="py-2 px-4 border-b">
-                  {/* {Array.isArray(product.variants.map((size,index) ? (
-                    product.size.join(',') // Join sizes with a comma
-                  ) : (
-                    product.size // If it's not an array, just display the value
-                  )))} */}
-
 {Array.isArray(product.variants) ? (
   product.variants.map((variant, index) => (
     variant.size && Array.isArray(variant.size) ? (
-      variant.size.join(",") // Join sizes with a comma
+      variant.size.join(",")
     ) : (
-      variant.size // If it's not an array, just display the value
+      variant.size 
     )
-  )).join(", ") // Join all sizes from map with a comma
+  )).join(", ") 
 ) : (
-  product.size // If `product.variants` is not an array, display `product.size`
+  product.size 
 )}
 
                 </td>
@@ -147,14 +133,27 @@ function VendorProductList() {
       ) : (
         <p className="ml-10">No products found.</p>
       )}
-      {/* <EditProductModal
+     
+    </div>
+  );
+}
+export default VendorProductList;
+
+
+
+ {/* <EditProductModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         product={selectedProduct}
         onUpdate={handleUpdate}
       /> */}
-    </div>
-  );
-}
 
-export default VendorProductList;
+        // if (loading) {
+  //   return <div>Loading...</div>; // Show loading state while fetching data
+  // }
+
+     {/* {Array.isArray(product.variants.map((size,index) ? (
+                    product.size.join(',') // Join sizes with a comma
+                  ) : (
+                    product.size // If it's not an array, just display the value
+                  )))} */}
