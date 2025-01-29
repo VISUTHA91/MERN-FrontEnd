@@ -35,7 +35,6 @@ const UserOrderPage = () => {
         setLoading(true);
         const userId = JSON.parse(localStorage.getItem('userData'));
         const fetchedOrders = await getOrdersByUser(userId.id);
-        console.log(",m,m,m,mm,,m,m,,m",userId.id)
         setOrders(fetchedOrders);
         console.log(fetchedOrders);
         setLoading(false);
@@ -46,11 +45,7 @@ const UserOrderPage = () => {
     };
 
     fetchOrders();
-  }, []);
-
-
-
-
+  },[]);
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <h1 className="text-2xl font-bold text-gray-800 mb-6 mt-14">My Orders</h1>

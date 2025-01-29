@@ -167,7 +167,7 @@ function ProfilePage() {
     <p className='text-sm text-gray-500 ml-14'>Edit Addresses For Orders and Gifts </p>
 </div>
   </Link>
-<Link>
+<Link to={'/User/whislist'}>
   <div
     style={{
       border: '1px solid #e5e7eb',
@@ -195,6 +195,40 @@ function ProfilePage() {
     <p className='text-sm text-gray-500 ml-12'>Favorites, just a click away!" </p>
   </div>
   </Link>
+
+  {/* <Link to={'/User/Returnpage'}>
+  <div
+    style={{
+      border: '1px solid #e5e7eb',
+      width: '24rem',
+      borderRadius: '8px',
+      padding: '40px',
+      marginBottom: '8px',
+      display: 'flex flex-col',
+      alignItems: 'center',
+      gap: '16px',
+      fontSize: '1.25rem',
+      backgroundColor: '#fff',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s ease',
+    }}
+    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#e5e7eb')}
+    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#fff')}
+  >
+    <div className='flex flex-row gap-4'>
+    <FaHeart size={38} />
+    <div className='text-2xl'>
+    Your Wishlist
+    </div>
+    </div>
+    <p className='text-sm text-gray-500 ml-12'>Favorites, just a click away!" </p>
+  </div>
+  </Link> */}
+
+
+
+
+
 <Link>
   <div
     style={{

@@ -54,7 +54,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Retrieve token from local storage
+    
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers['Authorization'] = token;
@@ -121,11 +121,6 @@ export const getCategories = async () => {
     throw error;
   }
 };
-
-
-
-
-
 
 // fetch all userlist(admin)
 export const getAllUser = async () => {
@@ -469,7 +464,6 @@ export const getProductById = async (productId) => {
   }
 };
 
-
 // Product Detail get by Id
 export const getProductsById = async (productId) => {
   try {
@@ -481,6 +475,18 @@ export const getProductsById = async (productId) => {
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error; // Rethrow the error to be handled by the calling component
+  }
+};
+
+
+// newly added products
+export const newlyaddedProducts = async () => {
+  try {
+    const response = await axiosInstance.get(`${API_BASE_URL}latestProducts`);
+    return response.data; // Assuming the categories are in response.data
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
   }
 };
 
@@ -675,4 +681,54 @@ export const getOrdersByUser = async (userId) => {
     throw new Error(error.response?.data?.message || 'Failed to fetch order details');
   }
 };
+
+
+
+
+export const addToWishlist = async (productId) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}createWishlist`, {
+      productId,
+    });
+    return response.data; // Return response data
+  } catch (error) {
+    console.error("Error adding to wishlist:", error.response?.data || error.message);
+    throw error;
+  }
+};
+export const removeFromWishlist = async (productId) => {
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}removeWishlistItem`, { productId });
+    return response.data;
+  } catch (error) {
+    console.error("Error removing from wishlist:", error);
+    throw error;
+  }
+};
+
+// export const checkIfWishlisted = async (productId) => {
+//   try {
+//     const response = await axiosInstance.get(`${API_BASE_URL}checkWishlist`,{productId});
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error checking wishlist status:", error);
+//     return false;
+//   }
+// };
+
+export const checkIfWishlisted = async (productId) => {
+  try {
+    const token = localStorage.getItem("authToken"); // Get auth token
+    if (!token) return false; // If not logged in, return false
+
+    const response = await axiosInstance.get(`${API_BASE_URL}checkWishlist`,{productId})
+   
+
+    return response.data.isWishlisted; // Ensure API returns { isWishlisted: true/false }
+  } catch (error) {
+    console.error("Error checking wishlist status:", error);
+    return false; // Return false on error
+  }
+};
+
 

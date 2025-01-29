@@ -20,6 +20,7 @@ import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { kids } from '../assets/Images';
 import ModalAlert from '../Components/ModalAlert';
+import Newlyadded from '../Components/Newlyadded';
 
 
 
@@ -155,6 +156,7 @@ function Productdetails({ _id, images, price }) {
 
 
   return (
+    <div>
     <div className="flex flex-col lg:flex-row p-4 sm:p-6 lg:p-12 ">
       <div className="w-full lg:w-1/2 flex flex-col items-center gap-4 lg:ml-16 border rounded-lg p-4 bg-gray-200  lg:mt-32">
         <div className="w-full max-w-xs sm:max-w-md lg:max-w-lg">
@@ -337,7 +339,15 @@ function Productdetails({ _id, images, price }) {
           )}
         </div>
       </div>
+
+
+      {/* Newly Added */}
     </div>
+    
+
+          <Newlyadded />
+          </div>
+
   )
 }
 
