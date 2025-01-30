@@ -167,7 +167,7 @@ function ProfilePage() {
     <p className='text-sm text-gray-500 ml-14'>Edit Addresses For Orders and Gifts </p>
 </div>
   </Link>
-<Link to={'/User/whislist'}>
+<Link to={'/Wishlist'}>
   <div
     style={{
       border: '1px solid #e5e7eb',
