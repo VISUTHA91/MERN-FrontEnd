@@ -14,6 +14,7 @@ import { GrProductHunt } from "react-icons/gr";
 import { FaFirstOrder } from "react-icons/fa";
 import { MdReviews } from "react-icons/md";
 import VendorList from './VendorList';
+import Adminfooter from '../../Components/Adminfooter';
 // import { useState } from 'react';
 
 function Dashboard() {
@@ -40,6 +41,7 @@ function Dashboard() {
     }
   };
   return (
+    <>
     <div className="flex">
       {/* Side Content */}
       <div className="w-58 ">
@@ -154,8 +156,12 @@ function Dashboard() {
       {/* Main Content */}
       <div className='m-4 mt-8 w-full h-screen overflow-auto scrollbar-hide'>
         {renderPageContent()}
+        <div className='mt-5 fixed bottom-0 left-0 w-full'>
+        <Adminfooter></Adminfooter>
+        </div>
       </div>
     </div>
+      </>
   );
 }
 
