@@ -67,7 +67,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   async (response) => {
     try {
-      if (response.data?.statusCode === 700) {
+      if (response.data?.statusCode === 700 || response.status === 500) {
         // Remove the auth token from local storage
         localStorage.removeItem('authToken');
         localStorage.removeItem('userData');
@@ -115,6 +115,16 @@ export const userLogin = async (userData) => {
 export const getCategories = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}getAllCategory`); // Fetches categories from the backend
+    return response.data; // Assuming the categories are in response.data
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
+};
+
+export const getAdminCategories = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}admin/getAllCategory`); // Fetches categories from the backend
     return response.data; // Assuming the categories are in response.data
   } catch (error) {
     console.error('Error fetching categories:', error);
