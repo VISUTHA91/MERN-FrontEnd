@@ -716,6 +716,18 @@ export const removeFromWishlist = async (productId) => {
   }
 };
 
+
+export const fetchuserWishlist = async (userId) => {
+    try {
+      const response = await axiosInstance.get(`${API_BASE_URL}getWishlist`,{userId});
+      console.log("2121212121",response.data.wishlist)
+      return response.data.wishlist;
+    } catch (error) {
+      console.error("Error fetching wishlist:", error);
+      throw error;
+    }
+  }
+
 // export const checkIfWishlisted = async (productId) => {
 //   try {
 //     const response = await axiosInstance.get(`${API_BASE_URL}checkWishlist`,{productId});
@@ -728,8 +740,8 @@ export const removeFromWishlist = async (productId) => {
 
 export const checkIfWishlisted = async (productId) => {
   try {
-    const token = localStorage.getItem("authToken"); // Get auth token
-    if (!token) return false; // If not logged in, return false
+    // const token = localStorage.getItem("authToken"); // Get auth token
+    // if (!token) return false; // If not logged in, return false
 
     const response = await axiosInstance.get(`${API_BASE_URL}checkWishlist`,{productId})
    

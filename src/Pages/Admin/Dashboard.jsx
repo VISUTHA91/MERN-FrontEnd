@@ -155,7 +155,6 @@ function Dashboard() {
       <div className='m-4 mt-8 w-full h-screen overflow-auto scrollbar-hide'>
         {renderPageContent()}
       </div>
-
     </div>
   );
 }

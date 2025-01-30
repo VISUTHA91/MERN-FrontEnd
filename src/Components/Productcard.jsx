@@ -126,6 +126,8 @@ function Productcard({ _id, name, MRP, final_price, images }) {
   useEffect(() => {
     const checkWishlistStatus = async () => {
       try {
+        const token = localStorage.getItem("authToken");
+        if (!token) return;
         const isWishlisted = await checkIfWishlisted(_id); // API call to check if the product is in wishlist
         setIsWishlisted(isWishlisted);
       } catch (error) {
