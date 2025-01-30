@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { MdDeleteForever } from "react-icons/md";
-import { getCategories } from '../../api/apiServices';
+import { getAdminCategories } from '../../api/apiServices';
 import { MdEdit } from "react-icons/md";
 import { FcPlus } from "react-icons/fc";
 import { createCategory } from '../../api/apiServices';
@@ -44,7 +44,7 @@ function AdminCategory() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await getCategories(); // Fetch categories from backend
+        const response = await getAdminCategories(); // Fetch categories from backend
         // console.log("Fetched Data",response)
         setCategories(response.data); // Store fetched categories
       } catch (error) {
@@ -163,7 +163,7 @@ function AdminCategory() {
       setShowEditModal(false);
       // resetForm(); 
       // Refresh categories list
-      const { data } = await getCategories();
+      const { data } = await getAdminCategories();
       setCategories(data.data);
       setReload((prev) => !prev);
 
