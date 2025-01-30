@@ -119,7 +119,7 @@ function Productlist() {
         </div>)}
       </div>
       <FloatingButton />
-
+      
     </div>
   );
 }
