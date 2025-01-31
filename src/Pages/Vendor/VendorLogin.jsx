@@ -30,8 +30,7 @@ function VendorLogin() {
       console.log("Login In Successful:", data);
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("vendor", JSON.stringify({ id:data.vendor.id})); // Store user name
-      // console.log("hello",data.user);
-      navigate("/Vendor/VendorDashboard")
+      navigate("/vendor/dashboard")
       window.location.reload();
     } catch (error) {
       console.error("Login failed:", error.message || error);

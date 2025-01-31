@@ -38,8 +38,9 @@ import AdminOrders from './Pages/Admin/AdminOrders';
 import UserOrderPage from './Pages/User/UserOrder';
 import AdminVendorDetails from './Pages/Admin/AdminVendorDetails';
 import Address from './Pages/User/Address';
-// import Wishlist from './Pages/Wishlist';
 import WishlistPage from './Pages/WhislistPage';
+import Invoice from './Pages/Vendor/Invoice';
+import VendorLayout from './Layouts/VendorLayout';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -57,7 +58,7 @@ function App() {
           <Routes>
           <Route element={<RootLayout  cartCount={cartCount} />} >
             <Route index element={<Home />} />
-            <Route path='/Home' element={<Home/>} />
+      <Route path='/Home' element={<Home/>} />
       <Route path='/About' element={<About/>} />
       <Route path='/Contact' element={<Contact/>} />
       <Route path='/Signin' element={<Signin/>} />
@@ -68,7 +69,6 @@ function App() {
       <Route path='/Support' element={<Support/>} />
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />
       <Route path='/Productlist/gender/:gender' element={<Productlist/>} />
-      {/* <Route path='/Productlist/gender/women' element={<Productlist/>} /> */}
       <Route path='/Productlist' element={<Productlist/>} />
       <Route path='/User/ProfilePage/' element={<ProfilePage />} />
       <Route path='/User/Profile/' element={<Profile />} />
@@ -90,19 +90,44 @@ function App() {
         </Route>
 
 {/* Vendor Layout */}
-        {/* <Route element={<VendorSignup />} > */}
-        {/* <Route index element={<VendorSignup />} /> */}
-        <Route path='/Vendor/VendorSignup' element={<VendorSignup />} />
+         {/* <Route element={<VendorLayout />} >
+        <Route index element={<VendorDashboard />} />
+        <Route path='/Vendor' element={<VendorDashboard />} />
         <Route path='/Vendor/VendorLogin' element={<VendorLogin />} />
+        <Route path='/Vendor/VendorSignup' element={<VendorSignup />} />
         <Route path='/Vendor/VendorDashboard' element={<VendorDashboard />} />
-        <Route path='/Vendor/VendorMainContent' element={<VendorMainContent />} />
-        <Route path='/Vendor/VendorProductCreation' element={<VendorProductCreation />} />
+        <Route path='VendorMainContent' element={<VendorMainContent />} />
+        <Route path='VendorProductCreation' element={<VendorProductCreation />} />
         <Route path='/Vendor/VendorProductList' element={<VendorProductList />} />
         <Route path='/Vendor/EditProductPage/:id' element={<EditProductPage />} />
-      {/* <Route path='/Admin/Userlist' element={<Userlist />} /> */}
-      {/* <Route path='/Admin/Createproduct' element={<Createproduct />} /> */}
-      {/* <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} /> */}
-        {/* </Route> */}
+      <Route path='/Vendor/Invoice' element={<Invoice />} />
+        </Route> */}
+
+        {/* Vendor Layout */}
+        <Route path="/vendor/login" element={<VendorLogin />} />
+{/* <Route path="/vendor/login" element={<VendorLogin />} />
+  <Route path='/vendor/dashboard' element={<VendorDashboard />} >
+
+  <Route path="maincontent" index element={<VendorMainContent />} />
+  <Route path="login"   element={<VendorLogin />} />
+  <Route path="signup" element={<VendorSignup />} />
+  <Route path="dashboard" element={<VendorDashboard />} />
+  <Route path="productcreation" element={<VendorProductCreation />} />
+  <Route path="productlist" element={<VendorProductList />} />
+  <Route path="editproduct/:id" element={<EditProductPage />} />
+  <Route path="invoice" element={<Invoice />} />
+  </Route> */}
+
+  <Route path='/vendor/dashboard' element={<VendorDashboard />} >
+    <Route  index element={<VendorMainContent />} />
+    <Route path="productlist" element={<VendorProductList />} />
+    <Route path="productcreation" element={<VendorProductCreation />} />
+
+
+  </Route>
+
+
+
           </Routes>
         </BrowserRouter>
     </div>

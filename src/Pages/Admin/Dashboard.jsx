@@ -15,12 +15,16 @@ import { FaFirstOrder } from "react-icons/fa";
 import { MdReviews } from "react-icons/md";
 import VendorList from './VendorList';
 import Adminfooter from '../../Components/Adminfooter';
+import { TbLogout } from "react-icons/tb";
+import { useNavigate } from 'react-router-dom';
 // import { useState } from 'react';
 
 function Dashboard() {
 
 
   const [currentPage, setCurrentPage] = useState('Maincontent');
+    const navigate = useNavigate();
+  
 
   const renderPageContent = () => {
     switch (currentPage) {
@@ -40,12 +44,24 @@ function Dashboard() {
         return <h2>Page not found</h2>;
     }
   };
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    // localStorage.removeItem("vendorData")
+    // setIsAuthenticated(false);
+    // setVendor(null);
+    alert('Logged Out');
+    navigate("/")
+    window.location.reload();
+  };
+
   return (
     <>
     <div className="flex">
       {/* Side Content */}
       <div className="w-58 ">
-        <div className=" mt-16 w-58 h-screen bg-fuchsia-900 p-8 text-xl">
+        <div className="w-58 h-screen bg-fuchsia-900 p-8 text-xl">
           <ul className="space-y-4">
             <li>
               <button
@@ -140,6 +156,17 @@ function Dashboard() {
               </button>
             </li>
 
+             <li>
+                   <button
+                              onClick={handleLogout}
+                              className="flex items-center text-gray-300 hover:text-white gap-2">
+                              {/* <MdReviews className=' rounded mt-1 text-4xl lg:text-base' /> */}
+                              <TbLogout />
+                              {/* <span className="hidden lg:block">LogOut</span> */}
+                              LogOut
+                            </button>
+                          </li>
+
             {/* <li>
               <button
                 onClick={() => setCurrentPage('Reviews')}
@@ -154,7 +181,7 @@ function Dashboard() {
         </div>
       </div>
       {/* Main Content */}
-      <div className='m-4 mt-8 w-full h-screen overflow-auto scrollbar-hide'>
+      <div className='bg-fuchsia-100 rounded-xl p-2  m-1 w-full h-screen overflow-auto scrollbar-hide'>
         {renderPageContent()}
         <div className='mt-5 fixed bottom-0 left-0 w-full'>
         <Adminfooter></Adminfooter>

@@ -61,7 +61,7 @@ function VendorProductList() {
 
   return (
     <div className=' border-black mt-2 mr-8 h-screen overflow-auto scrollbar scrollbar-hide'>
-      <h1 className="text-2xl font-bold mt-4 ml-10">Product List</h1>
+      <h1 className="text-2xl font-bold mt-4 ml-18">Product List</h1>
       {productlist && productlist.length > 0 ? (
         <table className="w-full bg-white border border-gray-600 rounded-lg shadow-lg ml-18 mt-4">
           <thead>
