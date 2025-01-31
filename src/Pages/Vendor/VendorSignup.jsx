@@ -145,7 +145,6 @@ function VendorSignup() {
     const data = await apiCalls.registerVendor(finalvendorData);
     try {
       console.log("Registration  Successful:", data);
-
       localStorage.setItem("authToken", data.token);
       navigate("/Vendor/VendorLogin")
       // Storing token if needed

@@ -50,7 +50,7 @@ const Footer = () => {
         </li>
         <li className="mb-2">
           {/* <Link to={'/Vendor/VendorDashboard'} className="hover:underline"> */}
-          <Link to={'/Vendor/VendorLogin'} className="hover:underline">
+          <Link to={'/vendor/login'} className="hover:underline">
             Vendor
           </Link>
         </li>

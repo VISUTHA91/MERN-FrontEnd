@@ -44,11 +44,11 @@ function Maincontent() {
 
   return (
     <div className=''>
-         <div className="flex-grow mt-14 p-6">
+         <div className="flex-grow p-6">
                 <div className='bg-white rounded-xl lg:h-32 h-44 relative'>
-                <h1 className="text-3xl font-semibold ml-10">Welcome...</h1>
+                <h1 className="text-3xl font-semibold ml-10">Welcome Admin...</h1>
                 
-                <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 m-8 mt-8 absolute ">
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 m-8 absolute ">
                     <div className="bg-blue-500 text-white p-4  rounded-lg shadow-lg lg:gap-10  sm:w-58 sm:h-10 md:w-32 md:h-20 lg:w-44 lg:h-24  ">
                         <div className="text-center lg:text-xl md:text-md sm:text-sm">Total Amount</div>
                         <div className="text-center lg:text-2xl md:text-md sm:text-sm font-bold">1824657</div>
@@ -137,7 +137,7 @@ function Maincontent() {
                 </div>
             </div>
 
-    <div className="bg-white rounded-2xl shadow-lg p-6 mt-10">
+    <div className="bg-white rounded-2xl shadow-lg p-6  mt-8 mb-10">
       <h2 className="text-xl font-bold text-gray-700 mb-4">Dashboard Overview</h2>
   <div className="flex flex-wrap justify-center gap-6">
       {chartData.map((item, index) => (

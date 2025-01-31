@@ -42,10 +42,10 @@ const deleteuser = async (userId) => {
 
   return (
     <div className=''>
-  <h1 className="text-2xl font-bold  mt-24 ml-10">User Details</h1>
+  <h1 className="text-2xl font-bold  mt-16 ">User Details</h1>
   {/* <div className=" bg-rose-600 p-2 mb-10 ml-10 pl-10"> */}
     {userlist && (
-      <table className="w-full bg-white border border-gray-600 rounded-lg shadow-lg ml-28 mb-10 mt-4">
+      <table className="w-full bg-white border border-gray-600 rounded-lg shadow-lg  mb-8 mt-4">
         <thead>
           <tr className="bg-gray-200">
           <th className="py-2 px-4 border-b">S.No</th>

@@ -124,7 +124,7 @@ export const getCategories = async () => {
 
 export const getAdminCategories = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}admin/getAllCategory`); // Fetches categories from the backend
+    const response = await axiosInstance.get(`${API_BASE_URL}admin/getAllCategory`); // Fetches categories from the backend
     return response.data; // Assuming the categories are in response.data
   } catch (error) {
     console.error('Error fetching categories:', error);

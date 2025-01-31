@@ -31,7 +31,6 @@ const WishlistPage = () => {
     };
     fetchWishlist();
   }, []);
-  console.log("sdfghjkldfghjkl;dfghjk", wishlist);
 
 
 
