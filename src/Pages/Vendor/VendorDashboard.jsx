@@ -57,7 +57,7 @@ function VendorDashboard() {
 
             <ul className="space-y-4 mt-8 ">
               <li>
-                <Link to={'maincontent'}
+                <Link to={''}
                   className="flex items-center text-gray-300 hover:text-black gap-2">
                   <TbLayoutDashboard className=' rounded text-4xl lg:text-base' />
                   <span className="hidden lg:block md:space-x-6">Dashboard</span>
@@ -106,7 +106,7 @@ function VendorDashboard() {
                   >
                     <li>
                       <Link
-                        to={'/vendor/invoice'}
+                        to={'invoice'}
                         className="flex items-center px-4 py-2 text-gray-700 hover:text-white hover:bg-blue-300 gap-2 transition duration-200 rounded-md"
                         onClick={() => setIsAboutDropdownOpen(false)}
                       >
@@ -115,7 +115,7 @@ function VendorDashboard() {
                     </li>
                     <li>
                       <NavLink
-                        to={'/Productlist/gender/women'}
+                        to={'invoicelist'}
                         className="flex items-center px-4 py-2 text-gray-700 hover:text-white hover:bg-blue-300 gap-2 transition duration-200 rounded-md"
                         onClick={() => setIsAboutDropdownOpen(false)}
                       >
@@ -134,8 +134,8 @@ function VendorDashboard() {
                 )}
               </li>
               <li>
-                <NavLink to={'/Vendor/Profile'}
-                  onClick={() => setCurrentPage('Reviews')}
+                <NavLink to={'reviews'}
+                  // onClick={() => setCurrentPage('Reviews')}
                   className="flex items-center text-gray-300 hover:text-white gap-2">
                   <MdReviews className=' rounded mt-1 text-4xl lg:text-base' />
                   <span className="hidden lg:block">Reviews</span>

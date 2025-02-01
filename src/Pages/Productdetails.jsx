@@ -130,7 +130,6 @@ function Productdetails({ _id, images, price }) {
 
     } catch (error) {
       console.error('Error adding to cart:', error);
-      // setCartStatus('An error occurred. Please try again.');
     }
   };
 

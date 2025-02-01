@@ -16,10 +16,10 @@ function VendorProductList() {
       console.log("Fetched Data...", response.products); // Log fetched data
 
       if (Array.isArray(response.products)) {
-        setProductlist(response.products); // Set the state if it's an array
+        setProductlist(response.products);
       } else {
         console.warn("Expected an array for products but got:", response.products);
-        setProductlist([]); // Set to empty array if not valid
+        setProductlist([]); 
       }
     } catch (error) {
       console.error('Error fetching products:', error);

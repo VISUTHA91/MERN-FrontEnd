@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getUserProfile } from '../../api/apiServices';
 import { updateUserProfile } from '../../api/apiServices';
+import GoBackButton from '../../Components/GoBackButton';
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -82,53 +83,15 @@ function Profile() {
   }
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto p-8 relative">
+       <div className="absolute top-4 left-4">
+        <GoBackButton />
+      </div>
       <h1 className="text-2xl font-bold mb-4 mt-14 text-center"> Your Account</h1>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       {successMessage && <p className="text-green-500">{successMessage}</p>}
       {!isEditing ? (
-        // <div className="bg-white shadow-md rounded-lg p-6">
-        //   <div className="flex bg-gray-100 flex-col justify-center items-center rounded mb-4">
-        //     <div>
-        //       <div className='flex items-center ml-14 mt-4'>
-        //       <img src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} alt="Profile" className="w-20 h-20 rounded-full" />
-        //       </div>
-        //       <div className="flex flex-col items-center mb-4">
-        //         <h2 className="text-xl font-semibold">{user.name}</h2>
-        //         <p>{user.email}</p>
-        //         <p>Phone Number: {user.phone_number}</p>
-        //       </div>
-        //     </div>
-        //   </div>
 
-        //   <button
-        //     onClick={() => setIsEditing(true)}
-        //     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        //     Edit Profile
-        //   </button>
-        // </div>
-//         <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
-//   <div className="flex flex-col items-center bg-gray-50 p-4 rounded-lg mb-6">
-//     <div className="relative">
-//       <img 
-//         src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} 
-//         alt="Profile" 
-//         className="w-24 h-24 rounded-full shadow-md"
-//       />
-//     </div>
-//     <div className="flex flex-col items-center mt-4 text-center">
-//       <h2 className="text-2xl font-semibold text-gray-800">{user.name}</h2>
-//       <p className="text-gray-600">{user.email}</p>
-//       <p className="text-gray-500">Phone Number: {user.phone_number}</p>
-//     </div>
-//   </div>
-
-//   <button
-//     onClick={() => setIsEditing(true)}
-//     className="w-full bg-blue-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-600 transition duration-200">
-//     Edit Profile
-//   </button>
-// </div>
 
 
 <div className="bg-white shadow-2xl  mt-4 rounded-xl p-6 max-w-md mx-auto transform transition-all hover:scale-105">
@@ -225,6 +188,51 @@ function Profile() {
 }
 
 export default Profile;
+
+
+
+        // <div className="bg-white shadow-md rounded-lg p-6">
+        //   <div className="flex bg-gray-100 flex-col justify-center items-center rounded mb-4">
+        //     <div>
+        //       <div className='flex items-center ml-14 mt-4'>
+        //       <img src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} alt="Profile" className="w-20 h-20 rounded-full" />
+        //       </div>
+        //       <div className="flex flex-col items-center mb-4">
+        //         <h2 className="text-xl font-semibold">{user.name}</h2>
+        //         <p>{user.email}</p>
+        //         <p>Phone Number: {user.phone_number}</p>
+        //       </div>
+        //     </div>
+        //   </div>
+
+        //   <button
+        //     onClick={() => setIsEditing(true)}
+        //     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        //     Edit Profile
+        //   </button>
+        // </div>
+//         <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
+//   <div className="flex flex-col items-center bg-gray-50 p-4 rounded-lg mb-6">
+//     <div className="relative">
+//       <img 
+//         src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} 
+//         alt="Profile" 
+//         className="w-24 h-24 rounded-full shadow-md"
+//       />
+//     </div>
+//     <div className="flex flex-col items-center mt-4 text-center">
+//       <h2 className="text-2xl font-semibold text-gray-800">{user.name}</h2>
+//       <p className="text-gray-600">{user.email}</p>
+//       <p className="text-gray-500">Phone Number: {user.phone_number}</p>
+//     </div>
+//   </div>
+
+//   <button
+//     onClick={() => setIsEditing(true)}
+//     className="w-full bg-blue-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-600 transition duration-200">
+//     Edit Profile
+//   </button>
+// </div>
      {/* Edit Address Fields */}
           {/* {user.addresses && user.addresses.map((address, index) => (
             <div key={index} className="mb-4">
