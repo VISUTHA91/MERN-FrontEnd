@@ -38,23 +38,24 @@ function Standards() {
     return (
         <div className="flex flex-wrap w-full bg-gray-100 py-8 justify-around items-center">
             <div className="flex flex-col justify-center items-center w-1/2 md:w-1/4 lg:w-1/5 mb-4">
-                <img src={EasyReturns} alt="Easy Exchange" className="w-18 h-12 md:w-18 md:h-16" />
+                <img src={EasyReturns} alt="Easy Exchange" className="w-18 md:w-18 h-auto object-contain" />
                 <p className="text-center text-sm md:text-base mt-2">Easy Exchange</p>
             </div>
             <div className="flex flex-col justify-center items-center w-1/2 md:w-1/4 lg:w-1/5 mb-4">
-                <img src={paymentsecure} alt="Secure Payment" className="w-18 h-12 md:w-18 md:h-16" />
+                <img src={paymentsecure} alt="Secure Payment" className="w-18 md:w-18 h-auto object-contain" />
                 <p className="text-center text-sm md:text-base mt-2">Secure Payment</p>
             </div>
             <div className="flex flex-col justify-center items-center w-1/2 md:w-1/4 lg:w-1/5 mb-4">
-                <img src={Shipping} alt="Budget-friendly" className="w-18 h-12 md:w-18 md:h-16" />
+                <img src={Shipping} alt="Budget-friendly" className="w-18 md:w-18 h-auto object-contain" />
                 <p className="text-center text-sm md:text-base mt-2">Budget-friendly</p>
             </div>
             <div className="flex flex-col justify-center items-center w-1/2 md:w-1/4 lg:w-1/5 mb-4">
-                <img src={OnlineSupport} alt="24/7 Support" className="w-18 h-12 md:w-18 md:h-16" />
+                <img src={OnlineSupport} alt="24/7 Support" className="w-18 md:w-18 h-auto object-contain" />
                 <p className="text-center text-sm md:text-base mt-2">24/7 Support</p>
             </div>
         </div>
     );
+    
 }
 
 export default Standards;

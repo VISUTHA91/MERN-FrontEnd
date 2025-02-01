@@ -8,6 +8,7 @@ import Nav from './Components/Nav'
 import Home from './Pages/Home';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
+import FAQ from './Pages/Faq'
 import Signin from './Pages/Signin';
 import Cart from './Pages/Cart';
 import Signup from './Pages/Signup';
@@ -68,6 +69,7 @@ function App() {
       <Route path='/Wishlist' element={<WishlistPage/>} />
       <Route path='/Payment' element={<Payment/>} />
       <Route path='/Support' element={<Support/>} />
+      <Route path='/FAQ' element={<FAQ/>} />
       <Route path='/Productlist/:categoryName' element={<Productlist/>} />
       <Route path='/Productlist/gender/:gender' element={<Productlist/>} />
       <Route path='/Productlist' element={<Productlist/>} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts, editProduct } from '../../api/apiServices';
+import { getProducts, editProduct, API_BASE_URL } from '../../api/apiServices';
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { deleteProduct } from '../../api/apiServices';
 import { useNavigate } from 'react-router-dom';
@@ -87,7 +87,7 @@ function VendorProductList() {
                   {product.images.slice(0, 5).map((image, index) => (
                     <img
                       key={index}
-                      src={`http://192.168.20.5:3000/${image}`}
+                      src={`${API_BASE_URL}${image}`}
                       alt={`Product Image ${index + 1}`}
                       height="15"
                       width="10"

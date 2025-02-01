@@ -25,21 +25,45 @@ export default function Signin() {
   };
 
 
+  // const registerUser = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = await apiCalls.userLogin(user);
+  //     if(data.status == 200) // Correctly passing the 'user' object
+  //     toast.success("Login Successful!");
+  //     localStorage.setItem("authToken", data.token);
+  //     localStorage.setItem("userData", JSON.stringify({ role: data.user.role ,name:data.user.name ,id:data.user.id}));
+  //     navigate("/")
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.error("Login failed:", error.message || error);
+  //     alert(data.message)
+  //     navigate("/Signup")
+  //   }
+  // };
+
   const registerUser = async (e) => {
     e.preventDefault();
     try {
-      const data = await apiCalls.userLogin(user); // Correctly passing the 'user' object
-      toast.success("Login Successful!");
-      localStorage.setItem("authToken", data.token);
-      localStorage.setItem("userData", JSON.stringify({ role: data.user.role ,name:data.user.name ,id:data.user.id}));
-      navigate("/")
-      window.location.reload();
+      const data = await apiCalls.userLogin(user);
+      console.log(data)
+      if (data.status) {
+        toast.success("Login Successful!");
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("userData", JSON.stringify({ role: data.user.role, name: data.user.name, id: data.user.id }));
+        setTimeout(() => {
+        navigate("/", { replace: true });
+        window.location.reload();
+        }, 1000);
+      }else{
+        toast.error(data.message)}
     } catch (error) {
       console.error("Login failed:", error.message || error);
-      alert(data.message)
-      navigate("/Signup")
+      toast.error(error.response?.data?.message || "Login failed. Please try again.");
+      navigate("/Signup", { replace: true });
     }
   };
+  
 
   return (
     <>

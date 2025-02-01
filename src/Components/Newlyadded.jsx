@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getCategories} from '../api/apiServices'
+import { API_BASE_URL, getCategories} from '../api/apiServices'
 import { newlyaddedProducts } from '../api/apiServices';
 
 function NextArrow(props) {
@@ -129,7 +129,7 @@ fetchProducts();
             >
               <div className="flex flex-col justify-center items-center mt-4 w-40  ml-4 ">
                 <img
-                  src={`http://192.168.20.5:3000/${product.images}`}
+                  src={`${API_BASE_URL}${product.images}`}
                   className="border rounded-xl bg-gray-400 hover:scale-110 transition-transform duration-300 object-cover h-48 w-48"
                   alt={product.name}
                 />

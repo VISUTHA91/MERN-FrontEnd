@@ -45,8 +45,9 @@
 import axios from "axios";
 
 // Base URL for your API
-export const API_BASE_URL = "http://192.168.20.5:3000/";
+// export const API_BASE_URL = "http://192.168.20.5:3000/";
 // export const API_BASE_URL = "http://192.168.31.166:3000/";
+export const API_BASE_URL = "http://172.20.10.7:3000/";
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -70,6 +71,7 @@ axiosInstance.interceptors.response.use(
       if (response.data?.statusCode === 700 || response.status === 500) {
         // Remove the auth token from local storage
         localStorage.removeItem('authToken');
+        localStorage.removeItem('auth-token')
         localStorage.removeItem('userData');
         alert("Session expired. Please log in again.");
         window.location.href = "/Signin";
