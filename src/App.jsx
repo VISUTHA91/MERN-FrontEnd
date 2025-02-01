@@ -31,6 +31,7 @@ import VendorMainContent from './Pages/Vendor/VendorMainContent';
 import VendorList from './Pages/Admin/VendorList';
 import VendorDetails from './Pages/Vendor/VendorDetails';
 import VendorProductCreation from './Pages/Vendor/VendorProductCreation';
+import VendorOrders from './Pages/Vendor/VendorOrders';
 import Payment from './Pages/Payment';
 import VendorProductList from './Pages/Vendor/VendorProductList';
 import EditProductPage from './Pages/Vendor/EditProductPage';
@@ -40,7 +41,7 @@ import AdminVendorDetails from './Pages/Admin/AdminVendorDetails';
 import Address from './Pages/User/Address';
 import WishlistPage from './Pages/WhislistPage';
 import Invoice from './Pages/Vendor/Invoice';
-import VendorLayout from './Layouts/VendorLayout';
+import Reviews from './Pages/Vendor/Reviews';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -89,45 +90,17 @@ function App() {
       <Route path='/Admin/AdminOrders' element={<AdminOrders />} />
         </Route>
 
-{/* Vendor Layout */}
-         {/* <Route element={<VendorLayout />} >
-        <Route index element={<VendorDashboard />} />
-        <Route path='/Vendor' element={<VendorDashboard />} />
-        <Route path='/Vendor/VendorLogin' element={<VendorLogin />} />
-        <Route path='/Vendor/VendorSignup' element={<VendorSignup />} />
-        <Route path='/Vendor/VendorDashboard' element={<VendorDashboard />} />
-        <Route path='VendorMainContent' element={<VendorMainContent />} />
-        <Route path='VendorProductCreation' element={<VendorProductCreation />} />
-        <Route path='/Vendor/VendorProductList' element={<VendorProductList />} />
-        <Route path='/Vendor/EditProductPage/:id' element={<EditProductPage />} />
-      <Route path='/Vendor/Invoice' element={<Invoice />} />
-        </Route> */}
-
         {/* Vendor Layout */}
         <Route path="/vendor/login" element={<VendorLogin />} />
-{/* <Route path="/vendor/login" element={<VendorLogin />} />
-  <Route path='/vendor/dashboard' element={<VendorDashboard />} >
-
-  <Route path="maincontent" index element={<VendorMainContent />} />
-  <Route path="login"   element={<VendorLogin />} />
-  <Route path="signup" element={<VendorSignup />} />
-  <Route path="dashboard" element={<VendorDashboard />} />
-  <Route path="productcreation" element={<VendorProductCreation />} />
-  <Route path="productlist" element={<VendorProductList />} />
-  <Route path="editproduct/:id" element={<EditProductPage />} />
-  <Route path="invoice" element={<Invoice />} />
-  </Route> */}
-
-  <Route path='/vendor/dashboard' element={<VendorDashboard />} >
+  <Route path='/vendor' element={<VendorDashboard />} >
     <Route  index element={<VendorMainContent />} />
     <Route path="productlist" element={<VendorProductList />} />
     <Route path="productcreation" element={<VendorProductCreation />} />
-
-
+    <Route path="orders" element={<VendorOrders />} />
+    <Route path="reviews" element={<Reviews />} />
+    <Route path="invoice" element={<Invoice />} />
+    <Route path="editproduct/:id" element={<EditProductPage />} />
   </Route>
-
-
-
           </Routes>
         </BrowserRouter>
     </div>
