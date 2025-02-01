@@ -205,7 +205,7 @@ import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import ReviewModal from '../../Components/ReviewModal';
 import {useEffect} from "react";
-import { getOrdersByUser } from "../../api/apiServices";
+import { API_BASE_URL, getOrdersByUser } from "../../api/apiServices";
 
 const UserOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -315,7 +315,7 @@ const OrderCard = ({ order }) => {
     order.products.map((product) => (
       <div key={product.id} className="border p-2 rounded-lg mb-2">
         <img
-          src={product.imageUrl}
+          src={`${API_BASE_URL}${product.imageUrl}`}
           alt={product.name}
           className="w-full h-32 object-cover rounded-md"
         />

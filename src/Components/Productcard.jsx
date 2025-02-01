@@ -116,7 +116,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { addToWishlist, removeFromWishlist, checkIfWishlisted } from "../api/apiServices"; // Ensure these functions are defined
+import { addToWishlist, removeFromWishlist, checkIfWishlisted, API_BASE_URL } from "../api/apiServices"; // Ensure these functions are defined
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { fetchuserWishlist } from "../api/apiServices";
@@ -175,7 +175,7 @@ function Productcard({ _id, name, MRP, final_price, images }) {
       <div className="bg-gray-200 rounded-xl ">
         <Link to={`/Productdetails/${name}`} state={{ productId: _id }} key={_id}>
           <img
-            src={`http://192.168.20.5:3000/${images?.[0]}`}
+            src={`${API_BASE_URL}${images?.[0]}`}
             alt={name}
             className="h-48 w-56"
           />

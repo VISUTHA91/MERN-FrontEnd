@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { MdDeleteForever } from "react-icons/md";
-import { getAdminCategories } from '../../api/apiServices';
+import { API_BASE_URL, getAdminCategories } from '../../api/apiServices';
 import { MdEdit } from "react-icons/md";
 import { FcPlus } from "react-icons/fc";
 import { createCategory } from '../../api/apiServices';
@@ -298,7 +298,7 @@ function AdminCategory() {
                       </td>
                       <td style={{ padding: '12px 16px' }}>
                         <img
-                          src={`http://192.168.20.5:3000/${category.image}`}
+                          src={`${API_BASE_URL}${category.image}`}
                           alt="Category"
                           style={{
                             borderRadius: '6px',
@@ -411,7 +411,7 @@ function AdminCategory() {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Current Image</label>
                     {currentImage && (
                       <img
-                        src={`http://192.198.20.5:3000/${currentImage}`}
+                        src={`${API_BASE_URL}${currentImage}`}
                         alt="Current"
                         className="mb-4"
                         height="100"

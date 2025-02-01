@@ -193,7 +193,7 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getCategories } from "../api/apiServices";
+import { API_BASE_URL, getCategories } from "../api/apiServices";
 
 function ShopCategory() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -231,7 +231,7 @@ function ShopCategory() {
                 }}
               >
                 <img
-                  src={`http://192.168.20.5:3000/${category.image}`}
+                  src={`${API_BASE_URL}${category.image}`}
                   alt={category.name}
                   className="w-full h-full object-cover rounded-lg"
                 />

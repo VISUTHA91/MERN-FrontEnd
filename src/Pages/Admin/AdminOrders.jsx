@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-import Modal from '../../Components/Modal';
-import { useEffect } from 'react';
+import React, { useState } from "react";
+import Modal from "../../Components/Modal";
+import { useEffect } from "react";
 // import { getOrderDetails } from '../api/apiServices';
-import { getallOrders } from '../../api/apiServices.jsx';
+import { getallOrders } from "../../api/apiServices.jsx";
 
-
-
-
-
-const  AdminOrders = ({ orderId }) => {
+const AdminOrders = ({ orderId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [order, setOrder] = useState(null);
@@ -19,31 +15,33 @@ const  AdminOrders = ({ orderId }) => {
     const fetchOrderDetails = async () => {
       try {
         const data = await getallOrders();
-        console.log("data",data);
+        console.log("data", data);
         setOrder(data.orders);
-        console.log(",,.,.,.,.,.,.,",data);
-
+        console.log(",,.,.,.,.,.,.,", data);
       } catch (err) {
         setError(err.message);
-      } 
+      }
     };
 
     fetchOrderDetails();
   }, [orderId]);
 
   const handleViewDetails = (order) => {
-    setSelectedOrder(order);  // Set the selected order details
-    setIsModalOpen(true);     // Open the modal
+    setSelectedOrder(order); // Set the selected order details
+    setIsModalOpen(true); // Open the modal
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedOrder(null);   // Clear the selected order when closing the modal
+    setSelectedOrder(null); // Clear the selected order when closing the modal
   };
 
   return (
     <div className="bg h-full pt-10 p-6">
-      <h1 className="text-2xl font-bold text-gray-800  mt-10 mb-6"> Order List</h1>
+      <h1 className="text-2xl font-bold text-gray-800  mt-10 mb-6">
+        {" "}
+        Order List
+      </h1>
       <div className="bg-white rounded-lg shadow-md p-4">
         <table className="min-w-full table-auto">
           <thead>
@@ -58,36 +56,35 @@ const  AdminOrders = ({ orderId }) => {
           <tbody>
             {/* {order && order?.map((Order) => (000 */}
             {/* { order && order?.map((orderItem) => ( */}
-              {Array.isArray(order) && order.map((orderItem) => (
-              <tr key={orderItem.orderId} className="border-b">
-                <td className="px-4 py-2">{orderItem.
-razorpayOrderId
-}</td>
-                <td className="px-4 py-2">{orderItem.createdAt}</td>
-                <td className="px-4 py-2">
-                  <span
-                    className={`px-2 py-1 rounded-full text-white ${
-                      order.status === 'Delivered'
-                        ? 'bg-green-500'
-                        : order.status === 'Shipped'
-                        ? 'bg-blue-500'
-                        : 'bg-yellow-500'
-                    }`}
-                  >
-                    {order.status}
-                  </span>
-                </td>
-                <td className="px-4 py-2">{order.totalAmount}</td>
-                <td className="px-4 py-2">
-                  <button
-                    className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600"
-                    onClick={() => handleViewDetails(order)} // Open the modal with selected order details
-                  >
-                    View Details
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(order) &&
+              order.map((orderItem) => (
+                <tr key={orderItem.orderId} className="border-b">
+                  <td className="px-4 py-2">{orderItem.razorpayOrderId}</td>
+                  <td className="px-4 py-2">{orderItem.createdAt}</td>
+                  <td className="px-4 py-2">
+                    <span
+                      className={`px-2 py-1 rounded-full text-white ${
+                        order.status === "Delivered"
+                          ? "bg-green-500"
+                          : order.status === "Shipped"
+                          ? "bg-blue-500"
+                          : "bg-yellow-500"
+                      }`}
+                    >
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-2">{order.totalAmount}</td>
+                  <td className="px-4 py-2">
+                    <button
+                      className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600"
+                      onClick={() => handleViewDetails(order)} // Open the modal with selected order details
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -96,10 +93,15 @@ razorpayOrderId
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         {selectedOrder && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Order Details for #{selectedOrder.orderId}</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              Order Details for #{selectedOrder.orderId}
+            </h2>
             <div>
               {selectedOrder.products.map((product, index) => (
-                <div key={index} className="flex items-center mb-4 border-b pb-4">
+                <div
+                  key={index}
+                  className="flex items-center mb-4 border-b pb-4"
+                >
                   <img
                     src={product.imageUrl}
                     alt={product.name}
@@ -108,7 +110,9 @@ razorpayOrderId
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">{product.name}</h3>
                     <p className="text-gray-600">Price: {product.price}</p>
-                    <p className="text-gray-600">Vendor ID: {product.vendorId}</p>
+                    <p className="text-gray-600">
+                      Vendor ID: {product.vendorId}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -127,7 +131,6 @@ razorpayOrderId
 };
 
 export default AdminOrders;
-
 
 // const orders = [
 //   {

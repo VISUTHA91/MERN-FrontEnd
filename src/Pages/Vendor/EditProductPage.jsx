@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { MdEdit } from "react-icons/md";
-import { EditProduct, getCategories } from '../../api/apiServices';
+import { API_BASE_URL, EditProduct, getCategories } from '../../api/apiServices';
 import { MdDeleteForever } from "react-icons/md";
 import { useParams } from 'react-router-dom';
 import { getProductsById } from '../../api/apiServices';
@@ -693,7 +693,7 @@ function EditProductPage() {
                   {existingImages.map((image, index) => (
                     <div key={index} className="relative">
                       <img
-                        src={`http://192.168.20.5:3000/${image}`}
+                        src={`${API_BASE_URL}${image}`}
                         alt="Product" className="w-24 h-24 object-cover" />
                       <button
                         type="button"
