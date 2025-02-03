@@ -98,6 +98,7 @@ function App() {
     <Route  index element={<VendorMainContent />} />
     <Route path="productlist" element={<VendorProductList />} />
     <Route path="productcreation" element={<VendorProductCreation />} />
+    <Route path="users" element={<Userlist />} />
     <Route path="orders" element={<VendorOrders />} />
     <Route path="reviews" element={<Reviews />} />
     <Route path="invoice" element={<Invoice />} />

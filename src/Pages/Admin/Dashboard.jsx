@@ -64,20 +64,20 @@ function Dashboard() {
         <div className="w-58 h-screen bg-fuchsia-900 p-8 text-xl">
           <ul className="space-y-4">
             <li>
-              <button
-                onClick={() => setCurrentPage('Maincontent')}
+              <Link to="dashboard"
+                // onClick={() => setCurrentPage('Maincontent')}
                 className="flex items-center text-gray-300 hover:text-black gap-2">
                 <TbLayoutDashboard />
                 Dashboard
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                onClick={() => setCurrentPage('Category')}
+              <Link to="category"
+                // {/* onClick={() => setCurrentPage('Category')} */}
                 className="flex items-center text-gray-300 hover:text-black gap-2">
                 <GrProductHunt />
                 Category
-              </button>
+              </Link>
             </li>
 
 
@@ -115,45 +115,45 @@ function Dashboard() {
 
             <li>
               <div className="relative group">
-                <button className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
+                <Link className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
                   // onClick={toggleDropdown}>
                   onClick={() => setCurrentPage('Products')}>
                   <GrProductHunt />
                   Products
-                </button>
+                </Link>
               
               </div>
             </li>
 
             <li>
-              <button
-                onClick={() => setCurrentPage('Orders')}
+              <Link to="orders"
+                /* onClick={() => setCurrentPage('Orders')} */
                 className="flex items-center text-gray-300 hover:text-white gap-2"
               >
                 <FaFirstOrder />
                 Orders
-              </button>
+              </Link>
             </li>
 
             
             <li>
-              <button
+              <Link to="vendors"
                 onClick={() => setCurrentPage('Vendors')}
                 className="flex items-center text-gray-300 hover:text-white gap-2"
               >
                 <HiOutlineUserGroup />
                 Vendors
-              </button>
+              </Link>
             </li>
 
             <li>
-              <button
-                onClick={() => setCurrentPage('Users')}
+              <Link to="users"
+                // onClick={() => setCurrentPage('Users')}
                 className="flex items-center text-gray-300 hover:text-white gap-2"
               >
                 <HiOutlineUserGroup />
                 Customers
-              </button>
+              </Link>
             </li>
 
              <li>

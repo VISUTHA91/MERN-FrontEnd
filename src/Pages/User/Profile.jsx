@@ -84,7 +84,7 @@ function Profile() {
 
   return (
     <div className="container mx-auto p-8 relative">
-       <div className="absolute top-4 left-4">
+       <div className="absolute top-2 mt-28 -left-8">
         <GoBackButton />
       </div>
       <h1 className="text-2xl font-bold mb-4 mt-14 text-center"> Your Account</h1>

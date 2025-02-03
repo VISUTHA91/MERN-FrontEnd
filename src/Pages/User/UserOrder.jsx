@@ -206,6 +206,7 @@ import { FaStar } from "react-icons/fa";
 import ReviewModal from '../../Components/ReviewModal';
 import {useEffect} from "react";
 import { API_BASE_URL, getOrdersByUser } from "../../api/apiServices";
+import GoBackButton from "../../Components/GoBackButton";
 
 const UserOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -261,7 +262,12 @@ const UserOrder = () => {
 
 
     return (
-      <div className="bg-gray-100 min-h-screen p-6">
+      <div className="bg-gray-100 min-h-screen grid p-6">
+
+
+<div className="absolute top-2 mt-28 left-2">
+        <GoBackButton />
+      </div>
         <h1 className="text-2xl font-bold text-gray-800 mb-6 mt-14">My Orders</h1>
     
         {loading ? (
@@ -271,7 +277,9 @@ const UserOrder = () => {
         ) : orders.length === 0 ? (
           <p className="text-gray-600">No orders found.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          // <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+          <div className="flex ml-10 gap-2">
+           
             {orders.map((order) => (
               <OrderCard key={order._id} order={order} />
               
@@ -313,12 +321,13 @@ const OrderCard = ({ order }) => {
 <div className="mt-4">
   {Array.isArray(order.products) && order.products.length > 0 ? (
     order.products.map((product) => (
-      <div key={product.id} className="border p-2 rounded-lg mb-2">
+      <div key={product.id} className="border flex justify-between p-2 rounded-lg mb-2 gap-4">
         <img
-          src={`${API_BASE_URL}${product.imageUrl}`}
+          src={`${API_BASE_URL}${product.productId.images}`}
           alt={product.name}
-          className="w-full h-32 object-cover rounded-md"
+          className="w-1/3 h-32 object-cover rounded-md"
         />
+        <div className=" w-2/3">
         <h3 className="text-md font-semibold mt-2">{product.name}</h3>
         <p className="text-gray-600">Price: ₹{product.price?.toFixed(2)}</p>
         <p className="text-gray-600">Qty: {product.quantity}</p>
@@ -341,6 +350,7 @@ const OrderCard = ({ order }) => {
             );
           })}
         </div>
+      </div>
       </div>
     ))
   ) : (
