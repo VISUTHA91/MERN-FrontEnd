@@ -326,18 +326,29 @@ export const fetchSubcategories = async (categoryId) => {
 
 
 // Get User Address by UserID
+// export const fetchUserAddresses = async (userId) => {
+//   try {
+//     // Make a POST request to the API with the userId
+//     const response = await axiosInstance.get(`${API_BASE_URL}getAddressesByUser`, { userId });
+    
+//     // Return the data directly, as Axios handles JSON parsing
+//     return response;
+//   } catch (error) {
+//     console.error("Failed to fetch addresses:", error);
+//     throw new Error("Failed to fetch addresses");
+//   }
+// };
+
 export const fetchUserAddresses = async (userId) => {
   try {
-    // Make a POST request to the API with the userId
     const response = await axiosInstance.get(`${API_BASE_URL}getAddressesByUser`, { userId });
-    
-    // Return the data directly, as Axios handles JSON parsing
-    return response.data;
+    return response.data || []; // Assuming the addresses are inside 'data' property
   } catch (error) {
     console.error("Failed to fetch addresses:", error);
     throw new Error("Failed to fetch addresses");
   }
 };
+
 
 export const addAddress = async (userId, address) => {
   const response = await axiosInstance.post(`${API_BASE_URL}addAddress`, address);

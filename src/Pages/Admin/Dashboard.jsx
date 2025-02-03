@@ -54,28 +54,28 @@ function Dashboard() {
 
   return (
     <>
-      <div className="flex">
-        {/* Side Content */}
-        <div className="w-58 ">
-          <div className="w-58 h-screen bg-fuchsia-900 p-8 text-xl">
-            <ul className="space-y-4">
-              <li>
-                <button
-                  onClick={() => setCurrentPage("Maincontent")}
-                  className="flex items-center text-gray-300 hover:text-black gap-2"
-                >
-                  <TbLayoutDashboard />
-                  Dashboard
-                </button>
-              </li>
-              <li
-                to="category"
-                onClick={() => setCurrentPage("Category")}
-                className="flex items-center text-gray-300 hover:text-black gap-2"
-              >
+    <div className="flex">
+      {/* Side Content */}
+      <div className="w-58 ">
+        <div className="w-58 h-screen bg-fuchsia-900 p-8 text-xl">
+          <ul className="space-y-4">
+            <li>
+              <Link to="dashboard"
+                // onClick={() => setCurrentPage('Maincontent')}
+                className="flex items-center text-gray-300 hover:text-black gap-2">
+                <TbLayoutDashboard />
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="category"
+                // {/* onClick={() => setCurrentPage('Category')} */}
+                className="flex items-center text-gray-300 hover:text-black gap-2">
                 <GrProductHunt />
                 Category
-              </li>
+              </button>
+            </li>
+
 
               {/* <li>
             <div className="relative group">
@@ -111,45 +111,45 @@ function Dashboard() {
 
               <li>
                 <div className="relative group">
-                  <button
+                  <Link
                     className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
                     // onClick={toggleDropdown}>
                     onClick={() => setCurrentPage("Products")}
                   >
                     <GrProductHunt />
                     Products
-                  </button>
+                  </Link>
                 </div>
               </li>
 
               <li>
-                <button
-                  onClick={() => setCurrentPage("Orders")}
+                <Link to="orders"
+                  /* onClick={() => setCurrentPage("Orders")} */
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
                   <FaFirstOrder />
                   Orders
-                </button>
+                </Link>
               </li>
 
               <li>
-                <button
+                <Link to="vendors"
                   onClick={() => setCurrentPage("Vendors")}
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
                   <HiOutlineUserGroup />
                   Vendors
-                </button>
+                </Link>
               </li>
 
               <li>
-                <button
-                  onClick={() => setCurrentPage("Users")}
+                <Link to="users"
+                  // onClick={() => setCurrentPage("Users")}
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
                   <HiOutlineUserGroup />
                   Customers
-                </button>
+                </Link>
               </li>
 
               <li>

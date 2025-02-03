@@ -82,6 +82,9 @@ const WishlistPage = () => {
 
   return (
     <div className="container mx-auto p-4 ">
+      {/* <div className="absolute top-2 mt-28 left-2">
+        <GoBackButton />
+      </div> */}
       <h2 className="text-2xl font-semibold mb-4 flex items-center mt-16">
         <FaHeart className="text-red-500 mr-2" /> Wishlist
       </h2>
