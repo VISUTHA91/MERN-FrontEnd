@@ -73,7 +73,7 @@ function Dashboard() {
                 className="flex items-center text-gray-300 hover:text-black gap-2">
                 <GrProductHunt />
                 Category
-              </button>
+              </Link>
             </li>
 
 

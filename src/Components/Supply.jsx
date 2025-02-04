@@ -79,15 +79,14 @@ function Supply() {
         src={supplyBanner}
         style={{ color: "transparent" }}
       />
-      <div className="absolute left-0 top-0 text-white flex flex-col gap-y-4 p-4 w-full lg:w-2/3 xl:w-1/2 lg:ml-20 lg:mt-16 mt-1 md:ml-8">
-        <span className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold mt-2 lg:mt-8">
+      {/* <div className="absolute left-0 top-0 text-white flex flex-col gap-y-4 p-4 sm:w-1/2 lg:w-2/3 xl:w-1/2 lg:ml-20 lg:mt-16 mt-1 md:ml-8">
+        <span className="sm:text-sm md:text-2xl lg:text-4xl font-bold mt-2 lg:mt-8">
           Register as an Evvi Supplier
         </span>
-        <p className="text-sm md:text-base lg:text-lg">
+        <p className="sm:text-sm md:text-base lg:text-lg">
         Sell your products to crores of customers with just a 2% commission.
         </p>
   
-        {/* Features Section */}
         <div className="flex flex-col lg:flex-row lg:gap-x-8 lg:gap-y-4 gap-y-2 mt-4 justify-start items-start">
           {[
             "Grow your business 10x",
@@ -114,7 +113,6 @@ function Supply() {
           ))}
         </div>
   
-        {/* Button */}
         <Link to="/Vendor/VendorSignup" className="self-start mt-6">
           <button
             className="bg-white hover:bg-fuchsia-900 hover:text-white text-xs md:text-lg lg:text-xl text-fuchsia-900 font-bold py-2 px-5 rounded-lg transition duration-300 ease-in-out w-36 sm:w-40 lg:w-52"
@@ -123,7 +121,89 @@ function Supply() {
             Sign Up Now
           </button>
         </Link>
-      </div>
+      </div> */}
+
+<div className="absolute left-0 top-0 text-white flex flex-col gap-y-4 p-4 
+      w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3
+      sm:ml-12 md:ml-8 lg:ml-20 lg:mt-16 mt-2 xs:ml-12">
+      
+      {/* Heading */}
+      <h1 className="text-lg sm:text-lg md:text-2xl lg:text-4xl font-bold">
+        Register as an Evvi Supplier
+      </h1>
+
+      {/* Description */}
+      <p className="text-sm sm:text-base md:text-lg">
+        Sell your products to crores of customers with just a 2% commission.
+      </p>
+
+      {/* Features Section */}
+      {/* <div className="flex flex-col lg:flex-row lg:gap-x-8 gap-y-3 mt-4 ">
+        {[
+          "Grow your business 10x",
+          "Enjoy 100% Profit",
+          "Sell all over India",
+        ].map((text, index) => (
+          <div key={index} className="flex items-center gap-3">
+            <svg
+              width="20"
+              height="21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="flex-shrink-0"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M0 10.5C0 4.98 4.48.5 10 .5s10 4.48 10 10-4.48 10-10 10-10-4.48-10-10Zm7.283 4.293c.39.39 1.02.39 1.41 0l7.58-7.59a.996.996 0 1 0-1.41-1.41l-6.88 6.88-2.88-2.88a.996.996 0 1 0-1.41 1.41l3.59 3.59Z"
+                fill="#06A759"
+              />
+            </svg>
+            <p className="font-semibold text-sm md:text-base">{text}</p>
+          </div>
+        ))}
+      </div> */}
+
+<div className="hidden lg:flex flex-col lg:flex-row lg:gap-x-8 gap-y-3 mt-4">
+  {[
+    "Grow your business 10x",
+    "Enjoy 100% Profit",
+    "Sell all over India",
+  ].map((text, index) => (
+    <div key={index} className="flex items-center gap-3">
+      <svg
+        width="20"
+        height="21"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="flex-shrink-0"
+      >
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M0 10.5C0 4.98 4.48.5 10 .5s10 4.48 10 10-4.48 10-10-4.48-10-10Zm7.283 4.293c.39.39 1.02.39 1.41 0l7.58-7.59a.996.996 0 1 0-1.41-1.41l-6.88 6.88-2.88-2.88a.996.996 0 1 0-1.41 1.41l3.59 3.59Z"
+          fill="#06A759"
+        />
+      </svg>
+      <p className="font-semibold text-sm md:text-base">{text}</p>
+    </div>
+  ))}
+</div>
+
+
+      {/* Button */}
+      <Link to="/Vendor/VendorSignup" className="self-start mt-6">
+        <button
+          className="bg-white hover:bg-fuchsia-900 hover:text-white 
+          text-xs sm:text-sm md:text-lg lg:text-xl text-fuchsia-900 
+          font-bold py-2 px-5 rounded-lg transition duration-300 ease-in-out 
+          w-28 sm:w-36 md:w-40 lg:w-48"
+          type="button"
+        >
+          Sign Up Now
+        </button>
+      </Link>
+    </div>
     </div>
   );
   

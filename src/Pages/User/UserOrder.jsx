@@ -258,9 +258,6 @@ const UserOrder = () => {
 
     fetchOrders();
   },[]);
-
-
-
     return (
       <div className="bg-gray-100 min-h-screen grid p-6">
 
@@ -278,7 +275,7 @@ const UserOrder = () => {
           <p className="text-gray-600">No orders found.</p>
         ) : (
           // <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-          <div className="flex ml-10 gap-2">
+          <div className="flex flex-wrap  gap-2  justify-center">
            
             {orders.map((order) => (
               <OrderCard key={order._id} order={order} />
@@ -303,7 +300,7 @@ const OrderCard = ({ order }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
+    <div className="bg-white rounded-lg shadow-md p-4 bg-red-200 w-58">
       <h2 className="text-lg font-semibold text-gray-800">Order ID: {order.razorpayOrderId}</h2>
       <p className="text-gray-600">Delivery Date: {order.deliveryDate}</p>
       <span
@@ -317,7 +314,6 @@ const OrderCard = ({ order }) => {
       >
         {order.orderStatus}
       </span>
-
 <div className="mt-4">
   {Array.isArray(order.products) && order.products.length > 0 ? (
     order.products.map((product) => (
@@ -327,15 +323,15 @@ const OrderCard = ({ order }) => {
           alt={product.name}
           className="w-1/3 h-32 object-cover rounded-md"
         />
-        <div className=" w-2/3">
+        <div className="w-2/3">
         <h3 className="text-md font-semibold mt-2">{product.name}</h3>
         <p className="text-gray-600">Price: ₹{product.price?.toFixed(2)}</p>
         <p className="text-gray-600">Qty: {product.quantity}</p>
-        <div className="flex mt-2">
+        <div className="flex mt-2" >Give Ratings: 
           {[...Array(5)].map((_, index) => {
             const currentRating = index + 1;
-            return (
-              <FaStar
+            return ( 
+              <FaStar 
                 key={index}
                 className={`cursor-pointer text-xl ${
                   currentRating <= (hover || rating) ? "text-yellow-500" : "text-gray-300"

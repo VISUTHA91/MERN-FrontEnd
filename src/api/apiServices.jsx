@@ -342,7 +342,8 @@ export const fetchSubcategories = async (categoryId) => {
 export const fetchUserAddresses = async (userId) => {
   try {
     const response = await axiosInstance.get(`${API_BASE_URL}getAddressesByUser`, { userId });
-    return response.data || []; // Assuming the addresses are inside 'data' property
+    console.log("api::::",response)
+    return response.data; // Assuming the addresses are inside 'data' property
   } catch (error) {
     console.error("Failed to fetch addresses:", error);
     throw new Error("Failed to fetch addresses");
@@ -390,6 +391,7 @@ export const updateAddress = async (userId, addressId, updatedAddress) => {
     throw error;
   }
 };
+
 // Remove address
 export const removeAddress = async (addressId) => {
   try {
