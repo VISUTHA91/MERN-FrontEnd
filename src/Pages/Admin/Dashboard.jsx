@@ -54,28 +54,31 @@ function Dashboard() {
 
   return (
     <>
-    <div className="flex">
-      {/* Side Content */}
-      <div className="w-58 ">
-        <div className="w-58 h-screen bg-fuchsia-900 p-8 text-xl">
-          <ul className="space-y-4">
-            <li>
-              <Link to="dashboard"
-                // onClick={() => setCurrentPage('Maincontent')}
-                className="flex items-center text-gray-300 hover:text-black gap-2">
-                <TbLayoutDashboard />
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link to="category"
-                // {/* onClick={() => setCurrentPage('Category')} */}
-                className="flex items-center text-gray-300 hover:text-black gap-2">
-                <GrProductHunt />
-                Category
-              </button>
-            </li>
-
+      <div className="flex">
+        {/* Side Content */}
+        <div className="w-58 ">
+          <div className="w-58 h-screen bg-fuchsia-900 p-8 text-xl">
+            <ul className="space-y-4">
+              <li>
+                <Link
+                  to="dashboard"
+                  // onClick={() => setCurrentPage('Maincontent')}
+                  className="flex items-center text-gray-300 hover:text-black gap-2"
+                >
+                  <TbLayoutDashboard />
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="category"
+                  // {/* onClick={() => setCurrentPage('Category')} */}
+                  className="flex items-center text-gray-300 hover:text-black gap-2"
+                >
+                  <GrProductHunt />
+                  Category
+                </Link>
+              </li>
 
               {/* <li>
             <div className="relative group">
@@ -123,7 +126,8 @@ function Dashboard() {
               </li>
 
               <li>
-                <Link to="orders"
+                <Link
+                  to="orders"
                   /* onClick={() => setCurrentPage("Orders")} */
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
@@ -133,7 +137,8 @@ function Dashboard() {
               </li>
 
               <li>
-                <Link to="vendors"
+                <Link
+                  to="vendors"
                   onClick={() => setCurrentPage("Vendors")}
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
@@ -143,7 +148,8 @@ function Dashboard() {
               </li>
 
               <li>
-                <Link to="users"
+                <Link
+                  to="users"
                   // onClick={() => setCurrentPage("Users")}
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
