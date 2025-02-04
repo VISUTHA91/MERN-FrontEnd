@@ -123,7 +123,8 @@ function Dashboard() {
               </li>
 
               <li>
-                <Link to="orders"
+                <Link
+                  to="orders"
                   /* onClick={() => setCurrentPage("Orders")} */
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
@@ -133,7 +134,8 @@ function Dashboard() {
               </li>
 
               <li>
-                <Link to="vendors"
+                <Link
+                  to="vendors"
                   onClick={() => setCurrentPage("Vendors")}
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
@@ -143,7 +145,8 @@ function Dashboard() {
               </li>
 
               <li>
-                <Link to="users"
+                <Link
+                  to="users"
                   // onClick={() => setCurrentPage("Users")}
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
