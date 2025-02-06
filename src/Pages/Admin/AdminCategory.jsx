@@ -24,7 +24,6 @@ function AdminCategory() {
   const [categoryName, setCategoryName] = useState('');
 
   const [currentImage, setCurrentImage] = useState(null); // Store current image for preview
-
   const [images, setImages] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');

@@ -10,6 +10,8 @@ function VendorProductList() {
   const [productlist, setProductlist] = useState([]);
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  
   const fetchProductList = async () => {
     try {
       const response = await getProducts(); // Fetch products from backend

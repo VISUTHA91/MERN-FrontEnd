@@ -768,4 +768,19 @@ export const checkIfWishlisted = async (productId) => {
   }
 };
 
+export const submitReview = async (orderId, productId, rating, reviewText) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}createreview`, {
+      orderId,
+      productId,
+      rating,
+      reviewText,
+    });
+    return response.data; // return the response data
+  } catch (error) {
+    console.error('Error submitting review:', error);
+    throw error;
+  }
+};
+
 

@@ -5,7 +5,9 @@ import React from "react";
 const ReviewModal = ({ isOpen, onClose, rating, reviewText, setReviewText, onSubmit }) => {
   return (
     // <Modal open={isOpen} onClose={onClose} center>
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full ">
         <h2 className="text-xl font-bold mb-4">Rate This Product</h2>
         <p className="text-gray-600 mb-2">Selected Rating: {rating} Stars</p>
         <textarea
@@ -22,6 +24,7 @@ const ReviewModal = ({ isOpen, onClose, rating, reviewText, setReviewText, onSub
             Submit
           </button>
         </div>
+      </div>
       </div>
     // </Modal>
   );

@@ -8,7 +8,6 @@ import { removeFromWishlist } from "../api/apiServices";
 import { addCart } from "../api/apiServices";
 
 
-
 const WishlistPage = () => {
   const [wishlist, setWishlist] = useState([]);
   const [isWishlisted, setIsWishlisted] = useState(false);
