@@ -770,7 +770,7 @@ export const checkIfWishlisted = async (productId) => {
 
 export const submitReview = async (orderId, productId, rating, reviewText) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}createreview`, {
+    const response = await axiosInstance.post(`${API_BASE_URL}createreview`, {
       orderId,
       productId,
       rating,
