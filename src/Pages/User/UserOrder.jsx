@@ -28,6 +28,7 @@ const UserOrder = () => {
     };
     fetchOrders();
   },[]);
+  
     return (
       <div className="bg-gray-100 min-h-screen grid p-6">
     <div className="absolute top-2 mt-28 left-2">
@@ -51,6 +52,155 @@ const UserOrder = () => {
       </div>
     );
 };
+
+const OrderCard = ({ order }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ratings, setRatings] = useState({}); // Store ratings per product
+  const [reviews, setReviews] = useState({}); // Store reviews per product
+  const [hover, setHover] = useState({}); // Store hover state per product
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [ratedProducts, setRatedProducts] = useState({}); // Track rated products
+
+  // const handleSubmit = () => {
+  //   console.log("Review Submitted:", {
+  //     rating: ratings[selectedProductId],
+  //     reviewText: reviews[selectedProductId],
+  //   });
+
+  //   setRatedProducts((prev) => ({
+  //     ...prev,
+  //     [selectedProductId]: true, // Mark product as rated
+  //   }));
+
+  //   setIsModalOpen(false);
+  // };
+
+  const handleSubmit = async () => {
+    const rating = ratings[selectedProductId];
+    const reviewText = reviews[selectedProductId];
+    const orderId = order.razorpayOrderId; // Assuming the order ID is available here
+    const productId = selectedProductId;
+
+    console.log("Review Submitted:", { rating, reviewText });
+
+    try {
+      // Submit review to the backend
+      const response = await submitReview(orderId, productId, rating, reviewText);
+      console.log('Review submitted successfully:', response);
+      // Mark the product as rated
+      setRatedProducts((prev) => ({
+        ...prev,
+        [selectedProductId]: true,
+      }));
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Error submitting review:', error);
+      // Handle error (e.g., show a message to the user)
+    }
+  };
+
+
+
+
+  // const handleStarClick = (productId, rating,) => {
+  //   setSelectedProductId(productId); // Set selected product
+  //   setRatings((prev) => ({
+  //     ...prev,
+  //     [productId]: rating, // Store rating for this specific product
+  //   }));
+  //   setIsModalOpen(true);
+  // };
+  useEffect(() => {
+    const initialRatings = {};
+    cartItems.forEach((item) => {
+      initialRatings[item.productId] = item.userRating || 0;
+    });
+    setRatings(initialRatings);
+  }, [cartItems]);
+  
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 bg-red-200 min-w-[320px] max-w-4xl">
+      <h2 className="text-lg font-semibold text-gray-800">
+        Order ID: {order.razorpayOrderId}
+      </h2>
+      <p className="text-gray-600">Delivery Date: {order.deliveryDate}</p>
+      <span
+        className={`px-3 py-1 rounded-full text-white inline-block my-2 text-sm sm:text-base ${
+          order.orderStatus === "Delivered"
+            ? "bg-green-500"
+            : order.orderStatus === "Shipped"
+            ? "bg-blue-500"
+            : "bg-yellow-500"
+        }`}
+      >
+        {order.orderStatus}
+      </span>
+
+      <div className="mt-4">
+        {Array.isArray(order.products) && order.products.length > 0 ? (
+          order.products.map((product) => (
+            <div
+              key={product.productId._id}
+              className="border flex flex-col sm:flex-row items-center sm:items-start p-4 rounded-lg mb-4 gap-6"
+            >
+              <img
+                src={`${API_BASE_URL}${product.productDetails.images?.[0]}`}
+                alt={product.name}
+                className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-md"
+              />
+              <div className="w-full sm:w-2/3 text-center sm:text-left">
+                <h3 className="text-md font-semibold mt-2">{product.name}</h3>
+                <p className="text-gray-600">Price: ₹{product.price?.toFixed(2)}</p>
+                <p className="text-gray-600">Qty: {product.quantity}</p>
+                <div className="flex justify-center sm:justify-start mt-2">
+                  <span className="mr-2">
+                    {ratedProducts[product.productId._id] ? "You Rated" : "Rate This Product:"}
+                  </span>
+                  {[...Array(5)].map((_, index) => {
+                    const currentRating = index + 1;
+                    return (
+                      <FaStar
+                        key={index}
+                        className={`cursor-pointer text-xl ${
+                          currentRating <= (hover[product.productId] || ratings[product.productId])
+                            ? "text-yellow-500"
+                            : "text-gray-300"
+                        }`}
+                        onClick={() => handleStarClick(product.productId, currentRating)}
+                        onMouseEnter={() => setHover((prev) => ({ ...prev, [product.productId]: currentRating }))}
+                        onMouseLeave={() => setHover((prev) => ({ ...prev, [product.productId]: null }))}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-600 text-center">No products in this order.</p>
+        )}
+      </div>
+
+      {/* Rating Modal */}
+      {isModalOpen && selectedProductId && (
+        <ReviewModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          rating={ratings[selectedProductId] || 0}
+          reviewText={reviews[selectedProductId] || ""}
+          setReviewText={(text) =>
+            setReviews((prev) => ({ ...prev, [selectedProductId]: text }))
+          }
+          onSubmit={handleSubmit}
+        />
+      )}
+    </div>
+  );
+};
+
+
+export default UserOrder;
 
 // const OrderCard = ({ order }) => {
 //   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -367,146 +517,7 @@ const UserOrder = () => {
 //   );
 // };
 
-const OrderCard = ({ order }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ratings, setRatings] = useState({}); // Store ratings per product
-  const [reviews, setReviews] = useState({}); // Store reviews per product
-  const [hover, setHover] = useState({}); // Store hover state per product
-  const [selectedProductId, setSelectedProductId] = useState(null);
-  const [ratedProducts, setRatedProducts] = useState({}); // Track rated products
 
-  // const handleSubmit = () => {
-  //   console.log("Review Submitted:", {
-  //     rating: ratings[selectedProductId],
-  //     reviewText: reviews[selectedProductId],
-  //   });
-
-  //   setRatedProducts((prev) => ({
-  //     ...prev,
-  //     [selectedProductId]: true, // Mark product as rated
-  //   }));
-
-  //   setIsModalOpen(false);
-  // };
-
-  const handleSubmit = async () => {
-    const rating = ratings[selectedProductId];
-    const reviewText = reviews[selectedProductId];
-    const orderId = order.razorpayOrderId; // Assuming the order ID is available here
-    const productId = selectedProductId;
-
-    console.log("Review Submitted:", { rating, reviewText });
-
-    try {
-      // Submit review to the backend
-      const response = await submitReview(orderId, productId, rating, reviewText);
-      console.log('Review submitted successfully:', response);
-      // Mark the product as rated
-      setRatedProducts((prev) => ({
-        ...prev,
-        [selectedProductId]: true,
-      }));
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error('Error submitting review:', error);
-      // Handle error (e.g., show a message to the user)
-    }
-  };
-
-
-
-
-  const handleStarClick = (productId, rating,) => {
-    setSelectedProductId(productId); // Set selected product
-    setRatings((prev) => ({
-      ...prev,
-      [productId]: rating, // Store rating for this specific product
-    }));
-    setIsModalOpen(true);
-  };
-
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6 bg-red-200 min-w-[320px] max-w-4xl">
-      <h2 className="text-lg font-semibold text-gray-800">
-        Order ID: {order.razorpayOrderId}
-      </h2>
-      <p className="text-gray-600">Delivery Date: {order.deliveryDate}</p>
-      <span
-        className={`px-3 py-1 rounded-full text-white inline-block my-2 text-sm sm:text-base ${
-          order.orderStatus === "Delivered"
-            ? "bg-green-500"
-            : order.orderStatus === "Shipped"
-            ? "bg-blue-500"
-            : "bg-yellow-500"
-        }`}
-      >
-        {order.orderStatus}
-      </span>
-
-      <div className="mt-4">
-        {Array.isArray(order.products) && order.products.length > 0 ? (
-          order.products.map((product) => (
-            <div
-              key={product.productId._id}
-              className="border flex flex-col sm:flex-row items-center sm:items-start p-4 rounded-lg mb-4 gap-6"
-            >
-              <img
-                src={`${API_BASE_URL}${product.productId.images}`}
-                alt={product.name}
-                className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-md"
-              />
-              <div className="w-full sm:w-2/3 text-center sm:text-left">
-                <h3 className="text-md font-semibold mt-2">{product.name}</h3>
-                <p className="text-gray-600">Price: ₹{product.price?.toFixed(2)}</p>
-                <p className="text-gray-600">Qty: {product.quantity}</p>
-                <div className="flex justify-center sm:justify-start mt-2">
-                  <span className="mr-2">
-                    {ratedProducts[product.productId._id] ? "You Rated" : "Rate This Product:"}
-                  </span>
-                  {[...Array(5)].map((_, index) => {
-                    const currentRating = index + 1;
-                    return (
-                      <FaStar
-                        key={index}
-                        className={`cursor-pointer text-xl ${
-                          currentRating <= (hover[product.productId._id] || ratings[product.productId._id] || 0)
-                            ? "text-yellow-500"
-                            : "text-gray-300"
-                        }`}
-                        onClick={() => handleStarClick(product.productId._id, currentRating)}
-                        onMouseEnter={() => setHover((prev) => ({ ...prev, [product.productId._id]: currentRating }))}
-                        onMouseLeave={() => setHover((prev) => ({ ...prev, [product.productId._id]: null }))}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-600 text-center">No products in this order.</p>
-        )}
-      </div>
-
-      {/* Rating Modal */}
-      {isModalOpen && selectedProductId && (
-        <ReviewModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          rating={ratings[selectedProductId] || 0}
-          reviewText={reviews[selectedProductId] || ""}
-          setReviewText={(text) =>
-            setReviews((prev) => ({ ...prev, [selectedProductId]: text }))
-          }
-          onSubmit={handleSubmit}
-        />
-      )}
-    </div>
-  );
-};
-
-
-export default UserOrder;
 
 
 //     <div className="bg-white rounded-lg shadow-md p-4 bg-red-200 w-58">
