@@ -1,126 +1,96 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import ReviewModal from '../../Components/ReviewModal';
-import {useEffect} from "react";
-import { API_BASE_URL, getOrdersByUser } from "../../api/apiServices";
+import ReviewModal from "../../Components/ReviewModal";
 import GoBackButton from "../../Components/GoBackButton";
-import { submitReview } from "../../api/apiServices";
+import { API_BASE_URL, getOrdersByUser, submitReview } from "../../api/apiServices";
 
 const UserOrder = () => {
   const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        const userId = JSON.parse(localStorage.getItem('userData'));
-        const fetchedOrders = await getOrdersByUser(userId.id);
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        if (!userData || !userData.id) {
+          throw new Error("User not found");
+        }
+        const fetchedOrders = await getOrdersByUser(userData.id);
         setOrders(fetchedOrders);
-        console.log(fetchedOrders);
-        setLoading(false);
       } catch (err) {
-        setError('Failed to load orders. Please try again.');
+        setError("Failed to load orders. Please try again.");
+      } finally {
         setLoading(false);
       }
     };
     fetchOrders();
-  },[]);
-  
-    return (
-      <div className="bg-gray-100 min-h-screen grid p-6">
-    <div className="absolute top-2 mt-28 left-2">
+  }, []);
+
+  return (
+    <div className="bg-gray-100 min-h-screen p-6">
+      <div className="absolute top-2 mt-28 left-2">
         <GoBackButton />
       </div>
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 mt-14">My Orders</h1>
-    
-        {loading ? (
-          <p className="text-gray-600">Loading orders...</p>
-        ) : error ? (
-          <p className="text-red-500">{error}</p>
-        ) : orders.length === 0 ? (
-          <p className="text-gray-600">No orders found.</p>
-        ) : (
-          <div className="flex flex-wrap gap-2 justify-center">
-            {orders.map((order) => (
-              <OrderCard key={order._id} order={order} />
-            ))}
-          </div>
-        )}
-      </div>
-    );
+      <h1 className="text-2xl font-bold text-gray-800 mb-6 mt-14">My Orders</h1>
+
+      {loading ? (
+        <p className="text-gray-600">Loading orders...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : orders.length === 0 ? (
+        <p className="text-gray-600">No orders found.</p>
+      ) : (
+        <div className="flex flex-wrap gap-2 justify-center">
+          {orders.map((order) => (
+            <OrderCard key={order._id} order={order} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
 const OrderCard = ({ order }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ratings, setRatings] = useState({}); // Store ratings per product
-  const [reviews, setReviews] = useState({}); // Store reviews per product
-  const [hover, setHover] = useState({}); // Store hover state per product
+  const [ratings, setRatings] = useState({});
+  const [reviews, setReviews] = useState({});
+  const [hover, setHover] = useState({});
   const [selectedProductId, setSelectedProductId] = useState(null);
-  const [ratedProducts, setRatedProducts] = useState({}); // Track rated products
+  const [ratedProducts, setRatedProducts] = useState({});
 
-  // const handleSubmit = () => {
-  //   console.log("Review Submitted:", {
-  //     rating: ratings[selectedProductId],
-  //     reviewText: reviews[selectedProductId],
-  //   });
-
-  //   setRatedProducts((prev) => ({
-  //     ...prev,
-  //     [selectedProductId]: true, // Mark product as rated
-  //   }));
-
-  //   setIsModalOpen(false);
-  // };
+  const handleStarClick = (productId, rating) => {
+    setSelectedProductId(productId);
+    setRatings((prev) => ({ ...prev, [productId]: rating }));
+    setIsModalOpen(true);
+  };
 
   const handleSubmit = async () => {
     const rating = ratings[selectedProductId];
     const reviewText = reviews[selectedProductId];
-    const orderId = order.razorpayOrderId; // Assuming the order ID is available here
+    const orderId = order.razorpayOrderId;
     const productId = selectedProductId;
 
     console.log("Review Submitted:", { rating, reviewText });
 
     try {
-      // Submit review to the backend
       const response = await submitReview(orderId, productId, rating, reviewText);
-      console.log('Review submitted successfully:', response);
-      // Mark the product as rated
+      console.log("Review submitted successfully:", response);
+
       setRatedProducts((prev) => ({
         ...prev,
         [selectedProductId]: true,
       }));
       setIsModalOpen(false);
     } catch (error) {
-      console.error('Error submitting review:', error);
-      // Handle error (e.g., show a message to the user)
+      console.error("Error submitting review:", error);
     }
   };
 
-
-
-
-  // const handleStarClick = (productId, rating,) => {
-  //   setSelectedProductId(productId); // Set selected product
-  //   setRatings((prev) => ({
-  //     ...prev,
-  //     [productId]: rating, // Store rating for this specific product
-  //   }));
-  //   setIsModalOpen(true);
-  // };
-  useEffect(() => {
-    const initialRatings = {};
-    cartItems.forEach((item) => {
-      initialRatings[item.productId] = item.userRating || 0;
-    });
-    setRatings(initialRatings);
-  }, [cartItems]);
-  
-
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 bg-red-200 min-w-[320px] max-w-4xl">
+    <div className="bg-white rounded-lg shadow-md p-6 min-w-[320px] max-w-4xl">
       <h2 className="text-lg font-semibold text-gray-800">
         Order ID: {order.razorpayOrderId}
       </h2>
@@ -182,7 +152,6 @@ const OrderCard = ({ order }) => {
         )}
       </div>
 
-      {/* Rating Modal */}
       {isModalOpen && selectedProductId && (
         <ReviewModal
           isOpen={isModalOpen}
@@ -199,8 +168,8 @@ const OrderCard = ({ order }) => {
   );
 };
 
-
 export default UserOrder;
+
 
 // const OrderCard = ({ order }) => {
 //   const [isModalOpen, setIsModalOpen] = useState(false);
