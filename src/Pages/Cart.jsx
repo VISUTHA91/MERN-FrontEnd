@@ -227,7 +227,8 @@ console.log("cartPage",grandTotal)
               Your Cart Is Empty
             </h2>
              {/* <Link to={#}> */}
-        <button className="mt-6 px-6 py-3 bg-fuchsia-900 text-white font-semibold rounded-full hover:bg-gray-100 hover:text-fuchsia-900 hover:border-2 transition-colors">
+        <button className="mt-6 px-6 py-3 bg-fuchsia-900 text-white font-semibold rounded-full hover:bg-gray-100 hover:text-fuchsia-900 hover:border-2 transition-colors"  onClick={() => window.location.href = "/Home"}  // Redirect to home
+        >
           Explore
         </button>
         {/* </Link> */}

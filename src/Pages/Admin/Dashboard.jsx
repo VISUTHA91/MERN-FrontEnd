@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet ,NavLink} from "react-router-dom";
 import Userlist from "./Userlist";
 import Maincontent from "./Maincontent";
 import AdminProductlist from "./AdminProductlist";
@@ -17,30 +17,31 @@ import VendorList from "./VendorList";
 import Adminfooter from "../../Components/Adminfooter";
 import { TbLogout } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import Productlist from "../Productlist";
 // import { useState } from 'react';
 
 function Dashboard() {
   const [currentPage, setCurrentPage] = useState("Maincontent");
   const navigate = useNavigate();
 
-  const renderPageContent = () => {
-    switch (currentPage) {
-      case "Maincontent":
-        return <Maincontent />;
-      case "Category":
-        return <AdminCategory />;
-      case "Products":
-        return <AdminProductlist />;
-      case "Users":
-        return <Userlist />;
-      case "Orders":
-        return <AdminOrders />;
-      case "Vendors":
-        return <VendorList />;
-      default:
-        return <h2>Page not found</h2>;
-    }
-  };
+  // const renderPageContent = () => {
+  //   switch (currentPage) {
+  //     case "Maincontent":
+  //       return <Maincontent />;
+  //     case "Category":
+  //       return <AdminCategory />;
+  //     case "Products":
+  //       return <AdminProductlist />;
+  //     case "Users":
+  //       return <Userlist />;
+  //     case "Orders":
+  //       return <AdminOrders />;
+  //     case "Vendors":
+  //       return <VendorList />;
+  //     default:
+  //       return <h2>Page not found</h2>;
+  //   }
+  // };
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -60,20 +61,19 @@ function Dashboard() {
         <div className="w-58 h-screen bg-fuchsia-900 p-8 text-xl">
           <ul className="space-y-4">
             <li>
-              <Link to="dashboard"
+              <NavLink to={"/Dashboard"}
                 // onClick={() => setCurrentPage('Maincontent')}
                 className="flex items-center text-gray-300 hover:text-black gap-2">
                 <TbLayoutDashboard />
                 Dashboard
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="category"
-                // {/* onClick={() => setCurrentPage('Category')} */}
+              <NavLink to={'category'}
                 className="flex items-center text-gray-300 hover:text-black gap-2">
                 <GrProductHunt />
                 Category
-              </Link>
+              </NavLink>
             </li>
 
 
@@ -111,10 +111,10 @@ function Dashboard() {
 
               <li>
                 <div className="relative group">
-                  <Link
+                  <Link to={'Productlist'}
                     className="flex items-center text-gray-300 hover:text-white gap-2 transition duration-200"
                     // onClick={toggleDropdown}>
-                    onClick={() => setCurrentPage("Products")}
+                    // onClick={() => setCurrentPage("Products")}
                   >
                     <GrProductHunt />
                     Products
@@ -123,8 +123,7 @@ function Dashboard() {
               </li>
 
               <li>
-                <Link
-                  to="orders"
+                <Link to={'AdminOrders'}
                   /* onClick={() => setCurrentPage("Orders")} */
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
@@ -135,8 +134,8 @@ function Dashboard() {
 
               <li>
                 <Link
-                  to="vendors"
-                  onClick={() => setCurrentPage("Vendors")}
+                  to={"VendorList"}
+                  // onClick={() => setCurrentPage("Vendors")}
                   className="flex items-center text-gray-300 hover:text-white gap-2"
                 >
                   <HiOutlineUserGroup />
@@ -182,7 +181,7 @@ function Dashboard() {
         </div>
         {/* Main Content */}
         <div className="bg-fuchsia-100 rounded-xl p-2  m-1 w-full h-screen overflow-auto scrollbar-hide">
-          {renderPageContent()}
+          <Outlet />
           <div className="mt-5 fixed bottom-0 left-0 w-full">
             <Adminfooter></Adminfooter>
           </div>

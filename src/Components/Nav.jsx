@@ -275,7 +275,7 @@ function Nav({ cartCount }) {
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-35 bg-white rounded-md shadow-lg">
                     {user.role === 'admin' ? (
-                    <Link to={'/Admin/Dashboard'} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    <Link to={'/Dashboard'} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                     Dashboard
                     </Link>
                     ) : (

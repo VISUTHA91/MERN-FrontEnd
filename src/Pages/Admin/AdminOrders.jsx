@@ -26,8 +26,8 @@ const AdminOrders = ({ orderId }) => {
     fetchOrderDetails();
   }, [orderId]);
 
-  const handleViewDetails = (order) => {
-    setSelectedOrder(order); // Set the selected order details
+  const handleViewDetails = (orderItem) => {
+    setSelectedOrder(orderItem); // Set the selected order details
     setIsModalOpen(true); // Open the modal
   };
 
@@ -64,21 +64,21 @@ const AdminOrders = ({ orderId }) => {
                   <td className="px-4 py-2">
                     <span
                       className={`px-2 py-1 rounded-full text-white ${
-                        order.status === "Delivered"
+                        orderItem.orderStatus === "Delivered"
                           ? "bg-green-500"
-                          : order.status === "Shipped"
+                          : orderItem.status === "Shipped"
                           ? "bg-blue-500"
                           : "bg-yellow-500"
                       }`}
                     >
-                      {order.status}
+                      {orderItem.orderStatus}
                     </span>
                   </td>
-                  <td className="px-4 py-2">{order.totalAmount}</td>
+                  <td className="px-4 py-2">{orderItem.totalAmount}</td>
                   <td className="px-4 py-2">
                     <button
                       className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600"
-                      onClick={() => handleViewDetails(order)} // Open the modal with selected order details
+                      onClick={() => handleViewDetails(orderItem)} // Open the modal with selected order details
                     >
                       View Details
                     </button>

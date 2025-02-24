@@ -58,7 +58,7 @@ const WishlistButton = () => {
   const handleWishlistClick = (e) => {
     if (!isAuthenticated) {
       e.preventDefault(); // Prevent navigation
-      toast.warning("Please login to add items to your wishlist.");
+      // toast.warning("Please login to add items to your wishlist.");
       navigate("/Signin");
     }
   };

@@ -519,11 +519,11 @@ function ShopbyCategory() {
               >
                 <img
                   src={`${API_BASE_URL}${category.image}`}
-                  className="border rounded-xl bg-gray-300 hover:scale-105 transition-transform duration-300 object-cover h-40 w-40 sm:h-48 sm:w-48 md:h-52 md:w-52"
+                  className="border rounded-xl bg-gray-300 hover:scale-105 transition-transform duration-300 object-cover h-40 w-40 sm:h-48 sm:w-48 md:h-52 md:w-52 "
                   alt={category.name}
                   loading="lazy"
                 />
-                <div className="text-lg sm:text-xl font-semibold mt-3">{category.name}</div>
+                <div className="text-lg sm:text-xl font-semibold mt-3 justify-center items-center">{category.name}</div>
               </Link>
             ))}
           </Slider>
