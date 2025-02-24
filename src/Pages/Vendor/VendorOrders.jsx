@@ -1,9 +1,178 @@
-import React from 'react'
+import React, { useState } from "react";
+import Modal from "../../Components/Modal";
+import { useEffect } from "react";
+// import { getOrderDetails } from '../api/apiServices';
+import { getallOrders } from "../../api/apiServices.jsx";
 
-function VendorOrders() {
+const VendorOrders = ({ orderId }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchOrderDetails = async () => {
+  //     try {
+  //       const data = await getallOrders();
+  //       console.log("data", data);
+  //       setOrder(data.orders);
+  //       console.log(",,.,.,.,.,.,.,", data);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     }
+  //   };
+
+  //   fetchOrderDetails();
+  // }, [orderId]);
+
+  useEffect(() => {
+    const mockOrders = [
+      {
+        orderId: "123456",
+        razorpayOrderId: "RZP_987654",
+        createdAt: "2025-02-13",
+        status: "Shipped",
+        totalAmount: "₹2,500",
+        products: [
+          {
+            name: "T-Shirt",
+            price: "₹500",
+            vendorId: "V001",
+            imageUrl: "https://via.placeholder.com/100",
+          },
+          {
+            name: "Jeans",
+            price: "₹2,000",
+            vendorId: "V002",
+            imageUrl: "https://via.placeholder.com/100",
+          },
+        ],
+      },
+      {
+        orderId: "654321",
+        razorpayOrderId: "RZP_123789",
+        createdAt: "2025-02-12",
+        status: "Delivered",
+        totalAmount: "₹1,200",
+        products: [
+          {
+            name: "Jacket",
+            price: "₹1,200",
+            vendorId: "V003",
+            imageUrl: "https://via.placeholder.com/100",
+          },
+        ],
+      },
+    ];
+    setOrder(mockOrders);
+    // console.log("Status",order.status)
+
+  }, []);
+
+  
+  const handleViewDetails = (orderItem) => {
+    setSelectedOrder(orderItem); // Set the selected order details
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedOrder(null); // Clear the selected order when closing the modal
+  };
+
   return (
-    <div>VendorOrders</div>
-  )
-}
+    <div className="bg h-full pt-10 p-6">
+      <h1 className="text-2xl font-bold text-gray-800  mt-10 mb-6">
+        {" "}
+        Order List
+      </h1>
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr className="bg-gray-200 text-left">
+              <th className="px-4 py-4 text-gray-600">Order ID</th>
+              <th className="px-4 py-6 text-gray-600">Date</th>
+              <th className="px-4 py-2 text-gray-600">Status</th>
+              <th className="px-4 py-2 text-gray-600">Total</th>
+              <th className="px-4 py-2 text-gray-600">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* {order && order?.map((Order) => (000 */}
+            {/* { order && order?.map((orderItem) => ( */}
+            {Array.isArray(order) &&
+              order.map((orderItem) => (
+                <tr key={orderItem.orderId} className="border-b">
+                  <td className="px-4 py-2">{orderItem.razorpayOrderId}</td>
+                  <td className="px-4 py-2">{orderItem.createdAt}</td>
+                  <td className="px-4 py-2">
+                    <span
+                      className={`px-2 py-1 rounded-full text-white ${
+                        orderItem.status === "Delivered"
+                          ? "bg-green-500"
+                          : orderItem.status === "Shipped"
+                          ? "bg-blue-500"
+                          : "bg-yellow-500"
+                      }`}
+                    >
+                      {orderItem.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-2">{orderItem.totalAmount}</td>
+                  <td className="px-4 py-2">
+                    <button
+                      className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600"
+                      onClick={() => handleViewDetails(orderItem)} // Open the modal with selected order details
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
 
-export default VendorOrders
+      {/* Modal for showing order details */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {selectedOrder && (
+          <div>
+            <h2 className="text-xl font-semibold mb-4">
+              Order Details for #{selectedOrder.orderId}
+            </h2>
+            <div>
+              {selectedOrder?.products?.map((product,index) => (
+                <div
+                  key={index}
+                  className="flex items-center mb-4 border-b pb-4"
+                >
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="w-24 h-24 object-cover rounded-md"
+                  />
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold">{product.name}</h3>
+                    <p className="text-gray-600">Price: {product.price}</p>
+                    <p className="text-gray-600">
+                      Vendor ID: {product.vendorId}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              onClick={closeModal} // Close the modal
+            >
+              Close
+            </button>
+          </div>
+        )}
+      </Modal>
+    </div>
+  );
+};
+
+export default VendorOrders;

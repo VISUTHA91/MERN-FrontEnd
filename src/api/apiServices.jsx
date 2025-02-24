@@ -45,7 +45,7 @@
 import axios from "axios";
 
 // Base URL for your API
-export const API_BASE_URL = "http://192.168.20.5:3000/";
+export const API_BASE_URL = "http://192.168.20.7:3000/";
 // export const API_BASE_URL = "http://192.168.31.166:3000/";
 // export const API_BASE_URL = "http://172.20.10.7:3000/";
 
@@ -631,7 +631,6 @@ export const getProductsByFilter = async ({ category, gender }) => {
     const params = {};
     if (category) params.category = category;
     if (gender) params.gender = gender;
-
     const response = await axios.get(`${API_BASE_URL}filterProducts`, { params });
     return response.data;
   } catch (error) {

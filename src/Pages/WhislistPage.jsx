@@ -58,34 +58,48 @@ const WishlistPage = () => {
   };
 
 
-  const addToCart = async () => {
-    const cartItem = {
-      productId: items._id,
-      size: selectedSize,
-      color: selectedColor,
-      quantity: qty,
-      price: items.final_price,
-    };
+  // const addToCart = async () => {
+  //   const cartItem = {
+  //     productId: items._id,
+  //     size: selectedSize,
+  //     color: selectedColor,
+  //     quantity: qty,
+  //     price: items.final_price,
+  //   };
 
+  //   try {
+  //     const response = await addCart(cartItem);
+  //     console.log("...............................", response);
+  //     alert("Product Added to Cart Successfully");
+  //   } catch (error) {
+  //     console.error('Error adding to cart:', error);
+  //   }
+  // };
+  const addToCart = async (productId, size, color, quantity) => {
+    const cartItem = {
+      productId: productId,
+      size: size,
+      color: color,
+      quantity: quantity,
+      price: items.final_price, // Ensure `items` is defined
+    };
+  
     try {
       const response = await addCart(cartItem);
-
-
       console.log("...............................", response);
       alert("Product Added to Cart Successfully");
-
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
   };
-
+  
   return (
     <div className="container mx-auto p-4 ">
       {/* <div className="absolute top-2 mt-28 left-2">
         <GoBackButton />
       </div> */}
       <h2 className="text-2xl font-semibold mb-4 flex items-center mt-16">
-        <FaHeart className="text-red-500 mr-2" /> Wishlist
+        <FaHeart className="text-red-500 mr-2"/> Wishlist
       </h2>
       {wishlist.length === 0 ? (
         <p className="text-gray-500">Your wishlist is empty.</p>
@@ -141,8 +155,6 @@ const WishlistPage = () => {
               className="w-full h-40 object-cover rounded-lg mt-4"
             />
             <div className='text-3xl'> ₹{selectedProduct.final_price} </div>
-
-
             <div className="mt-4">
               <label className="font-bold">Select Size:</label>
               <div className="flex gap-2 mt-2">

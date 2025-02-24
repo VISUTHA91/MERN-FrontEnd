@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Route,Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -43,6 +43,8 @@ import Address from './Pages/User/Address';
 import WishlistPage from './Pages/WhislistPage';
 import Invoice from './Pages/Vendor/Invoice';
 import Reviews from './Pages/Vendor/Reviews';
+import VendorLayout from './Layouts/VendorLayout';
+import AdminCategory from './Pages/Admin/AdminCategory';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -51,61 +53,66 @@ function App() {
   const addToCart = () => {
     setCartCount(cartCount + 1); // Increase cart count by 1
   };
-  
+
   return (
     <div className='App'>
-        <BrowserRouter>
+      <BrowserRouter>
         <ToastContainer />
         <ScrollToTop />
-          <Routes>
-          <Route element={<RootLayout  cartCount={cartCount} />} >
+        <Routes>
+          <Route element={<RootLayout cartCount={cartCount} />} >
             <Route index element={<Home />} />
-      <Route path='/Home' element={<Home/>} />
-      <Route path='/About' element={<About/>} />
-      <Route path='/Contact' element={<Contact/>} />
-      <Route path='/Signin' element={<Signin/>} />
-      <Route path='/Signup' element={<Signup/>} />
-      <Route path='/Cart' element={<Cart/>} />
-      <Route path='/Wishlist' element={<WishlistPage/>} />
-      <Route path='/Payment' element={<Payment/>} />
-      <Route path='/Support' element={<Support/>} />
-      <Route path='/FAQ' element={<FAQ/>} />
-      <Route path='/Productlist/:categoryName' element={<Productlist/>} />
-      <Route path='/Productlist/gender/:gender' element={<Productlist/>} />
-      <Route path='/Productlist' element={<Productlist/>} />
-      <Route path='/User/ProfilePage/' element={<ProfilePage />} />
-      <Route path='/User/Profile/' element={<Profile />} />
-      <Route path='/User/UserOrder/' element={<UserOrderPage />} />
-      <Route path='/User/Address/' element={<Address />} />
-      <Route path='/Productdetails/:id' element={<Productdetails  addToCart={addToCart}  />} />
+            <Route path='/Home' element={<Home />} />
+            <Route path='/About' element={<About />} />
+            <Route path='/Contact' element={<Contact />} />
+            <Route path='/Signin' element={<Signin />} />
+            <Route path='/Signup' element={<Signup />} />
+            <Route path='/Cart' element={<Cart />} />
+            <Route path='/Wishlist' element={<WishlistPage />} />
+            <Route path='/Payment' element={<Payment />} />
+            <Route path='/Support' element={<Support />} />
+            <Route path='/FAQ' element={<FAQ />} />
+            <Route path='/Productlist/:categoryName' element={<Productlist />} />
+            <Route path='/Productlist/gender/:gender' element={<Productlist />} />
+            <Route path='/Productlist' element={<Productlist />} />
+            <Route path='/User/ProfilePage/' element={<ProfilePage />} />
+            <Route path='/User/Profile/' element={<Profile />} />
+            <Route path='/User/UserOrder/' element={<UserOrderPage />} />
+            <Route path='/User/Address/' element={<Address />} />
+            <Route path='/Productdetails/:id' element={<Productdetails addToCart={addToCart} />} />
           </Route>
           {/* Admin Layout */}
-        <Route element={<AdminLayout  />} >
-        <Route index element={<Dashboard />} />
-      <Route path='/Admin/Dashboard' element={<Dashboard />} />
-      <Route path='/Admin/Userlist' element={<Userlist />} />
-      <Route path='/Admin/VendorList' element={<VendorList />} />
-      <Route path='/Admin/VendorDetails/:id' element={<VendorDetails />} />
-      <Route path='/Admin/Createproduct' element={<Createproduct />} />
-      <Route path='/Admin/AdminProductlist' element={<AdminProductlist />} />
-      <Route path='/Admin/AdminVendorDetails' element={<AdminVendorDetails />} />
-      <Route path='/Admin/AdminOrders' element={<AdminOrders />} />
-        </Route>
+          <Route element={<AdminLayout />} >
+            <Route path='/Dashboard' element={<Dashboard />} >
+              <Route index element={<Maincontent />} />
+              <Route path='category' element={<AdminCategory />} />
+              <Route path='users' element={<Userlist />} />
+              <Route path='VendorList' element={<VendorList />} />
+              <Route path='VendorDetails/:id' element={<VendorDetails />} />
+              <Route path='Createproduct' element={<Createproduct />} />
+              <Route path='Productlist' element={<AdminProductlist />} />
+              <Route path='AdminVendorDetails' element={<AdminVendorDetails />} />
+              <Route path='VendorList' element={<VendorList />} />
+              <Route path='AdminOrders' element={<AdminOrders />} />
+            </Route>
+          </Route>
 
-        {/* Vendor Layout */}
-        <Route path="/vendor/login" element={<VendorLogin />} />
-  <Route path='/vendor' element={<VendorDashboard />} >
-    <Route  index element={<VendorMainContent />} />
-    <Route path="productlist" element={<VendorProductList />} />
-    <Route path="productcreation" element={<VendorProductCreation />} />
-    <Route path="users" element={<Userlist />} />
-    <Route path="orders" element={<VendorOrders />} />
-    <Route path="reviews" element={<Reviews />} />
-    <Route path="invoice" element={<Invoice />} />
-    <Route path="editproduct/:id" element={<EditProductPage />} />
-  </Route>
-          </Routes>
-        </BrowserRouter>
+          {/* Vendor Layout */}
+          <Route element={<VendorLayout />} >
+            <Route path="/Vendor/login" element={<VendorLogin />} />
+            <Route path='/VendorDashboard' element={<VendorDashboard />} >
+              <Route index element={<VendorMainContent />} />
+              <Route path='VendorProductList' element={<VendorProductList />} />
+              <Route path="VendorProductCreation" element={<VendorProductCreation />} />
+              {/* <Route path="/Vendor/" element={<Userlist />} /> */}
+              <Route path="VendorOrders" element={<VendorOrders />} />
+              <Route path="reviews" element={<Reviews />} />
+              <Route path="invoice" element={<Invoice />} />
+              <Route path="editproduct/:id" element={<EditProductPage />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }

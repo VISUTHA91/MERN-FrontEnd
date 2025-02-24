@@ -57,19 +57,19 @@ function VendorDashboard() {
 
             <ul className="space-y-4 mt-8 ">
               <li>
-                <Link to={''}
+                <NavLink to={'/VendorDashboard'}
                   className="flex items-center text-gray-300 hover:text-black gap-2">
                   <TbLayoutDashboard className=' rounded text-4xl lg:text-base' />
                   <span className="hidden lg:block md:space-x-6">Dashboard</span>
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to={'productlist'}
+                <NavLink to={'VendorProductList'}
                   className="flex items-center text-gray-300 hover:text-black gap-2">
                   <FaShoppingBasket className=' rounded mt-1 text-4xl lg:text-base' />
                   
                   <span className="hidden lg:block">AllProducts</span>
-                </Link>
+                </NavLink>
                 {/* <SidebarLink
             to="/vendor/productlist"
             Icon={FaDashcube}
@@ -78,7 +78,7 @@ function VendorDashboard() {
           /> */}
               </li>
               <li>
-                <Link to={'productcreation'}
+                <Link to={'VendorProductCreation'}
                   className="flex items-center text-gray-300 hover:text-black gap-2">
                   <GoPlus className='mt-1 border rounded text-4xl lg:text-base' />
                   <span className="hidden lg:block">Create Product</span>
@@ -86,7 +86,7 @@ function VendorDashboard() {
               </li>
 
               <li>
-                <Link to={'orders'}
+                <Link to={'VendorOrders'}
                   className="flex items-center text-gray-300 hover:text-white gap-2">
                   <FaFirstOrder className=' rounded mt-1 text-4xl lg:text-base' />
                   <span className="hidden lg:block">Orders</span>
@@ -124,7 +124,7 @@ function VendorDashboard() {
                     </li>
                     <li>
                       <Link
-                        to={'/Productlist/gender/kids'}
+                        to={'/'}
                         className="flex items-center px-4 py-2 text-gray-700 hover:text-white hover:bg-blue-300 gap-2 transition duration-200 rounded-md"
                         onClick={() => setIsAboutDropdownOpen(false)}>
                         Others
@@ -155,6 +155,7 @@ function VendorDashboard() {
         {/* Main Content */}
         <div className='mt-4 h-screen overflow-auto scrollbar scrollbar-hide lg:ml-14 ml-6 mr-6'>
         <Outlet />
+        {/* {renderPageContent()} */}
         </div>
       </div>
     </>

@@ -3,16 +3,10 @@ import { Link } from 'react-router-dom'
 import { fetchDashboardStats } from '../../api/apiServices';
 import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
 
-
-
-
-
 function Maincontent() {
     
     const [chartData, setChartData] = useState([]);
     const [loading, setLoading] = useState(true);
-
-
 
     useEffect(() => {
         const getDashboardStats = async () => {
@@ -51,12 +45,12 @@ function Maincontent() {
                 <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 m-8 absolute ">
                     <div className="bg-blue-500 text-white p-4  rounded-lg shadow-lg lg:gap-10  sm:w-58 sm:h-10 md:w-32 md:h-20 lg:w-44 lg:h-24  ">
                         <div className="text-center lg:text-xl md:text-md sm:text-sm">Total Amount</div>
-                        <div className="text-center lg:text-2xl md:text-md sm:text-sm font-bold">1824657</div>
+                        <div className="text-center lg:text-2xl md:text-md sm:text-sm font-bold">18257</div>
                     </div>
 
                     <div className="bg-green-500 text-white p-4 rounded-lg shadow-lg lg:w-44 lg:h-24 md:w-32 md:h-20 sm:h-16">
                         <div className="text-center lg:text-xl sm:text-sm">Products</div>
-                        <div className="text-center lg:text-2xl sm:text-sm font-bold">789654</div>
+                        <div className="text-center lg:text-2xl sm:text-sm font-bold">78954</div>
                         <Link
                             to="/Admin/AdminProductlist"
                             className="block mt-4 text-center text-sm underline hover:text-gray-200"
