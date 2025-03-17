@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import ReviewModal from "../../Components/ReviewModal";
 import GoBackButton from "../../Components/GoBackButton";
