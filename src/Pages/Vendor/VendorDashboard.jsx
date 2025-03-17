@@ -115,21 +115,21 @@ function VendorDashboard() {
                     </li>
                     <li>
                       <NavLink
-                        to={'invoicelist'}
+                        to={'VendorProductlist'}
                         className="flex items-center px-4 py-2 text-gray-700 hover:text-white hover:bg-blue-300 gap-2 transition duration-200 rounded-md"
                         onClick={() => setIsAboutDropdownOpen(false)}
                       >
                         List
                       </NavLink>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         to={'/'}
                         className="flex items-center px-4 py-2 text-gray-700 hover:text-white hover:bg-blue-300 gap-2 transition duration-200 rounded-md"
                         onClick={() => setIsAboutDropdownOpen(false)}>
                         Others
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 )}
               </li>

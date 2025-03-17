@@ -6,11 +6,8 @@ import { login } from '../../assets/Images';
 import { registerVendor } from '../../api/apiServices';
 import *as apiCalls from '../../api/apiServices.jsx';
 
-
-
 function VendorSignup() {
   const navigate = useNavigate();
-
   const [vendorData, setVendorData] = useState({
     name: "",
     phone_number: "",
@@ -34,10 +31,7 @@ function VendorSignup() {
 
   // const [ifscError, setIfscError] = useState('');
   // const [bankInfo, setBankInfo] = useState(null);
-
-
   const [step, setStep] = useState(1); // Track the current step
-
   const handleChange = (e) => {
     setVendorData({
       ...vendorData,
@@ -96,7 +90,6 @@ function VendorSignup() {
   //   }
   // };
 
-
   const handleNext = () => {
     setStep(step + 1);
   };
@@ -104,7 +97,6 @@ function VendorSignup() {
   const handlePrevious = () => {
     setStep(step - 1);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -153,8 +145,9 @@ function VendorSignup() {
       console.error("Registration failed:", error.message || error);
     }
   };
+  
   return (
-    <div className="flex justify-center items-center h-full bg-fuchsia-900 p-4 md:p-8">
+    <div className="flex justify-center items-center bg-fuchsia-900 p-4 md:p-8">
       <div className="flex pointer-events-none hidden select-none shadow-2xl md:block md:w-1/2 lg:w-1/2 rounded-tl-2xl rounded-bl-2xl h-full">
         <img className="h-screen w-full object-cover opacity-90 rounded-tl-3xl rounded-bl-3xl" src={login} alt="Login" />
       </div>
@@ -367,9 +360,4 @@ function VendorSignup() {
     </div>
   );
 }
-
-
-//   );
-// }
-
 export default VendorSignup;

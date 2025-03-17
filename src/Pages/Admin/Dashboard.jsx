@@ -182,9 +182,9 @@ function Dashboard() {
         {/* Main Content */}
         <div className="bg-fuchsia-100 rounded-xl p-2  m-1 w-full h-screen overflow-auto scrollbar-hide">
           <Outlet />
-          <div className="mt-5 fixed bottom-0 left-0 w-full">
+          {/* <div className="mt-5 fixed bottom-0 left-0 w-full">
             <Adminfooter></Adminfooter>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

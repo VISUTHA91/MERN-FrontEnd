@@ -34,7 +34,7 @@ import VendorDetails from './Pages/Vendor/VendorDetails';
 import VendorProductCreation from './Pages/Vendor/VendorProductCreation';
 import VendorOrders from './Pages/Vendor/VendorOrders';
 import Payment from './Pages/Payment';
-import VendorProductList from './Pages/Vendor/VendorProductList';
+import VendorProductList from './Pages/Vendor/VendorProductList'
 import EditProductPage from './Pages/Vendor/EditProductPage';
 import AdminOrders from './Pages/Admin/AdminOrders';
 import UserOrderPage from './Pages/User/UserOrder';
@@ -45,6 +45,9 @@ import Invoice from './Pages/Vendor/Invoice';
 import Reviews from './Pages/Vendor/Reviews';
 import VendorLayout from './Layouts/VendorLayout';
 import AdminCategory from './Pages/Admin/AdminCategory';
+// import ForgotPassword from './Pages/ForgotPassword';
+// import VendorProductlist from './Pages/Vendor/VendorProductlist';
+import PasswordReset from './Pages/PasswordReset';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
@@ -67,6 +70,8 @@ function App() {
             <Route path='/Contact' element={<Contact />} />
             <Route path='/Signin' element={<Signin />} />
             <Route path='/Signup' element={<Signup />} />
+            {/* <Route path='/ForgotPassword' element={<ForgotPassword />} /> */}
+            <Route path='/reset-password/:token' element={<PasswordReset />} />
             <Route path='/Cart' element={<Cart />} />
             <Route path='/Wishlist' element={<WishlistPage />} />
             <Route path='/Payment' element={<Payment />} />
@@ -100,7 +105,9 @@ function App() {
           {/* Vendor Layout */}
           <Route element={<VendorLayout />} >
             <Route path="/Vendor/login" element={<VendorLogin />} />
+            <Route path="/Vendor/VendorSignup" element={<VendorSignup />} />
             <Route path='/VendorDashboard' element={<VendorDashboard />} >
+            {/* <Route path='/Vendor/VendorSignup' element={<VendorSignup />} > */}
               <Route index element={<VendorMainContent />} />
               <Route path='VendorProductList' element={<VendorProductList />} />
               <Route path="VendorProductCreation" element={<VendorProductCreation />} />
@@ -108,6 +115,7 @@ function App() {
               <Route path="VendorOrders" element={<VendorOrders />} />
               <Route path="reviews" element={<Reviews />} />
               <Route path="invoice" element={<Invoice />} />
+              {/* <Route path="VendorProductlist" element={<VendorProductlist />} /> */}
               <Route path="editproduct/:id" element={<EditProductPage />} />
             </Route>
           </Route>

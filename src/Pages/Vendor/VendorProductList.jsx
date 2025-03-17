@@ -10,13 +10,12 @@ function VendorProductList() {
   const [productlist, setProductlist] = useState([]);
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-  
+  const [showOnline, setShowOnline] = useState(true);
+   
   const fetchProductList = async () => {
     try {
       const response = await getProducts(); // Fetch products from backend
       console.log("Fetched Data...", response.products); // Log fetched data
-
       if (Array.isArray(response.products)) {
         setProductlist(response.products);
       } else {
@@ -58,12 +57,35 @@ function VendorProductList() {
       alert('Failed to delete product.');
     }
   };
+  const toggleStatus = () => {
+    setShowOnline(!showOnline);
+  };
 
-
+  const filteredProducts = productlist.filter(
+    (product) => product.category_id.storeType === (showOnline ? 'online' : 'offline')
+  );
+  console.log("Filtered Products", filteredProducts);
 
   return (
     <div className=' border-black mt-2 mr-8 h-screen overflow-auto scrollbar scrollbar-hide'>
       <h1 className="text-2xl font-bold mt-4 ml-18">Product List</h1>
+      <div className="flex items-center mb-4">
+        <span className="mr-2 text-gray-700 font-medium">
+          {showOnline ? 'Showing: Online Products' : 'Showing: Offline Products'}
+        </span>
+        <button
+          onClick={toggleStatus}
+          className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
+            showOnline ? 'bg-green-500' : 'bg-gray-300'
+          }`}
+          >
+          <span
+            className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+              showOnline ? 'translate-x-6' : 'translate-x-0'
+            }`}
+            ></span>
+        </button>
+      </div>
       {productlist && productlist.length > 0 ? (
         <table className="w-full bg-white border border-gray-600 rounded-lg shadow-lg ml-18 mt-4">
           <thead>

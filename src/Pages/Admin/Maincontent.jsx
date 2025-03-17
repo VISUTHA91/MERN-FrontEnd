@@ -22,7 +22,6 @@ function Maincontent() {
                 { name: "Total Sales", value: totalSales, fill: "#8dd1e1" },
                 { name: "Out of Stock", value: outOfStockCount, fill: "#82ca9d" },
               ];
-    
               setChartData(formattedData);
             }
           } catch (error) {
@@ -41,7 +40,6 @@ function Maincontent() {
          <div className="flex-grow p-6">
                 <div className='bg-white rounded-xl lg:h-32 h-44 relative'>
                 <h1 className="text-3xl font-semibold ml-10">Welcome Admin...</h1>
-                
                 <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 m-8 absolute ">
                     <div className="bg-blue-500 text-white p-4  rounded-lg shadow-lg lg:gap-10  sm:w-58 sm:h-10 md:w-32 md:h-20 lg:w-44 lg:h-24  ">
                         <div className="text-center lg:text-xl md:text-md sm:text-sm">Total Amount</div>
@@ -52,12 +50,11 @@ function Maincontent() {
                         <div className="text-center lg:text-xl sm:text-sm">Products</div>
                         <div className="text-center lg:text-2xl sm:text-sm font-bold">78954</div>
                         <Link
-                            to="/Admin/AdminProductlist"
+                            to="Productlist"
                             className="block mt-4 text-center text-sm underline hover:text-gray-200"
                         >
                         </Link>
                     </div>
-
                     <div className="bg-red-500 text-white p-4 rounded-lg shadow-lg lg:w-44 lg:h-24 md:w-32 md:h-20 sm:h-16">
                         <div className="text-center lg:text-xl sm:text-sm">Orders</div>
                         <div className="text-center lg:text-2xl sm:text-sm font-bold">789654</div>

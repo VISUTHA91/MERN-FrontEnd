@@ -259,10 +259,10 @@ function VendorList() {
 
   return (
     <>
-      <div className='mr-12'>
-        <h1 className="text-2xl font-bold mt-24">Vendor Details</h1>
+      <div className='mr-12 h-[96vh]'>
+        <h1 className="text-2xl font-bold mt-2">Vendor Details</h1>
         {vendorlist && (
-          <table className="w-full bg-white mt-8 border border-gray-600 rounded-lg shadow-lg ">
+          <table className="w-full bg-white mt-2  border-gray-600 rounded-lg shadow-lg ">
             <thead>
               <tr className="bg-gray-200">
                 <th className="py-2 px-4 border-b">S.No</th>

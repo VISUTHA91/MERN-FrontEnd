@@ -2,12 +2,9 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import * as apiCalls from "../api/apiServices.jsx"
-
-
-
+import {  FaEye, FaEyeSlash } from "react-icons/fa";
 function Signup() {
-  const navigate = useNavigate()
-
+    const navigate = useNavigate()
     const [userData, setUserData] = useState({
         name: "",
         phone_number:"",
@@ -15,14 +12,14 @@ function Signup() {
         password: "",
         confirmpassword:"",
       });
-    
+        const [showPassword, setShowPassword] = useState(false);
+        const [confirmpassword, setConfirmpassword] = useState(false);
       const handleChange = (e) => {
         setUserData({
           ...userData,
           [e.target.name]: e.target.value,
         });
       };
-    
       const handleSubmit = async(e) => {
         e.preventDefault();
         const data = await apiCalls.registerUser(userData);
@@ -35,9 +32,8 @@ function Signup() {
         }
         navigate("/Signin")
       };
-    
       return (
-        <div className="flex justify-center items-center h-full bg-fuchsia-900">
+        <div className="flex justify-center items-center bg-fuchsia-900">
           <form
             onSubmit={handleSubmit}
             className="bg-white p-8 rounded-lg shadow-md mt-24 w-80">
@@ -51,7 +47,13 @@ function Signup() {
                 id="name"
                 name="name"
                 value={userData.name}
-                onChange={handleChange}
+                // onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^(?![0-9]+$)(?!\s+$)[a-zA-Z0-9 ]*$/.test(value)) {
+                    handleChange(e);
+                  }
+                }}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Your Name"
                 required/>
@@ -66,14 +68,17 @@ function Signup() {
                 id="phone_number"
                 name="phone_number"
                 value={userData.phone_number}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^\d{0,10}$/.test(value)) {
+                    handleChange(e);
+                  }
+                }}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Your Contact Number"
                 required
               />
             </div>
-    
-    
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
@@ -88,15 +93,13 @@ function Signup() {
                 placeholder="Email Address"
                 required
               />
-            </div>
-            
-    
-            <div className="mb-6">
+            </div>   
+            <div className="mb-4 relative">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"} 
                 id="password"
                 name="password"
                 value={userData.password}
@@ -105,26 +108,36 @@ function Signup() {
                 placeholder="********"
                 required
               />
+                 <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)} // Toggle state
+                      className="absolute right-2 top-2/4 transform -translate-y-1/5 text-gray-500 hover:text-gray-700"
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
             </div>
-
-            <div className="mb-6">
+            <div className="mb-4 relative">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                Confirm Password
               </label>
               <input
-                type="confirmpassword"
+                type={confirmpassword ? "text" : "password"} // Toggle type
                 id="confirmpassword"
                 name="confirmpassword"
                 value={userData.confirmpassword}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="********"
+                placeholder="*********"
                 required
               />
-            </div>
-        
-    
-    
+                   <button
+                      type="button"
+                      onClick={() => setConfirmpassword(!confirmpassword)} // Toggle state
+                      className="absolute right-2 top-1/2 transform -translate-y-1/5 text-gray-500 hover:text-gray-700"
+                    >
+                      {confirmpassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+            </div>        
             <div className="flex items-center justify-between">
               <button
                 type="submit"

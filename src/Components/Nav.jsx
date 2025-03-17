@@ -256,11 +256,12 @@ function Nav({ cartCount }) {
           {isAuthenticated ? (
             user.role === 'admin' ? (
               null
-            ):(<Badge color="secondary" badgeContent={cartCount}>
+            // ):(<Badge color="secondary" badgeContent={cartCount}>
+            ):(<Badge color="black" badgeContent={4}>
               <BsFillHandbagFill  size={28} className="cursor-pointer" />
             </Badge>
             )
-          ):(<Badge color="secondary" badgeContent={cartCount}>
+          ):(<Badge badgeContent={cartCount}>
             <BsFillHandbagFill  size={28} className="cursor-pointer" />
           </Badge>)}
           </Link>

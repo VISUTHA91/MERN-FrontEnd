@@ -43,9 +43,10 @@
 // );
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // Base URL for your API
-export const API_BASE_URL = "http://192.168.20.7:3000/";
+export const API_BASE_URL = "http://localhost:5005/";
 // export const API_BASE_URL = "http://192.168.31.166:3000/";
 // export const API_BASE_URL = "http://172.20.10.7:3000/";
 
@@ -73,16 +74,22 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem('authToken');
         localStorage.removeItem('auth-token')
         localStorage.removeItem('userData');
-        alert("Session expired. Please log in again.");
+        // alert("Session expired. Please log in again.");
+        toast.error("Session expired. Please log in again.");
         window.location.href = "/Signin";
       }
     } catch (error) {
       console.error("Error handling token expiration:", error);
+      window.location.href = "/Signin";
     }
     return response;
   },
   (error) => {
-    console.error("API Error:", error.response || error.message);
+    // console.error("API Error:", error.response.data.message || error.message);
+    toast.error(error.response.data.message)
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('auth-token')
+    localStorage.removeItem('userData');
     return Promise.reject(error);
   }
 );
@@ -112,6 +119,38 @@ export const userLogin = async (userData) => {
     return error.response ? error.response.data : new Error("Sign In Failed");
   }
 }
+
+// Password reset request...
+ export const requestPasswordReset = async (email) => {
+  try {
+    console.log("EMAIL",email)
+    const response = await axiosInstance.post(`${API_BASE_URL}forgot-password`,{email});
+    alert("Reset link sent to your email!");
+    return response;
+  } catch (error) {
+    console.error("Error sending reset link:", error);
+    alert(error.response?.data?.message || "Something went wrong!");
+  }
+};
+// UPdate password
+export const updatePassword = async (token, newPassword, confirmPassword) => {
+  console.log(" Token,NEW ,CONFIRM",token,newPassword, confirmPassword)
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}update-password`, {
+      token,
+      newPassword,
+      confirmPassword,
+    });
+
+    alert("Password updated successfully!");
+    return response.data;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    alert(error.response?.data?.message || "Something went wrong!");
+  }
+};
+
+
 
 // get All Categories(admin)
 export const getCategories = async () => {
@@ -170,6 +209,36 @@ export const getAllVendors = async () => {
   }
 };
 
+// Password reset request...
+export const VenodrrequestPasswordReset = async (email) => {
+  try {
+    console.log("EMAIL",email)
+    const response = await axiosInstance.post(`${API_BASE_URL}vendor/forgot-password`,{email});
+    alert("Reset link sent to your email!");
+    return response;
+  } catch (error) {
+    console.error("Error sending reset link:", error);
+    alert(error.response?.data?.message || "Something went wrong!");
+  }
+};
+// UPdate password
+export const vendorupdatePassword = async (token, newPassword, confirmPassword) => {
+  console.log(" Token,NEW ,CONFIRM",token,newPassword, confirmPassword)
+  try {
+    const response = await axiosInstance.post(`${API_BASE_URL}vendor/update-password`, {
+      token,
+      newPassword,
+      confirmPassword,
+    });
+
+    alert("Password updated successfully!");
+    return response.data;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    alert(error.response?.data?.message || "Something went wrong!");
+  }
+};
+
 // fetch all Products List(admin)
 export const getallProducts = async () => {
   try {
@@ -180,7 +249,6 @@ export const getallProducts = async () => {
     throw error;
   }
 };
-
 
 // Vendor Product Creation
 export const createProduct = async (formData) => {
@@ -225,22 +293,17 @@ export const editProduct = async (id, formData) => {
 export const EditProduct = async ( productData) => { // Make sure to pass the id as an argument
   try {
       // Log FormData entries for debugging
-   
-
-      const response = await axiosInstance.post(`${API_BASE_URL}vendor/updateProduct`, productData, {
+         const response = await axiosInstance.post(`${API_BASE_URL}vendor/updateProduct`, productData, {
           headers: {
               'Content-Type': 'multipart/form-data',
           },
       });
-
       return response.data;
   } catch (error) {
       console.error('Error updating product:', error);
       throw error;
   }
 };
-
-
 // Product Delete
 export const deleteProduct = async (productId) => {
   console.log(productId)
@@ -258,7 +321,6 @@ export const deleteProduct = async (productId) => {
 // CategoryCreation
 export const createCategory = async (formData) => {
   console.log("Category Name with sub Category",formData)
-
   const response = await axiosInstance.post(`${API_BASE_URL}admin/categoryCreate`, formData);
   return response.data;
 };
@@ -782,4 +844,11 @@ export const submitReview = async (orderId, productId, rating, reviewText) => {
   }
 };
 
-
+export const sendPasswordResetEmail = async (email) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/forgot-password`, { email });
+    return response.data; // Backend should return success message
+  } catch (error) {
+    throw error.response?.data?.message || "Something went wrong!";
+  }
+};

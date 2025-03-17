@@ -221,7 +221,7 @@ function AdminCategory() {
 
 
   return (
-    <div className='mt-14'>
+    <div className='mt-4'>
       <div className='flex gap-44'>
         <h1 className="text-2xl font-bold ml-2">Category Details</h1>
         <div>
@@ -232,7 +232,7 @@ function AdminCategory() {
         </div>
       </div>
       <div className='lg:flex lg:flex-row sm:flex-col w-full gap-2'>
-        <div className='mb-0'>
+        <div className='mb-0 h-screen overflow-auto'>
           {categories && (
             <table
               style={{

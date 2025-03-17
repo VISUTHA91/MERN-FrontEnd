@@ -38,8 +38,7 @@ const AdminOrders = ({ orderId }) => {
 
   return (
     <div className="bg h-full pt-10 p-6">
-      <h1 className="text-2xl font-bold text-gray-800  mt-10 mb-6">
-        {" "}
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">
         Order List
       </h1>
       <div className="bg-white rounded-lg shadow-md p-4">

@@ -443,6 +443,7 @@ function ShopbyCategory() {
   const [error, setError] = useState('');
 
   const settings = {
+    rtl: true, // Moves carousel from right to left
     infinite: categories.length > 1, // Avoid infinite scroll if only 1 category exists
     slidesToShow: categories.length < 5 ? categories.length : 5, // Show correct number of slides
     slidesToScroll: 1,
@@ -451,7 +452,8 @@ function ShopbyCategory() {
     cssEase: 'ease-in-out',
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows: true,
+    centerPadding: '5px', 
+    arrows: false,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
@@ -467,7 +469,7 @@ function ShopbyCategory() {
         settings: {
           slidesToShow: categories.length < 3 ? categories.length : 3,
           slidesToScroll: 1,
-          arrows: true,
+          arrows: false,
           
         },
       },
@@ -503,7 +505,6 @@ function ShopbyCategory() {
     <div className="flex flex-col justify-center items-center p-4 mt-10 w-full">
       <div className="w-full max-w-7xl px-4">
         <h1 className="text-3xl font-bold text-center mb-6">Explore By Categories</h1>
-
         {error ? (
           <div className="text-red-500 mt-4">{error}</div>
         ) : categories.length === 0 ? (
