@@ -51,7 +51,7 @@ import { toast } from "react-toastify";
 
 // export const API_BASE_URL = "http://192.168.31.166:3000/";
 // export const API_BASE_URL = "http://172.20.10.7:3000/"; 
-export const API_BASE_URL = "http://192.168.109.90:3000/";
+export const API_BASE_URL = "http://localhost:5005/";
 
 
 const axiosInstance = axios.create({
@@ -60,7 +60,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    
+  
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers['Authorization'] = token;
@@ -153,9 +153,6 @@ export const updatePassword = async (token, newPassword, confirmPassword) => {
     alert(error.response?.data?.message || "Something went wrong!");
   }
 };
-
-
-
 // get All Categories(admin)
 export const getCategories = async () => {
   try {
@@ -664,7 +661,7 @@ export const updateVendorStatus = (vendorId, status) => {
 
 export const addCart = async (cartItem) => {
   try {
-    const response = await axiosInstance.post(`${API_BASE_URL}createcart`, cartItem); // Change endpoint based on your API
+    const response = await axiosInstance.post(`${API_BASE_URL}createcart`, cartItem);
     return response.data; // Return response data
   } catch (error) {
     throw error.response?.data || 'Error adding to cart';
@@ -766,7 +763,8 @@ export const fetchDashboardStats = async () => {
 export const getOrdersByUser = async (userId) => {
   try {
     const response = await axiosInstance.post(`${API_BASE_URL}getOrdersByUser`,{userId});
-    return response.data;
+    console.log("response.data",response);
+    return response;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch order details');
   }

@@ -15,6 +15,7 @@ const WishlistPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState(""); // State for selected size
   const [selectedColor, setSelectedColor] = useState(""); // State for selected color
+  const [selectedfinal_price, setSelectedfinal_price] = useState(""); // State for selected color
   const [qty, setQty] = useState(1);
 
 
@@ -75,15 +76,15 @@ const WishlistPage = () => {
   //     console.error('Error adding to cart:', error);
   //   }
   // };
-  const addToCart = async (productId, size, color, quantity) => {
+  const addToCart = async (productId, size, color, quantity,final_price) => {
     const cartItem = {
       productId: productId,
       size: size,
       color: color,
       quantity: quantity,
-      price: items.final_price, // Ensure `items` is defined
+      price: final_price, // Ensure `items` is defined
     };
-  
+
     try {
       const response = await addCart(cartItem);
       console.log("...............................", response);
@@ -134,6 +135,7 @@ const WishlistPage = () => {
                     setSelectedProduct(item);
                     setSelectedSize(item?.variants?.[0]?.size || ""); // Default to first size if available
                     setSelectedColor(item.color || ""); // Default color
+                    setSelectedfinal_price(item.final_price || ""); // Default color
                     setIsModalOpen(true);
                   }}
                 >
@@ -171,7 +173,6 @@ const WishlistPage = () => {
               </div>
             </div>
 
-
             <div className="flex items-center">
               <label htmlFor="qty" className="mr-2 font-bold">Quantity:</label>
               <select
@@ -195,7 +196,7 @@ const WishlistPage = () => {
                     alert("Please select size and color before adding to cart.");
                     return;
                   }
-                  addToCart(selectedProduct._id, selectedSize, selectedColor, qty); // Add to cart
+                  addToCart(selectedProduct._id, selectedSize, selectedColor, qty,selectedfinal_price); // Add to cart
                   // removeWishlist(selectedProduct._id); // Remove from wishlist
                   setIsModalOpen(false); // Close modal
                 }}

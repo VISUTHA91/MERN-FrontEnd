@@ -27,7 +27,7 @@ import Newlyadded from '../Components/Newlyadded';
 
 
 
-function Productdetails({ _id, images, price }) {
+function Productdetails({ _id, images, price , setCartCount }) {
   const navigate = useNavigate()
   const location = useLocation();
   const productId = location.state?.productId;
@@ -124,7 +124,7 @@ function Productdetails({ _id, images, price }) {
       // Call the external API service to add product to cart
       const response = await addCart(cartItem);
       // setCartStatus('Product added to cart!');
-
+      setCartCount(prev => prev + 1); 
       console.log("...............................", response);
       alert("Product Added to Cart Successfully");
 

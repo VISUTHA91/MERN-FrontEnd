@@ -26,6 +26,7 @@ function Nav({ cartCount }) {
   const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = React.useState(null);
 
+  console.log("Cart Count at Nav Bar",cartCount);
 
 
   const Links = [
@@ -70,6 +71,7 @@ function Nav({ cartCount }) {
 
   const token = localStorage.getItem("authToken");
   const userData = JSON.parse(localStorage.getItem("userData")); 
+
 
   useEffect(() => {
     if (token && userData) {
@@ -251,13 +253,14 @@ function Nav({ cartCount }) {
         {/* Cart and User */}
         <div className="flex items-center lg:gap-8 gap-2 ">
           {/* Cart Icon */}
+          
           <Link
           to={isAuthenticated ? '/Cart' : '/Signin'}>
           {isAuthenticated ? (
             user.role === 'admin' ? (
               null
-            // ):(<Badge color="secondary" badgeContent={cartCount}>
-            ):(<Badge color="black" badgeContent={4}>
+            ):(
+            <Badge color="black" badgeContent={cartCount}>
               <BsFillHandbagFill  size={28} className="cursor-pointer" />
             </Badge>
             )

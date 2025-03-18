@@ -53,9 +53,8 @@ function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
 
   // Function to handle adding item to cart
-  const addToCart = () => {
-    setCartCount(cartCount + 1); // Increase cart count by 1
-  };
+  console.log(" cartCount at APP.JSX Page:", cartCount); // Debugging the state
+
 
   return (
     <div className='App'>
@@ -72,7 +71,7 @@ function App() {
             <Route path='/Signup' element={<Signup />} />
             {/* <Route path='/ForgotPassword' element={<ForgotPassword />} /> */}
             <Route path='/reset-password/:token' element={<PasswordReset />} />
-            <Route path='/Cart' element={<Cart />} />
+            <Route path='/Cart' element={<Cart setCartCount={setCartCount} />} />
             <Route path='/Wishlist' element={<WishlistPage />} />
             <Route path='/Payment' element={<Payment />} />
             <Route path='/Support' element={<Support />} />
@@ -84,7 +83,7 @@ function App() {
             <Route path='/User/Profile/' element={<Profile />} />
             <Route path='/User/UserOrder/' element={<UserOrderPage />} />
             <Route path='/User/Address/' element={<Address />} />
-            <Route path='/Productdetails/:id' element={<Productdetails addToCart={addToCart} />} />
+            <Route path='/Productdetails/:id' element={<Productdetails setCartCount={setCartCount}/>} />
           </Route>
           {/* Admin Layout */}
           <Route element={<AdminLayout />} >

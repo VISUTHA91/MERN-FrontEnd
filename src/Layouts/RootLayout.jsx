@@ -1,15 +1,18 @@
-import React from 'react'
+import React  from 'react'
 import Nav from '../Components/Nav';
 import { Outlet } from 'react-router';
 import Footer from '../Components/Footer';
 
-function RootLayout() {
+function RootLayout({children , cartCount}) {
   return (
     <>
-    <Nav />
+    <div>
+    <Nav cartCount={cartCount} />
+    {children}
+    </div>
     <Outlet />
     <Footer />
-        </>
+    </>
   )
 }
 

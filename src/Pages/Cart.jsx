@@ -7,21 +7,23 @@ import { updateCartItemQuantity } from "../api/apiServices";
 import { FaBoxOpen } from 'react-icons/fa'; // Optional icon for better visuals
 
 
-function Cart() {
+function Cart({setCartCount}) {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]); // Default as an empty array
   const [loading, setLoading] = useState(true);   // Add loading state
   const [error, setError] = useState(null);       // Add error state
   const [cartId, setCartId] = useState([]);       // Add error state
-
+// const [cartCount , setCartCount] = useState([]);
   const shippingFee = 0;
-
+  
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const data = await getCartItems();  // Fetch data from API
         setCartItems(data.cart.items);  // Only set if the data is an array
         console.log("Cart data:", data.cart.items);
+        console.log("Cart Count:", data.cart.items.length);
+        setCartCount(data.cart.items.length)
         setCartId(data.cart._id)
       } catch (err) {
         setError(err.message);
@@ -31,8 +33,15 @@ function Cart() {
     };
     fetchCartItems();
   }, []);
-  console.log("Final cartItems:", cartItems); // Debugging the state
 
+  // useEffect(() => {
+  //   setCartCount(cartItems.length); // Update cart count
+  // }, [cartItems, setCartCount]);
+  
+
+  // console.log(" cartCount at cart Page:", setCartCount); // Debugging the state
+
+  console.log("Final cartItems:", cartItems); // Debugging the state
   const increaseQuantity = async (id) => {
     const updatedCart = cartItems.map((item) =>
       item._id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -142,7 +151,7 @@ console.log("cartPage",grandTotal)
           {/* Product Details */}
           <div className="flex items-center w-full md:flex-1 md:justify-start">
             <img
-              src={`${API_BASE_URL}${item.product.images}`}
+              src={`${API_BASE_URL}${item.product.images[0]}`}
               alt={item.product.name} className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" 
             />
             <div className="ml-4">
