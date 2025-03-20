@@ -175,7 +175,6 @@ const handleUpiIDChange = (e) => {
   setUpiID(e.target.value);
 };
 
-
 const handleConfirmPayment = async () => {
   try {
       console.log("2525252525255",cartId);
@@ -193,8 +192,6 @@ const handleConfirmPayment = async () => {
         description: 'Test Transaction',
         order_id: order.data.id,
         handler: (response) => {
-            // Handle successful payment
-      
             console.log('Payment Successful:', response);
         },
         prefill: {

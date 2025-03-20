@@ -23,8 +23,8 @@ function Cart({setCartCount}) {
         setCartItems(data.cart.items);  // Only set if the data is an array
         console.log("Cart data:", data.cart.items);
         console.log("Cart Count:", data.cart.items.length);
-        setCartCount(data.cart.items.length)
-        setCartId(data.cart._id)
+        setCartCount(data.cart.items.length);
+        setCartId(data.cart._id);
       } catch (err) {
         setError(err.message);
       } finally {

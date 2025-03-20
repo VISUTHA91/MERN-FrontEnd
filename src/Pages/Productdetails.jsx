@@ -23,40 +23,27 @@ import ModalAlert from '../Components/ModalAlert';
 import Newlyadded from '../Components/Newlyadded';
 
 
-
-
-
-
 function Productdetails({ _id, images, price , setCartCount }) {
   const navigate = useNavigate()
   const location = useLocation();
   const productId = location.state?.productId;
-
   const [selectedColor, setSelectedColor] = useState('');
   const [product, setProduct] = useState(null);
-
   const [selectedSize, setSelectedSize] = useState('');
   // const [activeImage, setActiveImage] = useState(`${API_BASE_URL}${product.images[0]}`);
-
-
   const [activeImage, setActiveImage] = useState(images?.[0] || '');
-
-
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(true); // Loading state for API call
   const [error, setError] = useState(null);
   const productDetails = product?.product_details?.[0]; // Get the first product detail (or whichever is relevant)
+
   const sellerDetails = product?.seller_details; // Get the first product detail (or whichever is relevant)
-
-
   useEffect(() => {
     if (product) {
       // Set the first image in the array as the default active image
       setActiveImage(`${API_BASE_URL}${product.images[0]}`);
     }
   }, [product]);
-
-
   useEffect(() => {
     if (productId) {
       setLoading(true);
@@ -78,8 +65,6 @@ function Productdetails({ _id, images, price , setCartCount }) {
         });
     }
   }, [productId]);
-
-
   const handleMouseEnterProduct = (image) => {
     setActiveImage(`${API_BASE_URL}${image}`); // Update the state with the hovered image URL
   };
@@ -89,11 +74,11 @@ function Productdetails({ _id, images, price , setCartCount }) {
   const handleSizeChange = (size) => {
     setSelectedSize(size.toUpperCase()); // Change to uppercase if required by backend
   }
-
   const handleQuantityChange = (event) => {
     setQty(event.target.value);
     console.log(event.target.value)
   };
+
 
   const addToCart = async () => {
     const token = localStorage.getItem('authToken'); // Check if the user is logged in
@@ -119,7 +104,6 @@ function Productdetails({ _id, images, price , setCartCount }) {
       quantity: qty,
       price: product.final_price,
     };
-
     try {
       // Call the external API service to add product to cart
       const response = await addCart(cartItem);
@@ -127,7 +111,6 @@ function Productdetails({ _id, images, price , setCartCount }) {
       setCartCount(prev => prev + 1); 
       console.log("...............................", response);
       alert("Product Added to Cart Successfully");
-
     } catch (error) {
       console.error('Error adding to cart:', error);
     }

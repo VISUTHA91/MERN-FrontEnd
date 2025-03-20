@@ -230,7 +230,7 @@ function AdminProductlist() {
 
 
   return (
-    <div className=' border-black mt-12 mr-8'>
+    <div className=' border-black mt-4 mr-8'>
         <h1 className="text-2xl font-bold mb-4">Product Details</h1>
         <div className="flex items-center mb-4">
         <span className="mr-2 text-gray-700 font-medium">
