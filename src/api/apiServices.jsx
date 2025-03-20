@@ -50,11 +50,11 @@ import { toast } from "react-toastify";
 // export const API_BASE_URL = "http://192.168.20.7:3000/";
 
 // export const API_BASE_URL = "http://192.168.31.166:3000/";
-// export const API_BASE_URL = "http://172.20.10.7:3000/"; 
-export const API_BASE_URL = "http://localhost:5005/";
+export const API_BASE_URL = "http://172.20.10.7:3000/"; 
+// export const API_BASE_URL = "http://localhost:5005/";
 
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
 });
 
@@ -732,12 +732,23 @@ export const updateCartItemQuantity = async (cartId,id, quantity) => {
 export const confirmPayment = async (cartId,address_id) => {
   try {
     const response = await axiosInstance.post(`${API_BASE_URL}createOrder`, { cartId ,address_id});
+    console.log(response);
     return response.data; // Return the response data to the caller
   } catch (error) {
     console.error('Error confirming payment:', error);
     throw error; // Re-throw the error for handling in the calling function
   }
 };
+export const verifyPayment = async (razorpay_order_id,razorpay_payment_id,razorpay_signature) => {
+  try{
+      const response = await axiosInstance.post(`${API_BASE_URL}verifyPayment`,{razorpay_order_id,razorpay_payment_id,razorpay_signature})
+      return response.data;
+  }catch{
+    console.error("Error in verifying payment", error);
+    throw error
+  }
+  
+}
 //  Admin Get Orders
 export const getallOrders = async () => {
   try {
