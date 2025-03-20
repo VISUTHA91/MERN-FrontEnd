@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 import RootLayout from './Layouts/RootLayout';
 import Nav from './Components/Nav'
 import Home from './Pages/Home';
@@ -45,14 +46,10 @@ import Invoice from './Pages/Vendor/Invoice';
 import Reviews from './Pages/Vendor/Reviews';
 import VendorLayout from './Layouts/VendorLayout';
 import AdminCategory from './Pages/Admin/AdminCategory';
-// import ForgotPassword from './Pages/ForgotPassword';
-// import VendorProductlist from './Pages/Vendor/VendorProductlist';
 import PasswordReset from './Pages/PasswordReset';
 
 function App() {
   const [cartCount, setCartCount] = useState(0); // State to keep track of cart count
-
-  // Function to handle adding item to cart
   console.log(" cartCount at APP.JSX Page:", cartCount); // Debugging the state
 
 
@@ -67,7 +64,7 @@ function App() {
             <Route path='/Home' element={<Home />} />
             <Route path='/About' element={<About />} />
             <Route path='/Contact' element={<Contact />} />
-            <Route path='/Signin' element={<Signin />} />
+            <Route path='/Signin' element={<Signin setCartCount={setCartCount}/>} />
             <Route path='/Signup' element={<Signup />} />
             {/* <Route path='/ForgotPassword' element={<ForgotPassword />} /> */}
             <Route path='/reset-password/:token' element={<PasswordReset />} />
@@ -92,6 +89,7 @@ function App() {
               <Route path='category' element={<AdminCategory />} />
               <Route path='users' element={<Userlist />} />
               <Route path='VendorList' element={<VendorList />} />
+              <Route path='VendorList/VendorDetails' element={<VendorDetails />} />
               <Route path='VendorDetails/:id' element={<VendorDetails />} />
               <Route path='Createproduct' element={<Createproduct />} />
               <Route path='Productlist' element={<AdminProductlist />} />
@@ -106,15 +104,12 @@ function App() {
             <Route path="/Vendor/login" element={<VendorLogin />} />
             <Route path="/Vendor/VendorSignup" element={<VendorSignup />} />
             <Route path='/VendorDashboard' element={<VendorDashboard />} >
-            {/* <Route path='/Vendor/VendorSignup' element={<VendorSignup />} > */}
               <Route index element={<VendorMainContent />} />
               <Route path='VendorProductList' element={<VendorProductList />} />
               <Route path="VendorProductCreation" element={<VendorProductCreation />} />
-              {/* <Route path="/Vendor/" element={<Userlist />} /> */}
               <Route path="VendorOrders" element={<VendorOrders />} />
               <Route path="reviews" element={<Reviews />} />
               <Route path="invoice" element={<Invoice />} />
-              {/* <Route path="VendorProductlist" element={<VendorProductlist />} /> */}
               <Route path="editproduct/:id" element={<EditProductPage />} />
             </Route>
           </Route>

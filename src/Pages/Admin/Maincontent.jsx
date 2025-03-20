@@ -2,6 +2,8 @@ import React, { useEffect , useState } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchDashboardStats } from '../../api/apiServices';
 import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
+import { AiOutlineMail } from "react-icons/ai";
+
 
 function Maincontent() {
     
@@ -62,7 +64,6 @@ function Maincontent() {
                             to="/Admin/AdminOrders"
                             className="block mt-4 text-center text-sm underline hover:text-gray-200"
                         >
-
                         </Link>
                     </div>
 
@@ -80,6 +81,18 @@ function Maincontent() {
                         <div className="text-center text-xl">Out of Stock</div>
                         <div className="text-center text-2xl font-bold">258</div>
                     </div>
+                    {/* <div className="flex items-center gap-4 bg-blue-50 p-4 rounded-md shadow-md">
+        <AiOutlineMail className="text-blue-600 text-2xl" />
+        <div>
+          <h2 className="text-lg font-semibold">Email Support</h2>
+          <div className='flex gap-2'>
+          <p>For queries, email us at:</p>
+          <a href="mailto:pharmasupport@evvisolutions.com" className="text-blue-500 hover:underline">
+            pharmasupport@evvisolutions.com
+          </a>
+          </div>
+        </div>
+      </div> */}
                 </div>
                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 m-4 md:m-8 mt-4 relative">
     <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg flex flex-col justify-center items-center">

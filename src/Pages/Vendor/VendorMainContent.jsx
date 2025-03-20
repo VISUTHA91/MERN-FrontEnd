@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 // import {chart as chartJS} from 'chart.js/auto';
 import { LineChart, Line, Bar, BarChart, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { AiOutlineMail } from "react-icons/ai";
+
 
 
 function VendorMainContent() {
@@ -44,38 +46,36 @@ function VendorMainContent() {
         },
       ];
   return (
-    <div className='flex flex-col gap-6 h-screen overflow-auto scrollbar scrollbar-hide'>
-         <div className="flex-grow  p-22 ">
+    <div className='flex flex-col gap-1'>
+         <div className="flex-grow ">
                 <h1 className="text-3xl font-semibold mb-8"> Vendor Dashboard</h1>
-
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                     {/* Total Amount */}
-                    <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg">
+                    <div className="bg-blue-500 text-white p-2 rounded-lg shadow-lg">
                         <div className="text-center text-xl">Total Amount</div>
                         <div className="text-center text-2xl font-bold">1824657</div>
                     </div>
 
                     {/* Products */}
-                    <div className="bg-green-500 text-white p-6 rounded-lg shadow-lg">
+                    <div className="bg-green-500 text-white p-4 rounded-lg shadow-lg">
+                    <Link
+                            to="/Admin/AdminProductlist"
+                            className="block  text-center text-sm hover:text-gray-200"
+                        >
                         <div className="text-center text-xl">Products</div>
                         <div className="text-center text-2xl font-bold">789654</div>
-                        <Link
-                            to="/Admin/AdminProductlist"
-                            className="block mt-4 text-center text-sm underline hover:text-gray-200"
-                        >
-                            View Details
                         </Link>
                     </div>
 
                     {/* Orders */}
-                    <div className="bg-red-500 text-white p-6 rounded-lg shadow-lg">
+                    <div className="bg-red-500 text-white p-4 rounded-lg shadow-lg">
                         <div className="text-center text-xl">Orders</div>
                         <div className="text-center text-2xl font-bold">789654</div>
                         <Link
                             to="/Admin/AdminOrders"
                             className="block mt-4 text-center text-sm underline hover:text-gray-200"
                         >
-                            View Details
+                        
                         </Link>
                     </div>
 
@@ -119,20 +119,19 @@ function VendorMainContent() {
 
 
         </div> */}
-        <div className=' flex'>
-
+        <div className=' flex '>
         <LineChart
           width={450}
-          height={300}
+          height={250}
           data={data}
           margin={{
-            top: 5,
+            top: 2,
             right: 30,
             left: 20,
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="2 2" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
@@ -144,10 +143,10 @@ function VendorMainContent() {
 
         <BarChart
           width={450}
-          height={300}
+          height={250}
           data={data}
           margin={{
-            top: 5,
+            top: 2,
             right: 30,
             left: 20,
             bottom: 5,
@@ -162,6 +161,19 @@ function VendorMainContent() {
           <Bar dataKey="Products" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
         </BarChart>
       
+      </div>
+      <div className="flex items-center gap-4 bg-blue-50 p-4 rounded-md shadow-md">
+        <AiOutlineMail className="text-blue-600 text-2xl" />
+        <div>
+          <h2 className="text-lg font-semibold">Email Support</h2>
+          <div className='flex gap-2'>
+          <p>For queries, email us at:</p>
+          <a href="mailto:pharmasupport@evvisolutions.com" className="text-blue-500 hover:underline">
+            {/* pharmasupport@evvisolutions.com */}
+            admin@mail.com
+          </a>
+          </div>
+        </div>
       </div>
     </div>
   )

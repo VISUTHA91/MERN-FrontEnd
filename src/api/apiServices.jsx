@@ -615,11 +615,10 @@ export const vendorLogin = async (vendor) => {
 
 // Product Detail get by Id
 export const getVendorById = async (vendorId) => {
+  console.log("Vendor Id",vendorId)
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}getVendorById`, {
-      params: { vendorId }, // Pass categoryName as a query parameter
-    });
-    return response; // Return the response
+    const response = await axiosInstance.post(`${API_BASE_URL}admin/getVendorById`, { vendorId } );
+    return response.data; // Return the response
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error; // Rethrow the error to be handled by the calling component

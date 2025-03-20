@@ -218,20 +218,22 @@
 
 // export default VendorList;
 
-
-
 import React, { useState, useEffect } from 'react';
 import { getAllVendors, updateVendorStatus } from '../../api/apiServices';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+
 
 function VendorList() {
   const [vendorlist, setVendorlist] = useState([]); // List of vendors
+  const navigate = useNavigate();
+
 
   // Handle approval status change
   const handleApprovalStatus = (vendorId, approvalStatus) => {
+    console.log("VENDOR ID IN LIST PAGE",vendorId)
     const isApproved = approvalStatus === 'true'; // Boolean value for approval
-
-    // Update vendor approval status in the backend
     updateVendorStatus(vendorId, isApproved) // Only send isApproved value
       .then((response) => {
         console.log('Approval status updated successfully', response.data);
@@ -242,12 +244,11 @@ function VendorList() {
       });
   };
 
-  // Fetch the vendor list from the backend
   const fetchVendorList = async () => {
     try {
       const response = await getAllVendors();
       console.log('Fetched Data', response);
-      setVendorlist(response.vendors); // Store fetched vendors
+      setVendorlist(response.vendors);
     } catch (error) {
       console.error('Error fetching vendors:', error);
     }
@@ -258,7 +259,6 @@ function VendorList() {
   }, []);
 
   return (
-    <>
       <div className='mr-12 h-[96vh]'>
         <h1 className="text-2xl font-bold mt-2">Vendor Details</h1>
         {vendorlist && (
@@ -275,12 +275,13 @@ function VendorList() {
             </thead>
             <tbody>
               {vendorlist.map((vendor, index) => (
-                <tr key={vendor._id} className="hover:bg-gray-100 w-1/4">
+                <tr key={vendor.id} className="hover:bg-gray-100 w-1/4" 
+                >
                   <td className="py-2 px-4 border-b">{index + 1}</td>
                   <td className="py-2 px-4 border-b">
-                    <Link to={'/Admin/AdminVendorDetails/'}
-                      state={{ vendorId: vendor._id }}
-                      key={vendor._id}>
+                    <Link to={'VendorDetails'}
+                      state={{ vendorId: vendor.id }}
+                      key={vendor.id}>
                       {vendor.name}
                     </Link>
                   </td>
@@ -288,8 +289,8 @@ function VendorList() {
                   <td className="py-2 px-4 border-b">{vendor.phone_number}</td>
                   <td className="py-2 px-4 border-b">
                     <select
-                      value={vendor.is_approved ? 'true' : 'false'} // Convert boolean to string for display
-                      onChange={(e) => handleApprovalStatus(vendor.id, e.target.value)} // Convert string back to boolean
+                      value={vendor.is_approved ? 'true' : 'false'}
+                      onChange={(e) => handleApprovalStatus(vendor.id, e.target.value)} 
                       className="px-4 py-1 rounded">
                       <option value="false">Not Approved</option> {/* false means not approved */}
                       <option value="true">Approved</option> {/* true means approved */}
@@ -298,7 +299,7 @@ function VendorList() {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-700"
-                      onClick={() => deleteuser(vendor._id)}>
+                      onClick={() => deleteuser(vendor.id)}>
                       Delete
                     </button>
                   </td>
@@ -307,9 +308,7 @@ function VendorList() {
             </tbody>
           </table>
         )}
-      </div>
-    </>
+     </div>
   );
 }
-
 export default VendorList;

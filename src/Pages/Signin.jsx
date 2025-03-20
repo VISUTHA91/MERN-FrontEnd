@@ -10,11 +10,12 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // import Modal from "react-modal";
 import {requestPasswordReset} from '../api/apiServices.jsx';
+import { getCartItems } from '../api/apiServices.jsx';
 
 
 
 
-export default function Signin() {
+export default function Signin({ setCartCount }) {
   const [user, setUser] = useState({
     email: "",
     password: ""
@@ -57,15 +58,26 @@ export default function Signin() {
       const data = await apiCalls.userLogin(user);
       console.log(data)
       if (data.status) {
-        toast.success("Login Successful!");
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("userData", JSON.stringify({ role: data.user.role, name: data.user.name, id: data.user.id }));
+        toast.success("Login Successful!", {
+          autoClose: 1000,   // closes after 3 seconds
+        });
+        try {
+          const cartData = await getCartItems();
+          setCartCount(cartData.cart.items.length);
+          console.log("VVVVVVVVVVVVVVVVVV",cartData.items.length);
+        } catch (cartError) {
+          console.warn("Could not fetch cart items after login:", cartError);
+          // toast.warning("Logged in! But couldn't fetch cart count.");
+        }
         setTimeout(() => {
         navigate("/", { replace: true });
         window.location.reload();
         }, 1000);
-      }else{
-        toast.error(data.message)}
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
       console.error("Login failed:", error.message || error);
       toast.error(error.response?.data?.message || "Login failed. Please try again.");

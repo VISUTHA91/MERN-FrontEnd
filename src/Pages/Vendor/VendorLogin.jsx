@@ -9,8 +9,6 @@ import {  FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from 'react-toastify';
 import { VenodrrequestPasswordReset } from '../../api/apiServices.jsx'
 
-
-
 function VendorLogin() {
   const [vendor, setVendor] = useState({
     email: "",
@@ -31,7 +29,7 @@ function VendorLogin() {
 
   const registerVendor = async (e) => {
     e.preventDefault();
-    // console.log(user)
+                
     try {
       const data = await apiCalls.vendorLogin(vendor); // Correctly passing the 'user' object
       console.log("Login In Successful:", data);
@@ -45,7 +43,8 @@ function VendorLogin() {
       navigate("/Vendor/VendorSignup")
     }
   };
-    const handleRequestReset = async (e) => {
+
+  const handleRequestReset = async (e) => {
       e.preventDefault();
       try {
         const response = await VenodrrequestPasswordReset(email);
@@ -54,7 +53,7 @@ function VendorLogin() {
       } catch (error) {
         setMessage(error); // Display error message if request fails
       }
-    };
+  };
 
   return (
       <div className="flex w-full flex-wrap  justify-center bg-fuchsia-900 p-2 ">
@@ -153,6 +152,4 @@ function VendorLogin() {
       </div>
   );
 }
-
-
 export default VendorLogin

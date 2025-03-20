@@ -153,33 +153,34 @@ const Payment = ({ userId }) => {
     window.location.reload();
   };
 
-  const handleCancel = () => {
-    setIsEditing(null);
-    setCurrentAddress(null);
-  };
-  const handleRemoveAddress = async (addressId) => {
-    try {
-      await removeAddress(addressId);
-      setAddresses((prevAddresses) => {
-        if (!Array.isArray(prevAddresses)) {
-          console.error("Invalid addresses state:", prevAddresses);
-          return [];
-        }
-        return prevAddresses.filter((address) => address._id !== addressId);
-      });
-      console.log(`Address with ID ${addressId} removed successfully.`);
-    } catch (error) {
-      console.error("Error removing address:", error.message);
-      alert("Failed to remove address. Please try again.");
-    }
-  };
-  const handleCardDetailsChange = (e) => {
-    const { name, value } = e.target;
-    setCardDetails({ ...cardDetails, [name]: value });
-  };
-  const handleUpiIDChange = (e) => {
-    setUpiID(e.target.value);
-  };
+const handleCancel = () => {
+  setIsEditing(null);
+  setCurrentAddress(null);
+};
+const handleRemoveAddress = async (addressId) => {
+  try {
+    await removeAddress(addressId);
+    setAddresses((prevAddresses) => {
+      if (!Array.isArray(prevAddresses)) {
+        console.error("Invalid addresses state:", prevAddresses);
+        return [];
+      }
+      return prevAddresses.filter((address) => address._id !== addressId);
+    });
+    console.log(`Address with ID ${addressId} removed successfully.`);
+  } catch (error) {
+    console.error("Error removing address:", error.message);
+    alert("Failed to remove address. Please try again.");
+  }
+};
+const handleCardDetailsChange = (e) => {
+  const { name, value } = e.target;
+  setCardDetails({ ...cardDetails, [name]: value });
+};
+const handleUpiIDChange = (e) => {
+  setUpiID(e.target.value);
+};
+
 
   const handleConfirmPayment = async () => {
     try {
@@ -192,24 +193,16 @@ const Payment = ({ userId }) => {
       console.log("Payment confirmed:", result);
       // Update state upon successful payment confirmation
       const options = {
-        key: "rzp_test_rDX5rrHKEQJju1", // Replace with your Razorpay Key ID
-        amount: result.amount,
-        currency: "INR",
-        method: "upi, card, wallet, netbanking",
-        name: "Evvi",
-        description: "Test Transaction",
-        order_id: result.razorpayOrderId || result._id,
-        handler: async (response) => {
-          // Handle successful payment
-
-          console.log("Payment Successful:", response);
-          await axiosInstance.post(`${API_BASE_URL}verifyPayment`, {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-          });
-          setOrderCompleted(true);
-          alert("Payment Verified Successfully!");
+        key: 'rzp_test_rDX5rrHKEQJju1', // Replace with your Razorpay Key ID
+        amount: order.data.amount,
+        currency: INR,
+        name: 'Evvi',
+        description: 'Test Transaction',
+        order_id: order.data.id,
+        handler: (response) => {
+            // Handle successful payment
+      
+            console.log('Payment Successful:', response);
         },
         prefill: {
           name: "Your Customer Name",

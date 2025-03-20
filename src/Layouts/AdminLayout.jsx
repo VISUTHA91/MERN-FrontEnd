@@ -5,10 +5,8 @@ import { Outlet } from 'react-router';
 function AdminLayout() {
     return (
         <>
-            {/* <Nav /> */}
             <Outlet />
         </>
     )
 }
-
 export default AdminLayout

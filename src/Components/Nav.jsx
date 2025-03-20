@@ -23,6 +23,8 @@ function Nav({ cartCount }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [count, setCount] = useState(null);
+
   const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = React.useState(null);
 
@@ -80,6 +82,10 @@ function Nav({ cartCount }) {
     }
   }, []);
 // console.log(user.id)
+
+useEffect(() => {
+  setCount(cartCount);
+},[cartCount]);
 
   const toggleDropdown = () => {
     // setIsDropdownOpen(!isDropdownOpen);
@@ -260,11 +266,11 @@ function Nav({ cartCount }) {
             user.role === 'admin' ? (
               null
             ):(
-            <Badge color="black" badgeContent={cartCount}>
+            <Badge color="black" badgeContent={count}>
               <BsFillHandbagFill  size={28} className="cursor-pointer" />
             </Badge>
             )
-          ):(<Badge badgeContent={cartCount}>
+          ):(<Badge badgeContent={count}>
             <BsFillHandbagFill  size={28} className="cursor-pointer" />
           </Badge>)}
           </Link>
